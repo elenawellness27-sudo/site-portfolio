@@ -501,7 +501,7 @@
       margin: auto;
       overflow: visible;
       background: #ffffff;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.03);
+      box-shadow: none; /* AUCUNE OMBRE */
     }
 
     .anim-layer {
@@ -521,18 +521,18 @@
       pointer-events: none;
     }
 
-    /* ─── 01. INSPIRATION: 01 apparaît d'abord, puis 02 ─── */
+    /* ─── 01. INSPIRATION: 01 apparaît d'abord, puis 02 (rythme plus fluide et posé) ─── */
     .insp-01 {
       clip-path: inset(0 35.5% 0 0);
       opacity: 0;
       transform: translateY(40px) scale(0.98);
-      transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .insp-02 {
       clip-path: inset(0 0 0 64.5%);
       opacity: 0;
       transform: translateY(40px) scale(0.98);
-      transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.35s, transform 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.35s;
+      transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.5s, transform 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.5s;
     }
     .spread-frame.active .insp-01,
     .spread-frame.active .insp-02 {
@@ -540,51 +540,59 @@
       transform: translateY(0) scale(1);
     }
 
-    /* ─── 02. RESEARCH: mitraillette éléments de gauche puis droite d'un coup ─── */
-    /* 6 éléments gauche avec stagger très rapide (50ms) */
-    .res-l1 {
-      clip-path: inset(0 88% 48% 0);
+    /* ─── 02. RESEARCH: titre intact, mitraillette rythmée à gauche, puis droite d'un coup ─── */
+    /* Titre RESEARCH. complet non tronqué */
+    .res-title {
+      clip-path: inset(0 75% 82% 0);
       opacity: 0;
-      transform: scale(0.85) translateY(15px);
-      transition: opacity 0.2s cubic-bezier(0.2, 0.9, 0.3, 1.2) 0ms, transform 0.2s cubic-bezier(0.2, 0.9, 0.3, 1.2) 0ms;
+      transform: translateY(-15px);
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    /* 6 éléments gauche avec mitraillette rythmée (stagger 90ms, un peu plus lente) */
+    .res-l1 {
+      clip-path: inset(18% 88% 48% 0);
+      opacity: 0;
+      transform: scale(0.85) translateY(18px);
+      transition: opacity 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2) 60ms, transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2) 60ms;
     }
     .res-l2 {
       clip-path: inset(48% 88% 0 0);
       opacity: 0;
-      transform: scale(0.85) translateY(15px);
-      transition: opacity 0.2s cubic-bezier(0.2, 0.9, 0.3, 1.2) 50ms, transform 0.2s cubic-bezier(0.2, 0.9, 0.3, 1.2) 50ms;
+      transform: scale(0.85) translateY(18px);
+      transition: opacity 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2) 150ms, transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2) 150ms;
     }
     .res-l3 {
       clip-path: inset(18% 69.5% 48% 11.5%);
       opacity: 0;
-      transform: scale(0.85) translateY(15px);
-      transition: opacity 0.2s cubic-bezier(0.2, 0.9, 0.3, 1.2) 100ms, transform 0.2s cubic-bezier(0.2, 0.9, 0.3, 1.2) 100ms;
+      transform: scale(0.85) translateY(18px);
+      transition: opacity 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2) 240ms, transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2) 240ms;
     }
     .res-l4 {
       clip-path: inset(48% 69.5% 0 11.5%);
       opacity: 0;
-      transform: scale(0.85) translateY(15px);
-      transition: opacity 0.2s cubic-bezier(0.2, 0.9, 0.3, 1.2) 150ms, transform 0.2s cubic-bezier(0.2, 0.9, 0.3, 1.2) 150ms;
+      transform: scale(0.85) translateY(18px);
+      transition: opacity 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2) 330ms, transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2) 330ms;
     }
     .res-l5 {
       clip-path: inset(18% 43.5% 48% 30.5%);
       opacity: 0;
-      transform: scale(0.85) translateY(15px);
-      transition: opacity 0.2s cubic-bezier(0.2, 0.9, 0.3, 1.2) 200ms, transform 0.2s cubic-bezier(0.2, 0.9, 0.3, 1.2) 200ms;
+      transform: scale(0.85) translateY(18px);
+      transition: opacity 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2) 420ms, transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2) 420ms;
     }
     .res-l6 {
       clip-path: inset(48% 43.5% 0 30.5%);
       opacity: 0;
-      transform: scale(0.85) translateY(15px);
-      transition: opacity 0.2s cubic-bezier(0.2, 0.9, 0.3, 1.2) 250ms, transform 0.2s cubic-bezier(0.2, 0.9, 0.3, 1.2) 250ms;
+      transform: scale(0.85) translateY(18px);
+      transition: opacity 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2) 510ms, transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2) 510ms;
     }
-    /* Droite d'un coup après la mitraillette gauche */
+    /* Droite d'un coup après un léger temps */
     .res-right {
       clip-path: inset(0 0 0 56.25%);
       opacity: 0;
-      transform: translateX(40px) scale(0.98);
-      transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1) 360ms, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1) 360ms;
+      transform: translateX(45px) scale(0.98);
+      transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1) 700ms, transform 0.65s cubic-bezier(0.16, 1, 0.3, 1) 700ms;
     }
+    .spread-frame.active .res-title,
     .spread-frame.active .res-l1,
     .spread-frame.active .res-l2,
     .spread-frame.active .res-l3,
@@ -601,42 +609,105 @@
     .def-boat {
       clip-path: inset(34% 19% 8% 34%);
       opacity: 0;
-      transform: scale(0.85) translateY(25px);
-      transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0ms, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0ms;
+      transform: scale(0.85) translateY(30px);
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0ms, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0ms;
     }
     /* 2. Sens antihoraire: Haut-Gauche */
     .def-top-left {
       clip-path: inset(0 65% 55% 0);
       opacity: 0;
-      transform: translateY(-25px) scale(0.95);
-      transition: opacity 0.32s cubic-bezier(0.16, 1, 0.3, 1) 160ms, transform 0.32s cubic-bezier(0.16, 1, 0.3, 1) 160ms;
+      transform: translateY(-30px) scale(0.95);
+      transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1) 220ms, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1) 220ms;
     }
     /* 3. Sens antihoraire: Gauche & Bas-Gauche */
     .def-bot-left {
       clip-path: inset(45% 65% 0 0);
       opacity: 0;
-      transform: translateX(-25px) scale(0.95);
-      transition: opacity 0.32s cubic-bezier(0.16, 1, 0.3, 1) 270ms, transform 0.32s cubic-bezier(0.16, 1, 0.3, 1) 270ms;
+      transform: translateX(-30px) scale(0.95);
+      transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1) 380ms, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1) 380ms;
     }
     /* 4. Sens antihoraire: Bas-Centre */
     .def-bot-mid {
       clip-path: inset(76% 50% 0 25%);
       opacity: 0;
-      transform: translateY(25px) scale(0.95);
-      transition: opacity 0.32s cubic-bezier(0.16, 1, 0.3, 1) 380ms, transform 0.32s cubic-bezier(0.16, 1, 0.3, 1) 380ms;
+      transform: translateY(30px) scale(0.95);
+      transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1) 540ms, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1) 540ms;
     }
     /* 5. Sens antihoraire: Droite (Luxury car render sur fond gris) */
     .def-right {
       clip-path: inset(18% 0 10% 55%);
       opacity: 0;
-      transform: translateX(40px) scale(0.96);
-      transition: opacity 0.42s cubic-bezier(0.16, 1, 0.3, 1) 490ms, transform 0.42s cubic-bezier(0.16, 1, 0.3, 1) 490ms;
+      transform: translateX(45px) scale(0.96);
+      transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1) 700ms, transform 0.55s cubic-bezier(0.16, 1, 0.3, 1) 700ms;
     }
     .spread-frame.active .def-boat,
     .spread-frame.active .def-top-left,
     .spread-frame.active .def-bot-left,
     .spread-frame.active .def-bot-mid,
     .spread-frame.active .def-right {
+      opacity: 1;
+      transform: translateX(0) translateY(0) scale(1);
+    }
+
+    /* ─── 04. USAGE: 6 rectangles en salve puis dessin à droite après un léger temps ─── */
+    .usage-title {
+      clip-path: inset(0 75% 82% 0);
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    /* Les 6 rectangles du storyboard (3 cols x 2 rows) */
+    .usage-r1 {
+      clip-path: inset(18.5% 79.5% 51% 1.5%);
+      opacity: 0;
+      transform: scale(0.9) translateY(20px);
+      transition: opacity 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.2) 80ms, transform 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.2) 80ms;
+    }
+    .usage-r2 {
+      clip-path: inset(18.5% 60% 51% 21%);
+      opacity: 0;
+      transform: scale(0.9) translateY(20px);
+      transition: opacity 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.2) 200ms, transform 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.2) 200ms;
+    }
+    .usage-r3 {
+      clip-path: inset(18.5% 40.5% 51% 40.5%);
+      opacity: 0;
+      transform: scale(0.9) translateY(20px);
+      transition: opacity 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.2) 320ms, transform 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.2) 320ms;
+    }
+    .usage-r4 {
+      clip-path: inset(48% 79.5% 19% 1.5%);
+      opacity: 0;
+      transform: scale(0.9) translateY(20px);
+      transition: opacity 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.2) 440ms, transform 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.2) 440ms;
+    }
+    .usage-r5 {
+      clip-path: inset(48% 60% 19% 21%);
+      opacity: 0;
+      transform: scale(0.9) translateY(20px);
+      transition: opacity 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.2) 560ms, transform 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.2) 560ms;
+    }
+    .usage-r6 {
+      clip-path: inset(48% 40.5% 19% 40.5%);
+      opacity: 0;
+      transform: scale(0.9) translateY(20px);
+      transition: opacity 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.2) 680ms, transform 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.2) 680ms;
+    }
+    /* Dessin de droite: arrive après un léger temps (pause marquée après la salve) */
+    .usage-drawing {
+      clip-path: inset(0 0 0 59.5%);
+      opacity: 0;
+      transform: translateX(45px) scale(0.97);
+      transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1) 1200ms, transform 0.75s cubic-bezier(0.16, 1, 0.3, 1) 1200ms;
+    }
+    .spread-frame.active .usage-title,
+    .spread-frame.active .usage-r1,
+    .spread-frame.active .usage-r2,
+    .spread-frame.active .usage-r3,
+    .spread-frame.active .usage-r4,
+    .spread-frame.active .usage-r5,
+    .spread-frame.active .usage-r6,
+    .spread-frame.active .usage-drawing {
       opacity: 1;
       transform: translateX(0) translateY(0) scale(1);
     }
@@ -820,7 +891,9 @@
     <section class="spread-section" id="chrysler-4">
       <div class="spread-container">
         <div class="spread-frame" id="research-frame">
-          <!-- 6 éléments gauche en mitraillette ultra-rapide -->
+          <!-- Titre RESEARCH. complet non coupé -->
+          <div class="anim-layer res-title"><img src="pages_ordered/page_7.png" alt="" /></div>
+          <!-- 6 éléments gauche en mitraillette rythmée -->
           <div class="anim-layer res-l1"><img src="pages_ordered/page_7.png" alt="" /></div>
           <div class="anim-layer res-l2"><img src="pages_ordered/page_7.png" alt="" /></div>
           <div class="anim-layer res-l3"><img src="pages_ordered/page_7.png" alt="" /></div>
@@ -851,10 +924,20 @@
       </div>
     </section>
 
+    <!-- USAGE: salve des 6 rectangles de gauche puis dessin à droite après un léger temps -->
     <section class="spread-section" id="chrysler-6">
       <div class="spread-container">
-        <div class="spread-card" data-anim="slide-left">
-          <img class="spread-image" src="pages_ordered/page_9.png" alt="Chrysler Usage & Modularity" loading="lazy" />
+        <div class="spread-frame" id="usage-frame">
+          <div class="anim-layer usage-title"><img src="pages_ordered/page_9.png" alt="" /></div>
+          <!-- 6 rectangles en salve -->
+          <div class="anim-layer usage-r1"><img src="pages_ordered/page_9.png" alt="" /></div>
+          <div class="anim-layer usage-r2"><img src="pages_ordered/page_9.png" alt="" /></div>
+          <div class="anim-layer usage-r3"><img src="pages_ordered/page_9.png" alt="" /></div>
+          <div class="anim-layer usage-r4"><img src="pages_ordered/page_9.png" alt="" /></div>
+          <div class="anim-layer usage-r5"><img src="pages_ordered/page_9.png" alt="" /></div>
+          <div class="anim-layer usage-r6"><img src="pages_ordered/page_9.png" alt="" /></div>
+          <!-- Dessin à droite après un léger temps -->
+          <div class="anim-layer usage-drawing"><img src="pages_ordered/page_9.png" alt="" /></div>
         </div>
       </div>
     </section>
@@ -1178,7 +1261,7 @@
       rootMargin: '0px 0px -40px 0px'
     });
 
-    ['insp-frame', 'research-frame', 'defining-frame'].forEach(id => {
+    ['insp-frame', 'research-frame', 'defining-frame', 'usage-frame'].forEach(id => {
       const el = document.getElementById(id);
       if (el) frameObserver.observe(el);
     });
