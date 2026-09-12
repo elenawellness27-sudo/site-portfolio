@@ -490,10 +490,155 @@
       top: 0; left: 0; width: 100%; height: 100%;
       pointer-events: none;
     }
-    .float-element {
+
+    /* ─── CHOREOGRAPHED SPREAD FRAMES (INSPIRATION / RESEARCH / DEFINING) ─── */
+    .spread-frame {
+      position: relative;
+      width: 100vw;
+      max-width: calc(100vh * (3840 / 1800));
+      height: calc(100vw * (1800 / 3840));
+      max-height: 100vh;
+      margin: auto;
+      overflow: visible;
+      background: #ffffff;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.03);
+    }
+
+    .anim-layer {
       position: absolute;
-      transition: transform 0.2s cubic-bezier(0.1, 0.8, 0.2, 1);
-      will-change: transform;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      will-change: transform, opacity;
+    }
+    .anim-layer img {
+      width: 100%;
+      height: 100%;
+      object-fit: fill;
+      display: block;
+      pointer-events: none;
+    }
+
+    /* ─── 01. INSPIRATION: 01 apparaît d'abord, puis 02 ─── */
+    .insp-01 {
+      clip-path: inset(0 35.5% 0 0);
+      opacity: 0;
+      transform: translateY(40px) scale(0.98);
+      transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .insp-02 {
+      clip-path: inset(0 0 0 64.5%);
+      opacity: 0;
+      transform: translateY(40px) scale(0.98);
+      transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.35s, transform 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.35s;
+    }
+    .spread-frame.active .insp-01,
+    .spread-frame.active .insp-02 {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    /* ─── 02. RESEARCH: mitraillette éléments de gauche puis droite d'un coup ─── */
+    /* 6 éléments gauche avec stagger très rapide (50ms) */
+    .res-l1 {
+      clip-path: inset(0 88% 48% 0);
+      opacity: 0;
+      transform: scale(0.85) translateY(15px);
+      transition: opacity 0.2s cubic-bezier(0.2, 0.9, 0.3, 1.2) 0ms, transform 0.2s cubic-bezier(0.2, 0.9, 0.3, 1.2) 0ms;
+    }
+    .res-l2 {
+      clip-path: inset(48% 88% 0 0);
+      opacity: 0;
+      transform: scale(0.85) translateY(15px);
+      transition: opacity 0.2s cubic-bezier(0.2, 0.9, 0.3, 1.2) 50ms, transform 0.2s cubic-bezier(0.2, 0.9, 0.3, 1.2) 50ms;
+    }
+    .res-l3 {
+      clip-path: inset(18% 69.5% 48% 11.5%);
+      opacity: 0;
+      transform: scale(0.85) translateY(15px);
+      transition: opacity 0.2s cubic-bezier(0.2, 0.9, 0.3, 1.2) 100ms, transform 0.2s cubic-bezier(0.2, 0.9, 0.3, 1.2) 100ms;
+    }
+    .res-l4 {
+      clip-path: inset(48% 69.5% 0 11.5%);
+      opacity: 0;
+      transform: scale(0.85) translateY(15px);
+      transition: opacity 0.2s cubic-bezier(0.2, 0.9, 0.3, 1.2) 150ms, transform 0.2s cubic-bezier(0.2, 0.9, 0.3, 1.2) 150ms;
+    }
+    .res-l5 {
+      clip-path: inset(18% 43.5% 48% 30.5%);
+      opacity: 0;
+      transform: scale(0.85) translateY(15px);
+      transition: opacity 0.2s cubic-bezier(0.2, 0.9, 0.3, 1.2) 200ms, transform 0.2s cubic-bezier(0.2, 0.9, 0.3, 1.2) 200ms;
+    }
+    .res-l6 {
+      clip-path: inset(48% 43.5% 0 30.5%);
+      opacity: 0;
+      transform: scale(0.85) translateY(15px);
+      transition: opacity 0.2s cubic-bezier(0.2, 0.9, 0.3, 1.2) 250ms, transform 0.2s cubic-bezier(0.2, 0.9, 0.3, 1.2) 250ms;
+    }
+    /* Droite d'un coup après la mitraillette gauche */
+    .res-right {
+      clip-path: inset(0 0 0 56.25%);
+      opacity: 0;
+      transform: translateX(40px) scale(0.98);
+      transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1) 360ms, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1) 360ms;
+    }
+    .spread-frame.active .res-l1,
+    .spread-frame.active .res-l2,
+    .spread-frame.active .res-l3,
+    .spread-frame.active .res-l4,
+    .spread-frame.active .res-l5,
+    .spread-frame.active .res-l6,
+    .spread-frame.active .res-right {
+      opacity: 1;
+      transform: translateX(0) translateY(0) scale(1);
+    }
+
+    /* ─── 03. DEFINING: bateau central au milieu d'abord, puis sens antihoraire ─── */
+    /* 1. Bateau central au milieu en premier */
+    .def-boat {
+      clip-path: inset(34% 19% 8% 34%);
+      opacity: 0;
+      transform: scale(0.85) translateY(25px);
+      transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0ms, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0ms;
+    }
+    /* 2. Sens antihoraire: Haut-Gauche */
+    .def-top-left {
+      clip-path: inset(0 65% 55% 0);
+      opacity: 0;
+      transform: translateY(-25px) scale(0.95);
+      transition: opacity 0.32s cubic-bezier(0.16, 1, 0.3, 1) 160ms, transform 0.32s cubic-bezier(0.16, 1, 0.3, 1) 160ms;
+    }
+    /* 3. Sens antihoraire: Gauche & Bas-Gauche */
+    .def-bot-left {
+      clip-path: inset(45% 65% 0 0);
+      opacity: 0;
+      transform: translateX(-25px) scale(0.95);
+      transition: opacity 0.32s cubic-bezier(0.16, 1, 0.3, 1) 270ms, transform 0.32s cubic-bezier(0.16, 1, 0.3, 1) 270ms;
+    }
+    /* 4. Sens antihoraire: Bas-Centre */
+    .def-bot-mid {
+      clip-path: inset(76% 50% 0 25%);
+      opacity: 0;
+      transform: translateY(25px) scale(0.95);
+      transition: opacity 0.32s cubic-bezier(0.16, 1, 0.3, 1) 380ms, transform 0.32s cubic-bezier(0.16, 1, 0.3, 1) 380ms;
+    }
+    /* 5. Sens antihoraire: Droite (Luxury car render sur fond gris) */
+    .def-right {
+      clip-path: inset(18% 0 10% 55%);
+      opacity: 0;
+      transform: translateX(40px) scale(0.96);
+      transition: opacity 0.42s cubic-bezier(0.16, 1, 0.3, 1) 490ms, transform 0.42s cubic-bezier(0.16, 1, 0.3, 1) 490ms;
+    }
+    .spread-frame.active .def-boat,
+    .spread-frame.active .def-top-left,
+    .spread-frame.active .def-bot-left,
+    .spread-frame.active .def-bot-mid,
+    .spread-frame.active .def-right {
+      opacity: 1;
+      transform: translateX(0) translateY(0) scale(1);
     }
 
     /* ─── FOOTER & CONTACT ─── */
@@ -647,10 +792,18 @@
       </div>
     </section>
 
+    <!-- INSPIRATION: 01 apparaît d'abord, puis 02 -->
     <section class="spread-section" id="chrysler-2">
       <div class="spread-container">
-        <div class="spread-card" data-anim="tilt-in">
-          <img class="spread-image" src="pages_ordered/page_5.png" alt="Chrysler Inspirations" loading="lazy" />
+        <div class="spread-frame" id="insp-frame">
+          <!-- 01. GAUCHE: apparaît en premier -->
+          <div class="anim-layer insp-01">
+            <img src="pages_ordered/page_5.png" alt="Chrysler Inspiration 01" />
+          </div>
+          <!-- 02. DROITE: apparaît après le 01 -->
+          <div class="anim-layer insp-02">
+            <img src="pages_ordered/page_5.png" alt="Chrysler Inspiration 02" />
+          </div>
         </div>
       </div>
     </section>
@@ -663,18 +816,37 @@
       </div>
     </section>
 
+    <!-- RESEARCH: elements gauche mitraillette, droite d un coup -->
     <section class="spread-section" id="chrysler-4">
       <div class="spread-container">
-        <div class="spread-card" data-anim="zoom-in">
-          <img class="spread-image" src="pages_ordered/page_7.png" alt="Chrysler Research & Sketches" loading="lazy" />
+        <div class="spread-frame" id="research-frame">
+          <!-- 6 éléments gauche en mitraillette ultra-rapide -->
+          <div class="anim-layer res-l1"><img src="pages_ordered/page_7.png" alt="" /></div>
+          <div class="anim-layer res-l2"><img src="pages_ordered/page_7.png" alt="" /></div>
+          <div class="anim-layer res-l3"><img src="pages_ordered/page_7.png" alt="" /></div>
+          <div class="anim-layer res-l4"><img src="pages_ordered/page_7.png" alt="" /></div>
+          <div class="anim-layer res-l5"><img src="pages_ordered/page_7.png" alt="" /></div>
+          <div class="anim-layer res-l6"><img src="pages_ordered/page_7.png" alt="" /></div>
+          <!-- Éléments droite d'un coup -->
+          <div class="anim-layer res-right"><img src="pages_ordered/page_7.png" alt="" /></div>
         </div>
       </div>
     </section>
 
+    <!-- DEFINING: bateau central au milieu d'abord, puis sens antihoraire -->
     <section class="spread-section" id="chrysler-5">
       <div class="spread-container">
-        <div class="spread-card" data-anim="slide-up">
-          <img class="spread-image" src="pages_ordered/page_8.png" alt="Chrysler Defining Lines" loading="lazy" />
+        <div class="spread-frame" id="defining-frame">
+          <!-- 1. Bateau central en premier -->
+          <div class="anim-layer def-boat"><img src="pages_ordered/page_8.png" alt="" /></div>
+          <!-- 2. Sens antihoraire: Haut-Gauche -->
+          <div class="anim-layer def-top-left"><img src="pages_ordered/page_8.png" alt="" /></div>
+          <!-- 3. Sens antihoraire: Bas-Gauche -->
+          <div class="anim-layer def-bot-left"><img src="pages_ordered/page_8.png" alt="" /></div>
+          <!-- 4. Sens antihoraire: Bas-Centre -->
+          <div class="anim-layer def-bot-mid"><img src="pages_ordered/page_8.png" alt="" /></div>
+          <!-- 5. Sens antihoraire: Droite (Luxury car render) -->
+          <div class="anim-layer def-right"><img src="pages_ordered/page_8.png" alt="" /></div>
         </div>
       </div>
     </section>
@@ -990,6 +1162,26 @@
       rootMargin: '0px 0px -50px 0px'
     });
     cards.forEach(card => observer.observe(card));
+
+    // ─── CHOREOGRAPHED SPREAD OBSERVER (INSPIRATION / RESEARCH / DEFINING) ───
+    const frameObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        } else if (entry.boundingClientRect.top > window.innerHeight * 0.9) {
+          // Re-arm when user scrolls back above the section
+          entry.target.classList.remove('active');
+        }
+      });
+    }, {
+      threshold: 0.15,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    ['insp-frame', 'research-frame', 'defining-frame'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) frameObserver.observe(el);
+    });
 
     // Dynamic 3D tilt and floating cutout parallax on mouse move
     window.addEventListener('mousemove', (e) => {
