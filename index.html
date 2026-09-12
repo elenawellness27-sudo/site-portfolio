@@ -254,6 +254,75 @@
       left: 180%;
     }
 
+    /* ─── SCROLL-DRIVEN VIDEO SECTION (DE TOMASO) ─── */
+    .scroll-video-section {
+      position: relative;
+      width: 100vw;
+      height: 350vh; /* Scroll track length for smooth frame scrubbing */
+      background: #000000;
+    }
+    .sticky-video-container {
+      position: sticky;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #000;
+    }
+    .scrub-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      pointer-events: none;
+    }
+    .detomaso-hero-overlay {
+      position: absolute;
+      top: 50%;
+      right: 10vw;
+      transform: translateY(-50%);
+      color: #ffffff;
+      max-width: 380px;
+      z-index: 10;
+      text-align: left;
+      pointer-events: none;
+      user-select: none;
+    }
+    .detomaso-hero-num {
+      font-size: clamp(36px, 4.2vw, 68px);
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 24px;
+      letter-spacing: -0.02em;
+      color: #ffffff;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.6);
+    }
+    .detomaso-hero-brief-title {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      color: #ffffff;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+    }
+    .detomaso-hero-brief-desc {
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.9);
+      letter-spacing: 0.02em;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.7);
+    }
+
 
     /* ─── PROJECT HERO HEADERS (01. CHRYSLER / 02. DE TOMASO / 03. LAND ROVER) ─── */
     .project-header-section {
@@ -516,11 +585,16 @@
       <p class="project-hero-desc">Fusion percutante entre le design sculptural et sensuel italien et la puissance brute mécanique d'un moteur américain V8 Ford Pantera.</p>
     </div>
 
-    <!-- Pages De Tomaso (11 à 17) -->
-    <section class="spread-section" id="detomaso-1">
-      <div class="spread-container">
-        <div class="spread-card" data-anim="slide-up">
-          <img class="spread-image" src="pages_ordered/page_11.png" alt="De Tomaso Cover & Heritage" loading="lazy" />
+    <!-- De Tomaso Video Hero Cover with Scroll-Scrubbing -->
+    <section class="scroll-video-section" id="detomaso-1">
+      <div class="sticky-video-container">
+        <video id="detomasoVideo" class="scrub-video" src="Logo_glowing_on_red_background_20260912165105.mp4" muted playsinline preload="auto"></video>
+        <div class="detomaso-hero-overlay">
+          <div class="detomaso-hero-num">03.</div>
+          <div class="detomaso-hero-brief-title">BRIEF.</div>
+          <p class="detomaso-hero-brief-desc">
+            The ultimate automotive challenge: remastering the legendary De Tomaso Pantera by fusing its raw, retro brutalism with cutting-edge modern engineering
+          </p>
         </div>
       </div>
     </section>
@@ -800,6 +874,52 @@
         }
       }
     }, { passive: true });
+
+    // ─── SMOOTH SCROLL-DRIVEN VIDEO SCRUBBING (DE TOMASO) ───
+    const detomasoSection = document.getElementById('detomaso-1');
+    const detomasoVideo = document.getElementById('detomasoVideo');
+    let targetTime = 0;
+    let videoDuration = 0;
+
+    if (detomasoVideo && detomasoSection) {
+      detomasoVideo.addEventListener('loadedmetadata', () => {
+        videoDuration = detomasoVideo.duration;
+      });
+
+      // Update target playback position based on scroll within the section
+      window.addEventListener('scroll', () => {
+        if (!videoDuration && detomasoVideo.duration) {
+          videoDuration = detomasoVideo.duration;
+        }
+        if (!videoDuration) return;
+
+        const rect = detomasoSection.getBoundingClientRect();
+        const sectionHeight = detomasoSection.offsetHeight;
+        const windowHeight = window.innerHeight;
+        
+        // Progress from when section enters top of viewport (rect.top <= 0)
+        // to when section has scrolled to bottom (rect.top <= -(sectionHeight - windowHeight))
+        const scrollDistance = sectionHeight - windowHeight;
+        if (scrollDistance > 0) {
+          const currentScroll = -rect.top;
+          const progress = Math.min(Math.max(currentScroll / scrollDistance, 0), 1);
+          targetTime = progress * videoDuration;
+        }
+      }, { passive: true });
+
+      // Smooth RAF loop to avoid stutter and keep playback butter-smooth
+      function updateVideoScrub() {
+        if (videoDuration && detomasoVideo.readyState >= 2) {
+          // Linear interpolation / easing towards targetTime
+          const diff = targetTime - detomasoVideo.currentTime;
+          if (Math.abs(diff) > 0.01) {
+            detomasoVideo.currentTime += diff * 0.25;
+          }
+        }
+        requestAnimationFrame(updateVideoScrub);
+      }
+      requestAnimationFrame(updateVideoScrub);
+    }
   </script>
 </body>
 </html>
