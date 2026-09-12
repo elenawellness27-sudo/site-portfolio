@@ -344,7 +344,6 @@
       opacity: 0;
       transform: translate3d(0, 60px, 0) scale(0.9);
       transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s, transform 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
-      filter: drop-shadow(0 25px 35px rgba(0,0,0,0.14));
     }
     .spread-card.visible .floating-cutout {
       opacity: 1;
@@ -352,19 +351,15 @@
       animation: floatBreath 6s ease-in-out infinite 1.5s;
     }
 
-    /* Shimmer light pass on luxury renders */
-    .spread-card::after {
-      content: '';
-      position: absolute;
-      top: 0; left: -100%;
-      width: 60%; height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-      transform: skewX(-20deg);
-      pointer-events: none;
-      transition: left 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
-    }
-    .spread-card.visible::after {
-      left: 180%;
+    .spread-section,
+    .spread-container,
+    .spread-card,
+    .spread-frame,
+    .scroll-video-section,
+    .sticky-video-container {
+      box-shadow: none !important;
+      border: none !important;
+      outline: none !important;
     }
 
     /* ─── SCROLL-DRIVEN VIDEO SECTION (DE TOMASO) ─── */
@@ -946,7 +941,6 @@
       <div class="spread-container">
         <div class="spread-card" data-anim="zoom-in">
           <img class="spread-image" src="pages_ordered/page_10.png" alt="Chrysler Final Water & Road Mode" loading="lazy" />
-          <img class="floating-cutout" src="assets_master/bateau/sketch/defining/3-4 av b+R.png" alt="Chrysler Final Detail" style="top: 10%; right: 7%; width: 26vw; max-width: 420px;" />
         </div>
       </div>
     </section>
