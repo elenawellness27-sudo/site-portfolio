@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
@@ -144,86 +144,62 @@
       width: 100%;
     }
 
+    /* ─── FULL-BLEED SECTIONS (WHITE DESERT STYLE - NO CARDS, NO BORDERS, NO SHADOWS) ─── */
     .spread-section {
       position: relative;
-      width: 100%;
+      width: 100vw;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding: 100px 4vw 80px;
+      padding: 0;
       background: #ffffff;
-      border-bottom: 1px solid #f2f2f2;
       overflow: hidden;
     }
 
     .spread-container {
       position: relative;
-      width: 100%;
-      max-width: 1540px;
-      margin: 0 auto;
+      width: 100vw;
+      height: 100vh;
       display: flex;
-      flex-direction: column;
       align-items: center;
+      justify-content: center;
     }
 
     .spread-header {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      margin-bottom: 20px;
-      padding: 0 4px;
-    }
-    .spread-num {
-      font-size: 11px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: #aaa;
-      font-weight: 600;
-    }
-    .spread-tag {
-      font-size: 11px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: #666;
-      font-weight: 500;
+      display: none !important;
     }
 
-    /* ─── HIGH RES FRAME & INTERACTION ─── */
     .spread-card {
       position: relative;
-      width: 100%;
+      width: 100vw;
+      height: 100vh;
       background: #ffffff;
-      border-radius: 4px;
-      box-shadow: 0 10px 40px -15px rgba(0,0,0,0.06);
-      border: 1px solid rgba(0,0,0,0.04);
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       overflow: hidden;
-      transform: translateY(40px) scale(0.985);
-      opacity: 0;
-      transition: opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1),
-                  transform 1.1s cubic-bezier(0.16, 1, 0.3, 1),
-                  box-shadow 0.4s ease;
+      opacity: 0.15;
+      transform: scale(0.985);
+      transition: opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .spread-card.visible {
       opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-    .spread-card:hover {
-      box-shadow: 0 20px 60px -10px rgba(0,0,0,0.1);
+      transform: scale(1);
     }
 
     .spread-image {
-      width: 100%;
+      width: 100vw;
       height: auto;
+      max-height: 100vh;
       display: block;
       object-fit: contain;
-      transform: scale(1);
-      transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .spread-card:hover .spread-image {
-      transform: scale(1.015);
+      object-position: center;
+      transform: none;
     }
 
     /* ─── PROJECT HERO HEADERS (01. CHRYSLER / 02. LAND ROVER / 03. DE TOMASO) ─── */
@@ -371,13 +347,9 @@
 
   <main>
     <!-- PAGE 01 : COVER -->
-    <section class="spread-section" id="page-1" style="padding-top: 120px;">
+    <section class="spread-section" id="page-1">
       <div class="spread-container">
-        <div class="spread-header">
-          <span class="spread-num">01 / 29</span>
-          <span class="spread-tag">Portfolio Cover — 2026</span>
-        </div>
-        <div class="spread-card">
+        <div class="spread-card visible">
           <img class="spread-image" src="pages/portfolio_compressed_small_page_1.png" alt="Paloma Hernandez Portfolio 2026" loading="eager" />
         </div>
       </div>
@@ -386,10 +358,6 @@
     <!-- PAGE 02 : PROFIL & CV -->
     <section class="spread-section" id="page-2">
       <div class="spread-container">
-        <div class="spread-header">
-          <span class="spread-num">02 / 29</span>
-          <span class="spread-tag">Curriculum Vitae & Profil</span>
-        </div>
         <div class="spread-card">
           <img class="spread-image" src="pages/portfolio_compressed_small_page_2.png" alt="Curriculum Vitae Paloma Hernandez" loading="lazy" />
         </div>
@@ -399,10 +367,6 @@
     <!-- PAGE 03 : INDEX -->
     <section class="spread-section" id="page-3">
       <div class="spread-container">
-        <div class="spread-header">
-          <span class="spread-num">03 / 29</span>
-          <span class="spread-tag">Index des Projets</span>
-        </div>
         <div class="spread-card">
           <img class="spread-image" src="pages/portfolio_compressed_small_page_3.png" alt="Index des Projets" loading="lazy" />
         </div>
