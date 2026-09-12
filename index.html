@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    /* ─── RESET & BASICS ─── */
+    /* ─── RESET & LUXURY ARCHITECTURE ─── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; background: #ffffff; color: #0a0a0a; }
     body {
@@ -139,12 +139,11 @@
       transition: width 0.1s linear;
     }
 
-    /* ─── PROJECT SECTIONS (FULLSCREEN / WHITE DESERT STYLE) ─── */
+    /* ─── FULL-BLEED SECTIONS (NO CARDS, NO BORDERS, NO SHADOWS, NO SHEET LABELS) ─── */
     main {
       width: 100%;
     }
 
-    /* ─── FULL-BLEED SECTIONS (WHITE DESERT STYLE - NO CARDS, NO BORDERS, NO SHADOWS) ─── */
     .spread-section {
       position: relative;
       width: 100vw;
@@ -165,10 +164,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-    }
-
-    .spread-header {
-      display: none !important;
     }
 
     .spread-card {
@@ -202,7 +197,7 @@
       transform: none;
     }
 
-    /* ─── PROJECT HERO HEADERS (01. CHRYSLER / 02. LAND ROVER / 03. DE TOMASO) ─── */
+    /* ─── PROJECT HERO HEADERS (01. CHRYSLER / 02. DE TOMASO / 03. LAND ROVER) ─── */
     .project-header-section {
       width: 100%;
       padding: 120px 6vw 80px;
@@ -223,8 +218,8 @@
       gap: 12px;
     }
     .badge-chrysler { color: #0d8b8f; }
-    .badge-landrover { color: #587834; }
     .badge-detomaso { color: #b81c25; }
+    .badge-landrover { color: #587834; }
     .badge-line {
       display: inline-block;
       width: 36px; height: 1px;
@@ -245,6 +240,18 @@
       max-width: 680px;
       line-height: 1.5;
       font-weight: 300;
+    }
+
+    /* ─── INDEPENDENT ANIMATABLE COMPONENT LAYER (FOR FUTURE ANIMATIONS) ─── */
+    .interactive-layer {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none;
+    }
+    .float-element {
+      position: absolute;
+      transition: transform 0.2s cubic-bezier(0.1, 0.8, 0.2, 1);
+      will-change: transform;
     }
 
     /* ─── FOOTER & CONTACT ─── */
@@ -285,12 +292,9 @@
       background: #444;
       transition: background 0.3s;
     }
-    .footer-email:hover {
-      color: #ffffff;
-    }
-    .footer-email:hover::after {
-      background: #ffffff;
-    }
+    .footer-email:hover { color: #ffffff; }
+    .footer-email:hover::after { background: #ffffff; }
+
     .footer-bottom {
       display: flex;
       justify-content: space-between;
@@ -311,14 +315,13 @@
 
     @media (max-width: 860px) {
       .nav-items { display: none; }
-      .spread-section { padding: 80px 3vw 50px; }
       .footer-bottom { flex-direction: column; gap: 16px; align-items: flex-start; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Custom Cursor -->
+  <!-- Custom Luxury Cursor -->
   <div class="cursor-dot" id="cursorDot"></div>
   <div class="cursor-follower" id="cursorFollower"></div>
 
@@ -331,8 +334,8 @@
     <ul class="nav-items">
       <li><a href="#page-2">Profil</a></li>
       <li><a href="#chrysler">01. Chrysler</a></li>
-      <li><a href="#landrover">02. Land Rover</a></li>
-      <li><a href="#detomaso">03. De Tomaso</a></li>
+      <li><a href="#detomaso">02. De Tomaso</a></li>
+      <li><a href="#landrover">03. Land Rover</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
     <a href="portfolio_compressed_small.pdf" download="Paloma_Hernandez_Portfolio_2026.pdf" class="btn-pdf">
@@ -350,7 +353,7 @@
     <section class="spread-section" id="page-1">
       <div class="spread-container">
         <div class="spread-card visible">
-          <img class="spread-image" src="pages/portfolio_compressed_small_page_1.png" alt="Paloma Hernandez Portfolio 2026" loading="eager" />
+          <img class="spread-image" src="pages_ordered/page_1.png" alt="Paloma Hernandez Portfolio 2026" loading="eager" />
         </div>
       </div>
     </section>
@@ -359,7 +362,7 @@
     <section class="spread-section" id="page-2">
       <div class="spread-container">
         <div class="spread-card">
-          <img class="spread-image" src="pages/portfolio_compressed_small_page_2.png" alt="Curriculum Vitae Paloma Hernandez" loading="lazy" />
+          <img class="spread-image" src="pages_ordered/page_2.png" alt="Curriculum Vitae Paloma Hernandez" loading="lazy" />
         </div>
       </div>
     </section>
@@ -368,7 +371,7 @@
     <section class="spread-section" id="page-3">
       <div class="spread-container">
         <div class="spread-card">
-          <img class="spread-image" src="pages/portfolio_compressed_small_page_3.png" alt="Index des Projets" loading="lazy" />
+          <img class="spread-image" src="pages_ordered/page_3.png" alt="Index des Projets" loading="lazy" />
         </div>
       </div>
     </section>
@@ -385,329 +388,242 @@
       <p class="project-hero-desc">Conception conjointe d'un bateau et de sa remorque détachable, alliant élégance rétro-futuriste américaine et hydrodynamisme d'inspiration aquatique.</p>
     </div>
 
-    <!-- Pages 4 à 10 : Chrysler -->
-    <section class="spread-section" id="page-4">
+    <!-- Pages Chrysler (4 à 10) -->
+    <section class="spread-section" id="chrysler-1">
       <div class="spread-container">
-        <div class="spread-header">
-          <span class="spread-num">04 / 29</span>
-          <span class="spread-tag">Chrysler · Title & Brief</span>
-        </div>
         <div class="spread-card">
-          <img class="spread-image" src="pages/portfolio_compressed_small_page_4.png" alt="Chrysler Title" loading="lazy" />
+          <img class="spread-image" src="pages_ordered/page_4.png" alt="Chrysler Title & Brief" loading="lazy" />
         </div>
       </div>
     </section>
 
-    <section class="spread-section" id="page-5">
+    <section class="spread-section" id="chrysler-2">
       <div class="spread-container">
-        <div class="spread-header">
-          <span class="spread-num">05 / 29</span>
-          <span class="spread-tag">Chrysler · Inspirations & Concept</span>
-        </div>
         <div class="spread-card">
-          <img class="spread-image" src="pages/portfolio_compressed_small_page_5.png" alt="Chrysler Inspirations" loading="lazy" />
+          <img class="spread-image" src="pages_ordered/page_5.png" alt="Chrysler Inspirations" loading="lazy" />
         </div>
       </div>
     </section>
 
-    <section class="spread-section" id="page-6">
+    <section class="spread-section" id="chrysler-3">
       <div class="spread-container">
-        <div class="spread-header">
-          <span class="spread-num">06 / 29</span>
-          <span class="spread-tag">Chrysler · CMF & Moodboard</span>
-        </div>
         <div class="spread-card">
-          <img class="spread-image" src="pages/portfolio_compressed_small_page_6.png" alt="Chrysler CMF" loading="lazy" />
+          <img class="spread-image" src="pages_ordered/page_6.png" alt="Chrysler CMF & Moodboard" loading="lazy" />
         </div>
       </div>
     </section>
 
-    <section class="spread-section" id="page-7">
+    <section class="spread-section" id="chrysler-4">
       <div class="spread-container">
-        <div class="spread-header">
-          <span class="spread-num">07 / 29</span>
-          <span class="spread-tag">Chrysler · Research & Key Sketches</span>
-        </div>
         <div class="spread-card">
-          <img class="spread-image" src="pages/portfolio_compressed_small_page_7.png" alt="Chrysler Research" loading="lazy" />
+          <img class="spread-image" src="pages_ordered/page_7.png" alt="Chrysler Research & Sketches" loading="lazy" />
         </div>
       </div>
     </section>
 
-    <section class="spread-section" id="page-8">
+    <section class="spread-section" id="chrysler-5">
       <div class="spread-container">
-        <div class="spread-header">
-          <span class="spread-num">08 / 29</span>
-          <span class="spread-tag">Chrysler · Defining Lines</span>
-        </div>
         <div class="spread-card">
-          <img class="spread-image" src="pages/portfolio_compressed_small_page_8.png" alt="Chrysler Defining" loading="lazy" />
+          <img class="spread-image" src="pages_ordered/page_8.png" alt="Chrysler Defining Lines" loading="lazy" />
         </div>
       </div>
     </section>
 
-    <section class="spread-section" id="page-9">
+    <section class="spread-section" id="chrysler-6">
       <div class="spread-container">
-        <div class="spread-header">
-          <span class="spread-num">09 / 29</span>
-          <span class="spread-tag">Chrysler · Usage & Modularity</span>
-        </div>
         <div class="spread-card">
-          <img class="spread-image" src="pages/portfolio_compressed_small_page_9.png" alt="Chrysler Usage" loading="lazy" />
+          <img class="spread-image" src="pages_ordered/page_9.png" alt="Chrysler Usage & Modularity" loading="lazy" />
         </div>
       </div>
     </section>
 
-    <section class="spread-section" id="page-10">
+    <section class="spread-section" id="chrysler-7">
       <div class="spread-container">
-        <div class="spread-header">
-          <span class="spread-num">10 / 29</span>
-          <span class="spread-tag">Chrysler · Final Water & Road Mode</span>
-        </div>
         <div class="spread-card">
-          <img class="spread-image" src="pages/portfolio_compressed_small_page_10.png" alt="Chrysler Final" loading="lazy" />
+          <img class="spread-image" src="pages_ordered/page_10.png" alt="Chrysler Final Water & Road Mode" loading="lazy" />
         </div>
       </div>
     </section>
 
     <!-- ══════════════════════════════════════════════════════════ -->
-    <!-- 02. LAND ROVER PROJECT -->
-    <!-- ══════════════════════════════════════════════════════════ -->
-    <div class="project-header-section" id="landrover">
-      <div class="project-hero-badge badge-landrover">
-        <span class="badge-line"></span>
-        Projet 02 · Exploration & Nature
-      </div>
-      <h2 class="project-hero-title">Land Rover</h2>
-      <p class="project-hero-desc">Création d'un véhicule d'exploration outdoor offrant une connexion organique et sensorielle avec la nature environnante.</p>
-    </div>
-
-    <!-- Pages 11 à 19 : Land Rover -->
-    <section class="spread-section" id="page-11">
-      <div class="spread-container">
-        <div class="spread-header">
-          <span class="spread-num">11 / 29</span>
-          <span class="spread-tag">Land Rover · Title & Landscape</span>
-        </div>
-        <div class="spread-card">
-          <img class="spread-image" src="pages/portfolio_compressed_small_page_11.png" alt="Land Rover Cover" loading="lazy" />
-        </div>
-      </div>
-    </section>
-
-    <section class="spread-section" id="page-12">
-      <div class="spread-container">
-        <div class="spread-header">
-          <span class="spread-num">12 / 29</span>
-          <span class="spread-tag">Land Rover · Outdoor Phenomenon</span>
-        </div>
-        <div class="spread-card">
-          <img class="spread-image" src="pages/portfolio_compressed_small_page_12.png" alt="Land Rover Outdoor" loading="lazy" />
-        </div>
-      </div>
-    </section>
-
-    <section class="spread-section" id="page-13">
-      <div class="spread-container">
-        <div class="spread-header">
-          <span class="spread-num">13 / 29</span>
-          <span class="spread-tag">Land Rover · Inspirations</span>
-        </div>
-        <div class="spread-card">
-          <img class="spread-image" src="pages/portfolio_compressed_small_page_13.png" alt="Land Rover Inspirations" loading="lazy" />
-        </div>
-      </div>
-    </section>
-
-    <section class="spread-section" id="page-14">
-      <div class="spread-container">
-        <div class="spread-header">
-          <span class="spread-num">14 / 29</span>
-          <span class="spread-tag">Land Rover · CMF & Natural Textures</span>
-        </div>
-        <div class="spread-card">
-          <img class="spread-image" src="pages/portfolio_compressed_small_page_14.png" alt="Land Rover CMF" loading="lazy" />
-        </div>
-      </div>
-    </section>
-
-    <section class="spread-section" id="page-15">
-      <div class="spread-container">
-        <div class="spread-header">
-          <span class="spread-num">15 / 29</span>
-          <span class="spread-tag">Land Rover · Sketches & Proportion</span>
-        </div>
-        <div class="spread-card">
-          <img class="spread-image" src="pages/portfolio_compressed_small_page_15.png" alt="Land Rover Sketches" loading="lazy" />
-        </div>
-      </div>
-    </section>
-
-    <section class="spread-section" id="page-16">
-      <div class="spread-container">
-        <div class="spread-header">
-          <span class="spread-num">16 / 29</span>
-          <span class="spread-tag">Land Rover · Research & Iterations</span>
-        </div>
-        <div class="spread-card">
-          <img class="spread-image" src="pages/portfolio_compressed_small_page_16.png" alt="Land Rover Research" loading="lazy" />
-        </div>
-      </div>
-    </section>
-
-    <section class="spread-section" id="page-17">
-      <div class="spread-container">
-        <div class="spread-header">
-          <span class="spread-num">17 / 29</span>
-          <span class="spread-tag">Land Rover · Defining Form</span>
-        </div>
-        <div class="spread-card">
-          <img class="spread-image" src="pages/portfolio_compressed_small_page_17.png" alt="Land Rover Defining" loading="lazy" />
-        </div>
-      </div>
-    </section>
-
-    <section class="spread-section" id="page-18">
-      <div class="spread-container">
-        <div class="spread-header">
-          <span class="spread-num">18 / 29</span>
-          <span class="spread-tag">Land Rover · Details & Materials</span>
-        </div>
-        <div class="spread-card">
-          <img class="spread-image" src="pages/portfolio_compressed_small_page_18.png" alt="Land Rover Details" loading="lazy" />
-        </div>
-      </div>
-    </section>
-
-    <section class="spread-section" id="page-19">
-      <div class="spread-container">
-        <div class="spread-header">
-          <span class="spread-num">19 / 29</span>
-          <span class="spread-tag">Land Rover · Final Exterior Render</span>
-        </div>
-        <div class="spread-card">
-          <img class="spread-image" src="pages/portfolio_compressed_small_page_19.png" alt="Land Rover Final" loading="lazy" />
-        </div>
-      </div>
-    </section>
-
-    <!-- ══════════════════════════════════════════════════════════ -->
-    <!-- 03. DE TOMASO PROJECT -->
+    <!-- 02. DE TOMASO PROJECT -->
     <!-- ══════════════════════════════════════════════════════════ -->
     <div class="project-header-section" id="detomaso">
       <div class="project-hero-badge badge-detomaso">
         <span class="badge-line"></span>
-        Projet 03 · Supercar & Puissance Viscérale
+        Projet 02 · Supercar & Puissance Viscérale
       </div>
       <h2 class="project-hero-title">De Tomaso</h2>
       <p class="project-hero-desc">Fusion percutante entre le design sculptural et sensuel italien et la puissance brute mécanique d'un moteur américain V8 Ford Pantera.</p>
     </div>
 
-    <!-- Pages 20 à 28 : De Tomaso & Free Work -->
-    <section class="spread-section" id="page-20">
+    <!-- Pages De Tomaso (11 à 17) -->
+    <section class="spread-section" id="detomaso-1">
       <div class="spread-container">
-        <div class="spread-header">
-          <span class="spread-num">20 / 29</span>
-          <span class="spread-tag">De Tomaso · Cover & Heritage</span>
-        </div>
         <div class="spread-card">
-          <img class="spread-image" src="pages/portfolio_compressed_small_page_20.png" alt="De Tomaso Cover" loading="lazy" />
+          <img class="spread-image" src="pages_ordered/page_11.png" alt="De Tomaso Cover & Heritage" loading="lazy" />
         </div>
       </div>
     </section>
 
-    <section class="spread-section" id="page-21">
+    <section class="spread-section" id="detomaso-2">
       <div class="spread-container">
-        <div class="spread-header">
-          <span class="spread-num">21 / 29</span>
-          <span class="spread-tag">De Tomaso · Inspiration & Concept</span>
-        </div>
         <div class="spread-card">
-          <img class="spread-image" src="pages/portfolio_compressed_small_page_21.png" alt="De Tomaso Inspiration" loading="lazy" />
+          <img class="spread-image" src="pages_ordered/page_12.png" alt="De Tomaso Inspiration & Concept" loading="lazy" />
         </div>
       </div>
     </section>
 
-    <section class="spread-section" id="page-22">
+    <section class="spread-section" id="detomaso-3">
       <div class="spread-container">
-        <div class="spread-header">
-          <span class="spread-num">22 / 29</span>
-          <span class="spread-tag">De Tomaso · CMF & Sang Léopard</span>
-        </div>
         <div class="spread-card">
-          <img class="spread-image" src="pages/portfolio_compressed_small_page_22.png" alt="De Tomaso CMF" loading="lazy" />
+          <img class="spread-image" src="pages_ordered/page_13.png" alt="De Tomaso CMF" loading="lazy" />
         </div>
       </div>
     </section>
 
-    <section class="spread-section" id="page-23">
+    <section class="spread-section" id="detomaso-4">
       <div class="spread-container">
-        <div class="spread-header">
-          <span class="spread-num">23 / 29</span>
-          <span class="spread-tag">De Tomaso · Sketches & Attitude</span>
-        </div>
         <div class="spread-card">
-          <img class="spread-image" src="pages/portfolio_compressed_small_page_23.png" alt="De Tomaso Sketches" loading="lazy" />
+          <img class="spread-image" src="pages_ordered/page_14.png" alt="De Tomaso Sketches & Attitude" loading="lazy" />
         </div>
       </div>
     </section>
 
-    <section class="spread-section" id="page-24">
+    <section class="spread-section" id="detomaso-5">
       <div class="spread-container">
-        <div class="spread-header">
-          <span class="spread-num">24 / 29</span>
-          <span class="spread-tag">De Tomaso · Volume Exploration</span>
-        </div>
         <div class="spread-card">
-          <img class="spread-image" src="pages/portfolio_compressed_small_page_24.png" alt="De Tomaso Volume" loading="lazy" />
+          <img class="spread-image" src="pages_ordered/page_15.png" alt="De Tomaso Volume Exploration" loading="lazy" />
         </div>
       </div>
     </section>
 
-    <section class="spread-section" id="page-25">
+    <section class="spread-section" id="detomaso-6">
       <div class="spread-container">
-        <div class="spread-header">
-          <span class="spread-num">25 / 29</span>
-          <span class="spread-tag">De Tomaso · Aerodynamics & Wedge</span>
-        </div>
         <div class="spread-card">
-          <img class="spread-image" src="pages/portfolio_compressed_small_page_25.png" alt="De Tomaso Aero" loading="lazy" />
+          <img class="spread-image" src="pages_ordered/page_16.png" alt="De Tomaso Aerodynamics & Wedge" loading="lazy" />
         </div>
       </div>
     </section>
 
-    <section class="spread-section" id="page-26">
+    <section class="spread-section" id="detomaso-7">
       <div class="spread-container">
-        <div class="spread-header">
-          <span class="spread-num">26 / 29</span>
-          <span class="spread-tag">De Tomaso · Final Render</span>
-        </div>
         <div class="spread-card">
-          <img class="spread-image" src="pages/portfolio_compressed_small_page_26.png" alt="De Tomaso Final" loading="lazy" />
+          <img class="spread-image" src="pages_ordered/page_17.png" alt="De Tomaso Final Render" loading="lazy" />
         </div>
       </div>
     </section>
 
-    <section class="spread-section" id="page-27">
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <!-- 03. LAND ROVER PROJECT -->
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <div class="project-header-section" id="landrover">
+      <div class="project-hero-badge badge-landrover">
+        <span class="badge-line"></span>
+        Projet 03 · Exploration & Nature
+      </div>
+      <h2 class="project-hero-title">Land Rover</h2>
+      <p class="project-hero-desc">Création d'un véhicule d'exploration outdoor offrant une connexion organique et sensorielle avec la nature environnante.</p>
+    </div>
+
+    <!-- Pages Land Rover (18 à 26) -->
+    <section class="spread-section" id="landrover-1">
       <div class="spread-container">
-        <div class="spread-header">
-          <span class="spread-num">27 / 29</span>
-          <span class="spread-tag">Free Work · Nothing Ambient Speaker</span>
-        </div>
         <div class="spread-card">
-          <img class="spread-image" src="pages/portfolio_compressed_small_page_27.png" alt="Free Work Nothing" loading="lazy" />
+          <img class="spread-image" src="pages_ordered/page_18.png" alt="Land Rover Title & Landscape" loading="lazy" />
         </div>
       </div>
     </section>
 
-    <section class="spread-section" id="page-28">
+    <section class="spread-section" id="landrover-2">
       <div class="spread-container">
-        <div class="spread-header">
-          <span class="spread-num">28 / 29</span>
-          <span class="spread-tag">Free Work · Renders & Scenarios</span>
-        </div>
         <div class="spread-card">
-          <img class="spread-image" src="pages/portfolio_compressed_small_page_28.png" alt="Free Work Scenarios" loading="lazy" />
+          <img class="spread-image" src="pages_ordered/page_19.png" alt="Land Rover Outdoor Phenomenon" loading="lazy" />
+        </div>
+      </div>
+    </section>
+
+    <section class="spread-section" id="landrover-3">
+      <div class="spread-container">
+        <div class="spread-card">
+          <img class="spread-image" src="pages_ordered/page_20.png" alt="Land Rover Inspirations" loading="lazy" />
+        </div>
+      </div>
+    </section>
+
+    <section class="spread-section" id="landrover-4">
+      <div class="spread-container">
+        <div class="spread-card">
+          <img class="spread-image" src="pages_ordered/page_21.png" alt="Land Rover CMF & Natural Textures" loading="lazy" />
+        </div>
+      </div>
+    </section>
+
+    <section class="spread-section" id="landrover-5">
+      <div class="spread-container">
+        <div class="spread-card">
+          <img class="spread-image" src="pages_ordered/page_22.png" alt="Land Rover Sketches & Proportion" loading="lazy" />
+        </div>
+      </div>
+    </section>
+
+    <section class="spread-section" id="landrover-6">
+      <div class="spread-container">
+        <div class="spread-card">
+          <img class="spread-image" src="pages_ordered/page_23.png" alt="Land Rover Research & Iterations" loading="lazy" />
+        </div>
+      </div>
+    </section>
+
+    <section class="spread-section" id="landrover-7">
+      <div class="spread-container">
+        <div class="spread-card">
+          <img class="spread-image" src="pages_ordered/page_24.png" alt="Land Rover Defining Form" loading="lazy" />
+        </div>
+      </div>
+    </section>
+
+    <section class="spread-section" id="landrover-8">
+      <div class="spread-container">
+        <div class="spread-card">
+          <img class="spread-image" src="pages_ordered/page_25.png" alt="Land Rover Details & Materials" loading="lazy" />
+        </div>
+      </div>
+    </section>
+
+    <section class="spread-section" id="landrover-9">
+      <div class="spread-container">
+        <div class="spread-card">
+          <img class="spread-image" src="pages_ordered/page_26.png" alt="Land Rover Final Exterior Render" loading="lazy" />
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <!-- 04. FREE WORK & PERSONAL PROJECTS -->
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <div class="project-header-section" id="freework">
+      <div class="project-hero-badge" style="color: #666;">
+        <span class="badge-line"></span>
+        Travaux Libres · Design Produit & Vision
+      </div>
+      <h2 class="project-hero-title">Nothing & Concepts</h2>
+      <p class="project-hero-desc">Explorations formelles de technologies transparentes et d'interactions sensorielles dans l'espace domestique.</p>
+    </div>
+
+    <!-- Pages Free Work (27 & 28) -->
+    <section class="spread-section" id="freework-1">
+      <div class="spread-container">
+        <div class="spread-card">
+          <img class="spread-image" src="pages_ordered/page_27.png" alt="Free Work Nothing Speaker" loading="lazy" />
+        </div>
+      </div>
+    </section>
+
+    <section class="spread-section" id="freework-2">
+      <div class="spread-container">
+        <div class="spread-card">
+          <img class="spread-image" src="pages_ordered/page_28.png" alt="Free Work Renders & Scenarios" loading="lazy" />
         </div>
       </div>
     </section>
@@ -715,12 +631,8 @@
     <!-- PAGE 29 : CLOSING -->
     <section class="spread-section" id="page-29">
       <div class="spread-container">
-        <div class="spread-header">
-          <span class="spread-num">29 / 29</span>
-          <span class="spread-tag">Conclusion & Remerciements</span>
-        </div>
         <div class="spread-card">
-          <img class="spread-image" src="pages/portfolio_compressed_small_page_29.png" alt="Thank You" loading="lazy" />
+          <img class="spread-image" src="pages_ordered/page_29.png" alt="Conclusion & Remerciements" loading="lazy" />
         </div>
       </div>
     </section>
