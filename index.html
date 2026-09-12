@@ -1,52 +1,120 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio - Paloma</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio – Paloma</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #1a1a1a;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        /* ─── Barre du haut (optionnelle, très discrète) ─── */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 48px;
+            background: rgba(20, 20, 20, 0.92);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        header .brand {
+            color: #fff;
+            font-weight: 700;
+            font-size: 16px;
+            letter-spacing: 0.04em;
+        }
+
+        header a.dl {
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            font-size: 13px;
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 4px 12px;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        header a.dl:hover {
+            color: #fff;
+            border-color: rgba(255,255,255,0.6);
+        }
+
+        /* ─── Le PDF prend tout l'espace sous la barre ─── */
+        #pdf-frame {
+            position: fixed;
+            top: 48px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: calc(100% - 48px);
+            border: none;
+        }
+
+        /* Fallback si le navigateur ne supporte pas l'embed PDF */
+        .fallback {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: #aaa;
+            gap: 16px;
+            text-align: center;
+            padding: 32px;
+        }
+
+        .fallback a {
+            color: #fff;
+            background: #444;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+        }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800 antialiased w-full h-full m-0 p-0">
-    <div class="min-h-screen flex flex-col">
-        <!-- Navbar -->
-        <nav class="border-b border-gray-200 p-6 flex justify-between items-center bg-white sticky top-0 z-50">
-            <div class="font-bold text-xl tracking-tight">Paloma<span class="text-indigo-600">.</span></div>
-            <div class="space-x-6 hidden md:flex text-sm font-semibold text-gray-600">
-                <a href="#projets" class="hover:text-indigo-600 transition">Projets</a>
-                <a href="#apropos" class="hover:text-indigo-600 transition">À propos</a>
-            </div>
-            <a href="#contact" class="px-5 py-2 bg-indigo-600 text-white rounded-md text-sm font-semibold hover:bg-indigo-700 transition shadow-sm">Contact</a>
-        </nav>
+<body>
 
-        <!-- Hero Section -->
-        <div class="flex-1 flex flex-col justify-center items-center p-8 text-center bg-white py-24">
-            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-gray-900 max-w-3xl">
-                Créative, passionnée et prête à <span class="text-indigo-600">innover.</span>
-            </h1>
-            <p class="text-gray-500 text-lg md:text-xl mb-10 max-w-2xl mx-auto">
-                Bienvenue sur mon portfolio. Je conçois des expériences numériques élégantes et fonctionnelles.
-            </p>
-            <div>
-                <a href="#projets" class="px-8 py-3 bg-gray-900 text-white rounded-lg font-semibold text-lg hover:bg-gray-800 transition shadow-md inline-block">
-                    Voir mes projets
-                </a>
-            </div>
+    <header>
+        <span class="brand">Paloma — Portfolio</span>
+        <a class="dl" href="portfolio_compressed_small.pdf" download="Portfolio_Paloma.pdf">⬇ Télécharger</a>
+    </header>
+
+    <!-- Le PDF s'affiche directement comme page principale -->
+    <iframe
+        id="pdf-frame"
+        src="portfolio_compressed_small.pdf"
+        type="application/pdf"
+        title="Portfolio Paloma"
+    ></iframe>
+
+    <!-- Fallback pour mobile où l'iframe PDF ne marche pas -->
+    <noscript>
+        <div class="fallback" style="display:flex;">
+            <p>Ton navigateur ne peut pas afficher le PDF directement.</p>
+            <a href="portfolio_compressed_small.pdf">📄 Ouvrir le portfolio</a>
         </div>
-        
-        <!-- Section Projets -->
-        <section id="projets" class="py-20 bg-gray-50 px-8 text-center">
-             <h2 class="text-3xl font-bold text-gray-900 mb-6">Mes Projets</h2>
-             <p class="text-gray-500 max-w-xl mx-auto">Ici viendront s'ajouter tes créations, tes images et tes descriptions de projets. Tu pourras m'envoyer tes images directement dans le chat pour que je les intègre.</p>
-        </section>
-        
-        <!-- Footer -->
-        <footer class="bg-white border-t border-gray-200 py-8 text-center text-sm text-gray-400">
-            &copy; 2026 Paloma. Tous droits réservés.
-        </footer>
-    </div>
+    </noscript>
+
 </body>
 </html>
