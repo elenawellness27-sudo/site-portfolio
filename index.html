@@ -991,8 +991,8 @@
       requestAnimationFrame(loop);
     }
 
-    // Chrysler : durée complète, passe au blanc pur 0.5s plus tôt avec transition fluide de 0.8s
-    setupScrollScrubVideo('chrysler-1', 'chryslerVideo', 'chryslerOverlay', 999, 0, false, 0.8, 0.5);
+    // Chrysler : durée complète, passe au blanc pur 1.0s avant la fin avec transition fluide de 0.8s
+    setupScrollScrubVideo('chrysler-1', 'chryslerVideo', 'chryslerOverlay', 999, 0, false, 0.8, 1.0);
     // De Tomaso : premières 5 secondes, fond blanc 0.4s plus tôt
     setupScrollScrubVideo('detomaso-1', 'detomasoVideo', 'detomasoOverlay', 5.0, 0, false, 0.6, 0.4);
     // Land Rover : dernières 5 secondes, texte part un peu avant, fond blanc 0.4s plus tôt
