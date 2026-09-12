@@ -204,28 +204,58 @@
       transform: translate3d(0, 0, 0) scale(1);
     }
 
+    /* Cover Page (Page 1): Car glued flush to the right edge */
+    #page-1 .spread-container,
+    #page-1 .spread-card {
+      justify-content: flex-end;
+    }
+    #page-1 .spread-image {
+      width: 100vw;
+      height: 100vh;
+      object-fit: contain;
+      object-position: right center;
+    }
+
     /* Animation varieties depending on data-anim attribute */
     .spread-card[data-anim="zoom-in"] {
-      transform: translate3d(0, 50px, 0) scale(0.94);
+      transform: perspective(1200px) translate3d(0, 45px, -40px) scale(0.93);
+      filter: blur(2px);
     }
     .spread-card[data-anim="zoom-in"].visible {
-      transform: translate3d(0, 0, 0) scale(1);
+      transform: perspective(1200px) translate3d(0, 0, 0) scale(1);
+      filter: blur(0px);
     }
 
     .spread-card[data-anim="slide-up"] {
-      transform: translate3d(0, 90px, 0);
+      transform: translate3d(0, 80px, 0) scale(0.96);
     }
     .spread-card[data-anim="slide-up"].visible {
-      transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0) scale(1);
     }
 
     .spread-card[data-anim="fade-scale"] {
-      transform: scale(1.04);
-      filter: blur(4px);
+      transform: scale(1.05);
+      filter: blur(5px);
     }
     .spread-card[data-anim="fade-scale"].visible {
       transform: scale(1);
       filter: blur(0px);
+    }
+
+    .spread-card[data-anim="tilt-in"] {
+      transform: perspective(1200px) rotateX(6deg) translateY(60px) scale(0.94);
+      filter: blur(3px);
+    }
+    .spread-card[data-anim="tilt-in"].visible {
+      transform: perspective(1200px) rotateX(0deg) translateY(0) scale(1);
+      filter: blur(0px);
+    }
+
+    .spread-card[data-anim="slide-left"] {
+      transform: translate3d(-60px, 0, 0) scale(0.96);
+    }
+    .spread-card[data-anim="slide-left"].visible {
+      transform: translate3d(0, 0, 0) scale(1);
     }
 
     .spread-image {
@@ -235,11 +265,20 @@
       display: block;
       object-fit: contain;
       object-position: center;
-      transition: transform 0.3s ease-out;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
       will-change: transform;
     }
 
-    /* Floating standalone cutouts */
+    /* Floating standalone cutouts with breathing animation */
+    @keyframes floatBreath {
+      0%, 100% {
+        transform: translate3d(0, 0, 0) rotate(0deg);
+      }
+      50% {
+        transform: translate3d(0, -14px, 0) rotate(0.8deg);
+      }
+    }
+
     .floating-cutout {
       position: absolute;
       pointer-events: none;
@@ -247,11 +286,12 @@
       opacity: 0;
       transform: translate3d(0, 60px, 0) scale(0.9);
       transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s, transform 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
-      filter: drop-shadow(0 25px 35px rgba(0,0,0,0.12));
+      filter: drop-shadow(0 25px 35px rgba(0,0,0,0.14));
     }
     .spread-card.visible .floating-cutout {
       opacity: 1;
       transform: translate3d(0, 0, 0) scale(1);
+      animation: floatBreath 6s ease-in-out infinite 1.5s;
     }
 
     /* Shimmer light pass on luxury renders */
@@ -496,7 +536,7 @@
     <!-- PAGE 01 : COVER -->
     <section class="spread-section" id="page-1">
       <div class="spread-container">
-        <div class="spread-card visible" data-anim="zoom-in">
+        <div class="spread-card visible" data-anim="slide-left">
           <img class="spread-image" src="pages_ordered/page_1.png" alt="Paloma Hernandez Portfolio 2026" loading="eager" />
         </div>
       </div>
@@ -548,7 +588,7 @@
 
     <section class="spread-section" id="chrysler-2">
       <div class="spread-container">
-        <div class="spread-card" data-anim="slide-up">
+        <div class="spread-card" data-anim="tilt-in">
           <img class="spread-image" src="pages_ordered/page_5.png" alt="Chrysler Inspirations" loading="lazy" />
         </div>
       </div>
@@ -581,7 +621,7 @@
 
     <section class="spread-section" id="chrysler-6">
       <div class="spread-container">
-        <div class="spread-card" data-anim="fade-scale">
+        <div class="spread-card" data-anim="slide-left">
           <img class="spread-image" src="pages_ordered/page_9.png" alt="Chrysler Usage & Modularity" loading="lazy" />
         </div>
       </div>
@@ -591,6 +631,7 @@
       <div class="spread-container">
         <div class="spread-card" data-anim="zoom-in">
           <img class="spread-image" src="pages_ordered/page_10.png" alt="Chrysler Final Water & Road Mode" loading="lazy" />
+          <img class="floating-cutout" src="assets_master/bateau/sketch/defining/3-4 av b+R.png" alt="Chrysler Final Detail" style="top: 10%; right: 7%; width: 26vw; max-width: 420px;" />
         </div>
       </div>
     </section>
@@ -623,7 +664,7 @@
 
     <section class="spread-section" id="detomaso-2">
       <div class="spread-container">
-        <div class="spread-card" data-anim="fade-scale">
+        <div class="spread-card" data-anim="tilt-in">
           <img class="spread-image" src="pages_ordered/page_12.png" alt="De Tomaso Inspiration & Concept" loading="lazy" />
         </div>
       </div>
@@ -641,6 +682,7 @@
       <div class="spread-container">
         <div class="spread-card" data-anim="slide-up">
           <img class="spread-image" src="pages_ordered/page_14.png" alt="De Tomaso Sketches & Attitude" loading="lazy" />
+          <img class="floating-cutout" src="assets_master/pantera/recherches/avant 3-4.png" alt="De Tomaso Front Angle Research" style="bottom: 8%; right: 6%; width: 24vw; max-width: 380px;" />
         </div>
       </div>
     </section>
@@ -655,7 +697,7 @@
 
     <section class="spread-section" id="detomaso-6">
       <div class="spread-container">
-        <div class="spread-card" data-anim="zoom-in">
+        <div class="spread-card" data-anim="tilt-in">
           <img class="spread-image" src="pages_ordered/page_16.png" alt="De Tomaso Aerodynamics & Wedge" loading="lazy" />
         </div>
       </div>
@@ -722,15 +764,16 @@
 
     <section class="spread-section" id="landrover-5">
       <div class="spread-container">
-        <div class="spread-card" data-anim="zoom-in">
+        <div class="spread-card" data-anim="tilt-in">
           <img class="spread-image" src="pages_ordered/page_22.png" alt="Land Rover Sketches & Proportion" loading="lazy" />
+          <img class="floating-cutout" src="assets_master/landrover/defining/volant.png" alt="Land Rover Steering Wheel Detail" style="top: 10%; right: 7%; width: 18vw; max-width: 280px;" />
         </div>
       </div>
     </section>
 
     <section class="spread-section" id="landrover-6">
       <div class="spread-container">
-        <div class="spread-card" data-anim="slide-up">
+        <div class="spread-card" data-anim="slide-left">
           <img class="spread-image" src="pages_ordered/page_23.png" alt="Land Rover Research & Iterations" loading="lazy" />
         </div>
       </div>
@@ -755,7 +798,7 @@
 
     <section class="spread-section" id="landrover-9">
       <div class="spread-container">
-        <div class="spread-card" data-anim="slide-up">
+        <div class="spread-card" data-anim="zoom-in">
           <img class="spread-image" src="pages_ordered/page_26.png" alt="Land Rover Final Exterior Render" loading="lazy" />
         </div>
       </div>
@@ -881,25 +924,27 @@
     });
     cards.forEach(card => observer.observe(card));
 
-    // Subtle 3D tilt and floating parallax on mouse move
+    // Dynamic 3D tilt and floating cutout parallax on mouse move
     window.addEventListener('mousemove', (e) => {
       const centerX = window.innerWidth / 2;
       const centerY = window.innerHeight / 2;
       const deltaX = (e.clientX - centerX) / centerX;
       const deltaY = (e.clientY - centerY) / centerY;
 
-      // Parallax on active visible card image and cutouts
-      const activeCard = document.querySelector('.spread-card.visible');
-      if (activeCard) {
-        const img = activeCard.querySelector('.spread-image');
-        const cut = activeCard.querySelector('.floating-cutout');
-        if (img) {
-          img.style.transform = `translate3d(${-deltaX * 8}px, ${-deltaY * 8}px, 0) scale(1.005)`;
+      // Parallax on all visible cards in viewport
+      document.querySelectorAll('.spread-card.visible').forEach(card => {
+        const rect = card.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+          const img = card.querySelector('.spread-image');
+          const cut = card.querySelector('.floating-cutout');
+          if (img && card.id !== 'page-1') {
+            img.style.transform = `translate3d(${-deltaX * 10}px, ${-deltaY * 10}px, 0) scale(1.008)`;
+          }
+          if (cut) {
+            cut.style.transform = `translate3d(${deltaX * 22}px, ${deltaY * 22}px, 0) rotate(${deltaX * 2}deg)`;
+          }
         }
-        if (cut) {
-          cut.style.transform = `translate3d(${deltaX * 18}px, ${deltaY * 18}px, 0) rotate(${deltaX * 1.5}deg)`;
-        }
-      }
+      });
     }, { passive: true });
 
     // ─── SMOOTH SCROLL-DRIVEN VIDEO SCRUBBING (CHRYSLER, DE TOMASO, LAND ROVER) ───
