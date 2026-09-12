@@ -1223,36 +1223,36 @@
       }
     }, { passive: true });
 
-    // Smooth reveal animation on scroll (White Desert style)
+    // Smooth reveal animation on scroll (triggered when section reaches center of viewport)
     const cards = document.querySelectorAll('.spread-card');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
-        } else if (entry.boundingClientRect.top > window.innerHeight) {
+        } else if (entry.boundingClientRect.top > window.innerHeight * 0.7) {
           // Re-trigger reveal when scrolling back down smoothly
           entry.target.classList.remove('visible');
         }
       });
     }, {
-      threshold: 0.15,
-      rootMargin: '0px 0px -50px 0px'
+      threshold: 0.35,
+      rootMargin: '-12% 0px -12% 0px'
     });
     cards.forEach(card => observer.observe(card));
 
-    // ─── CHOREOGRAPHED SPREAD OBSERVER (INSPIRATION / RESEARCH / DEFINING) ───
+    // ─── CHOREOGRAPHED SPREAD OBSERVER (INSPIRATION / RESEARCH / DEFINING / USAGE) ───
     const frameObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('active');
-        } else if (entry.boundingClientRect.top > window.innerHeight * 0.9) {
+        } else if (entry.boundingClientRect.top > window.innerHeight * 0.7) {
           // Re-arm when user scrolls back above the section
           entry.target.classList.remove('active');
         }
       });
     }, {
-      threshold: 0.15,
-      rootMargin: '0px 0px -40px 0px'
+      threshold: 0.35,
+      rootMargin: '-12% 0px -12% 0px'
     });
 
     ['insp-frame', 'research-frame', 'defining-frame', 'usage-frame'].forEach(id => {
