@@ -707,19 +707,32 @@
       transform: translateX(0) translateY(0) scale(1);
     }
 
-    /* ─── DE TOMASO CHOREOGRAPHIES ─── */
-    /* 1. DT Inspiration (page_12.png): 01 left, then 02 right */
+
+    /* ══════════════════════════════════════════════════════════════════
+       DE TOMASO — CHOREOGRAPHIES CORRIGÉES
+       Principe: chaque calque est l'image ENTIÈRE, seul opacity+transform
+       est animé. Les zones clip-path COUVRENT L'ENTIER du contenu visuel,
+       avec overlap pour ne jamais couper un élément au milieu.
+    ══════════════════════════════════════════════════════════════════ */
+
+    /* ── 1. DT INSPIRATION (page_12.png)
+       Layout: 01. (moodboard + 6 images) occupe ~0-60%, espace blanc, 02. (italy+usa) ~68-100%
+       Animation: bloc 01 arrive, puis bloc 02 glisse depuis la droite 450ms après */
     .dt-insp-01 {
-      clip-path: inset(0 32% 0 0);
+      /* Couvre toute la moitié gauche : titre "INSPIRATION.", numéro "01.", 6 images moodboard, texte */
+      clip-path: inset(0 40% 0 0);
       opacity: 0;
-      transform: translateY(35px) scale(0.98);
-      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: translateY(30px) scale(0.985);
+      transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .dt-insp-02 {
-      clip-path: inset(0 0 0 68%);
+      /* Couvre la section droite : numéro "02.", images ITALY+USA, texte CONCEPT */
+      clip-path: inset(0 0 0 60%);
       opacity: 0;
-      transform: translateY(35px) scale(0.98);
-      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.45s, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.45s;
+      transform: translateY(30px) scale(0.985);
+      transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.45s,
+                  transform 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.45s;
     }
     .spread-frame.active .dt-insp-01,
     .spread-frame.active .dt-insp-02 {
@@ -727,132 +740,153 @@
       transform: translateY(0) scale(1);
     }
 
-    /* 2. DT Research (page_14.png): Title top left, 4-step left machine gun, center car pop, right sketch finish */
+    /* ── 2. DT RESEARCH (page_14.png)
+       Layout: GAUCHE: petite photo panther + key sketch (0-28%), CENTRE-HAUT: grande voiture profil (28-100% haut),
+       BAS-GAUCHE: silhouettes lignes (8-28% bas), BAS-CENTRE: grand croquis 3/4 dessous (28-77% bas),
+       DROITE-BAS: vue arrière (77-100% bas)
+       Stratégie: 3 zones qui couvrent des entités visuelles complètes sans chevauchement destructeur:
+       - Zone A: toute la colonne gauche (photos + silhouettes)
+       - Zone B: grande voiture de profil (héros du haut, centre)
+       - Zone C: ensemble bas-centre + vue arrière droite */
+    .dt-res-left {
+      /* Toute la colonne gauche (0-28%) — petites photos panther, "KEY SKETCH", silhouettes bas */
+      clip-path: inset(0 72% 0 0);
+      opacity: 0;
+      transform: translateX(-25px);
+      transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0ms,
+                  transform 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0ms;
+    }
+    .dt-res-hero {
+      /* Grande voiture de profil + fond gris (28-100% haut, 0-55% vertical) — hero piece */
+      clip-path: inset(0 0 45% 28%);
+      opacity: 0;
+      transform: translateY(25px) scale(0.97);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1) 200ms,
+                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 200ms;
+    }
+    .dt-res-bottom {
+      /* Ensemble bas (28-100% largeur, 55-100% hauteur) — sketches 3/4, vue arrière */
+      clip-path: inset(55% 0 0 28%);
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1) 500ms,
+                  transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) 500ms;
+    }
     .dt-res-title {
-      clip-path: inset(0 75% 82% 0);
+      /* Titre "RESEARCH." en haut à gauche — petit rectangle indépendant */
+      clip-path: inset(0 75% 85% 0);
       opacity: 0;
-      transform: translateY(-15px);
-      transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1), transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .dt-res-l1 {
-      clip-path: inset(18% 70% 48% 0);
-      opacity: 0;
-      transform: scale(0.85) translateY(18px);
-      transition: opacity 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2) 80ms, transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2) 80ms;
-    }
-    .dt-res-l2 {
-      clip-path: inset(48% 70% 0 0);
-      opacity: 0;
-      transform: scale(0.85) translateY(18px);
-      transition: opacity 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2) 180ms, transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2) 180ms;
-    }
-    .dt-res-l3 {
-      clip-path: inset(18% 45% 48% 30%);
-      opacity: 0;
-      transform: scale(0.85) translateY(18px);
-      transition: opacity 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2) 280ms, transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2) 280ms;
-    }
-    .dt-res-l4 {
-      clip-path: inset(48% 45% 0 30%);
-      opacity: 0;
-      transform: scale(0.85) translateY(18px);
-      transition: opacity 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2) 380ms, transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2) 380ms;
-    }
-    .dt-res-car {
-      clip-path: inset(18% 22% 48% 55%);
-      opacity: 0;
-      transform: scale(0.9) translateY(25px);
-      transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1) 520ms, transform 0.55s cubic-bezier(0.16, 1, 0.3, 1) 520ms;
-    }
-    .dt-res-right {
-      clip-path: inset(0 0 0 78%);
-      opacity: 0;
-      transform: translateX(40px) scale(0.96);
-      transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1) 700ms, transform 0.65s cubic-bezier(0.16, 1, 0.3, 1) 700ms;
+      transform: translateY(-12px);
+      transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0ms,
+                  transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0ms;
     }
     .spread-frame.active .dt-res-title,
-    .spread-frame.active .dt-res-l1,
-    .spread-frame.active .dt-res-l2,
-    .spread-frame.active .dt-res-l3,
-    .spread-frame.active .dt-res-l4,
-    .spread-frame.active .dt-res-car,
-    .spread-frame.active .dt-res-right {
+    .spread-frame.active .dt-res-left,
+    .spread-frame.active .dt-res-hero,
+    .spread-frame.active .dt-res-bottom {
       opacity: 1;
       transform: translateX(0) translateY(0) scale(1);
     }
 
-    /* 3. DT Volume Exploration (page_15.png): Top sketches salvo left-to-right, giant 3D top render reveal right */
-    .dt-vol-s1 {
-      clip-path: inset(0 72% 50% 0);
+    /* ── 3. DT VOLUME / DEFINING FORME (page_15.png)
+       Layout: GAUCHE: 2 petites photos (0-9%), CENTRE: 5 silhouettes dessus + bande rouge (9-75%),
+       DROITE: grand rendu 3D vue du dessus (75-100%)
+       Stratégie: 3 zones horizontales qui arrivent en salve G→D */
+    .dt-vol-left {
+      /* Colonne gauche: 2 petites photos inspirations */
+      clip-path: inset(0 91% 0 0);
       opacity: 0;
-      transform: translateY(-20px) scale(0.95);
-      transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1) 50ms, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1) 50ms;
+      transform: translateX(-20px);
+      transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0ms,
+                  transform 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0ms;
     }
-    .dt-vol-s2 {
-      clip-path: inset(0 50% 50% 28%);
+    .dt-vol-center {
+      /* Centre: titre "RESEARCH.", 5 silhouettes vue dessus + bande rouge */
+      clip-path: inset(0 27% 0 9%);
       opacity: 0;
-      transform: translateY(-20px) scale(0.95);
-      transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1) 180ms, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1) 180ms;
+      transform: translateY(20px);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1) 200ms,
+                  transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) 200ms;
     }
-    .dt-vol-s3 {
-      clip-path: inset(0 25% 50% 50%);
+    .dt-vol-right {
+      /* Droite: grand rendu 3D vue du dessus — élément principal */
+      clip-path: inset(0 0 0 73%);
       opacity: 0;
-      transform: translateY(-20px) scale(0.95);
-      transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1) 310ms, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1) 310ms;
+      transform: translateX(40px) scale(0.97);
+      transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1) 500ms,
+                  transform 0.75s cubic-bezier(0.16, 1, 0.3, 1) 500ms;
     }
-    .dt-vol-bot {
-      clip-path: inset(50% 0 0 0);
-      opacity: 0;
-      transform: scale(0.96) translateY(30px);
-      transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1) 500ms, transform 0.75s cubic-bezier(0.16, 1, 0.3, 1) 500ms;
-    }
-    .spread-frame.active .dt-vol-s1,
-    .spread-frame.active .dt-vol-s2,
-    .spread-frame.active .dt-vol-s3,
-    .spread-frame.active .dt-vol-bot {
+    .spread-frame.active .dt-vol-left,
+    .spread-frame.active .dt-vol-center,
+    .spread-frame.active .dt-vol-right {
       opacity: 1;
-      transform: translateY(0) scale(1);
+      transform: translateX(0) translateY(0) scale(1);
     }
 
-    /* 4. DT Defining & Aerodynamics (page_16.png): Central diagrams first, then side/perspective renders */
-    .dt-def-center {
-      clip-path: inset(20% 30% 20% 30%);
-      opacity: 0;
-      transform: scale(0.88);
-      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-    }
+    /* ── 4. DT DEFINING (page_16.png)
+       Layout: GAUCHE: 2 petites photos + rendus FRONT/BACK (0-28%), CENTRE: schémas techniques
+       vue dessus et vue profil avec dimensions (28-68%), DROITE: grand rendu top-view final (68-100%)
+       Stratégie: La pièce maîtresse (droite) arrive en dernier, les schémas au centre d'abord */
     .dt-def-left {
-      clip-path: inset(0 70% 0 0);
+      /* Colonne gauche: photos + vues FRONT & BACK */
+      clip-path: inset(0 72% 0 0);
       opacity: 0;
-      transform: translateX(-40px);
-      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1) 250ms, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 250ms;
+      transform: translateX(-25px);
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0ms,
+                  transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0ms;
+    }
+    .dt-def-center {
+      /* Centre: schémas techniques (vue dessus moteur + vue profil pilote) */
+      clip-path: inset(0 33% 0 28%);
+      opacity: 0;
+      transform: translateY(20px) scale(0.97);
+      transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1) 200ms,
+                  transform 0.65s cubic-bezier(0.16, 1, 0.3, 1) 200ms;
     }
     .dt-def-right {
-      clip-path: inset(0 0 0 70%);
+      /* Droite: grand rendu top-view voiture — la pièce maîtresse */
+      clip-path: inset(0 0 0 67%);
       opacity: 0;
-      transform: translateX(40px);
-      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1) 450ms, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 450ms;
+      transform: translateX(35px) scale(0.97);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1) 480ms,
+                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 480ms;
     }
-    .spread-frame.active .dt-def-center,
+    .dt-def-title {
+      clip-path: inset(0 75% 85% 0);
+      opacity: 0;
+      transform: translateY(-12px);
+      transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0ms,
+                  transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0ms;
+    }
+    .spread-frame.active .dt-def-title,
     .spread-frame.active .dt-def-left,
+    .spread-frame.active .dt-def-center,
     .spread-frame.active .dt-def-right {
       opacity: 1;
-      transform: translateX(0) scale(1);
+      transform: translateX(0) translateY(0) scale(1);
     }
 
-    /* ─── LAND ROVER CHOREOGRAPHIES ─── */
-    /* 1. LR Inspirations (page_20.png): 01 left, then 02 outdoor photography right */
+
+    /* ══════════════════════════════════════════════════════════════════
+       LAND ROVER — CHOREOGRAPHIES CORRIGÉES
+    ══════════════════════════════════════════════════════════════════ */
+
+    /* ── 1. LR CONCEPT / INSPIRATION (page_20.png)
+       Layout: 01. (titre + 6 images moodboard nature) ~0-58%, espace, 02. (3 photos outdoor) ~68-100%
+       Animation: 01 monte, puis 02 glisse depuis droite */
     .lr-insp-01 {
-      clip-path: inset(0 48% 0 0);
+      clip-path: inset(0 42% 0 0);
       opacity: 0;
-      transform: translateY(35px) scale(0.98);
-      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: translateY(30px) scale(0.985);
+      transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .lr-insp-02 {
-      clip-path: inset(0 0 0 52%);
+      clip-path: inset(0 0 0 58%);
       opacity: 0;
-      transform: translateY(35px) scale(0.98);
-      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.45s, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.45s;
+      transform: translateY(30px) scale(0.985);
+      transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.45s,
+                  transform 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.45s;
     }
     .spread-frame.active .lr-insp-01,
     .spread-frame.active .lr-insp-02 {
@@ -860,104 +894,127 @@
       transform: translateY(0) scale(1);
     }
 
-    /* 2. LR Refining & Proportion (page_22.png): Left salvo, middle cockpit, right vehicle section */
-    .lr-ref-l1 {
-      clip-path: inset(0 68% 50% 0);
+    /* ── 2. LR REFINING (page_22.png)
+       Layout: GAUCHE: 3 petites photos vertes/nature (0-10%), CENTRE-GAUCHE: dessin de paysage +
+       croquis cockpit + plante (10-54%), DROITE: grand dessin vue de profil intérieur voiture (54-100%)
+       Stratégie: Gauche d'abord, centre ensuite, grand dessin droite en dernier */
+    .lr-ref-left {
+      /* Colonne gauche: 3 petites photos nature */
+      clip-path: inset(0 90% 0 0);
       opacity: 0;
-      transform: scale(0.88) translateY(20px);
-      transition: opacity 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.2) 60ms, transform 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.2) 60ms;
+      transform: translateX(-20px);
+      transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0ms,
+                  transform 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0ms;
     }
-    .lr-ref-l2 {
-      clip-path: inset(50% 68% 0 0);
+    .lr-ref-center {
+      /* Centre: dessin paysage + croquis cockpit vue dessus + dessin plante */
+      clip-path: inset(0 47% 0 10%);
       opacity: 0;
-      transform: scale(0.88) translateY(20px);
-      transition: opacity 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.2) 180ms, transform 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.2) 180ms;
-    }
-    .lr-ref-mid {
-      clip-path: inset(0 35% 0 32%);
-      opacity: 0;
-      transform: translateY(30px) scale(0.96);
-      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1) 340ms, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 340ms;
+      transform: translateY(25px);
+      transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1) 200ms,
+                  transform 0.65s cubic-bezier(0.16, 1, 0.3, 1) 200ms;
     }
     .lr-ref-right {
-      clip-path: inset(0 0 0 65%);
+      /* Droite: grand dessin vue profil véhicule + écrans + détails */
+      clip-path: inset(0 0 0 53%);
       opacity: 0;
-      transform: translateX(45px) scale(0.96);
-      transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1) 540ms, transform 0.65s cubic-bezier(0.16, 1, 0.3, 1) 540ms;
+      transform: translateX(40px) scale(0.97);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1) 480ms,
+                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 480ms;
     }
-    .spread-frame.active .lr-ref-l1,
-    .spread-frame.active .lr-ref-l2,
-    .spread-frame.active .lr-ref-mid,
+    .lr-ref-title {
+      clip-path: inset(0 75% 85% 0);
+      opacity: 0;
+      transform: translateY(-12px);
+      transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0ms,
+                  transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0ms;
+    }
+    .spread-frame.active .lr-ref-title,
+    .spread-frame.active .lr-ref-left,
+    .spread-frame.active .lr-ref-center,
     .spread-frame.active .lr-ref-right {
       opacity: 1;
       transform: translateX(0) translateY(0) scale(1);
     }
 
-    /* 3. LR Research & Iterations (page_23.png): Left seating salvo machine gun, right dashboard reveal */
-    .lr-res-l1 {
-      clip-path: inset(18% 70% 48% 0);
+    /* ── 3. LR RESEARCH (page_23.png)
+       Layout: GAUCHE: 3 photos + croquis siège + schémas structure (0-55%), DROITE: grands collages
+       photo avec cercle noir + cercle vert (55-100%)
+       Stratégie: salve gauche puis big reveal droite */
+    .lr-res-left {
+      /* Gauche: tout le bloc gauche (photos + croquis siège + structure détail) */
+      clip-path: inset(0 46% 0 0);
       opacity: 0;
-      transform: scale(0.85) translateY(18px);
-      transition: opacity 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2) 80ms, transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2) 80ms;
-    }
-    .lr-res-l2 {
-      clip-path: inset(48% 70% 0 0);
-      opacity: 0;
-      transform: scale(0.85) translateY(18px);
-      transition: opacity 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2) 180ms, transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2) 180ms;
-    }
-    .lr-res-l3 {
-      clip-path: inset(18% 45% 48% 30%);
-      opacity: 0;
-      transform: scale(0.85) translateY(18px);
-      transition: opacity 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2) 280ms, transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2) 280ms;
-    }
-    .lr-res-l4 {
-      clip-path: inset(48% 45% 0 30%);
-      opacity: 0;
-      transform: scale(0.85) translateY(18px);
-      transition: opacity 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2) 380ms, transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2) 380ms;
+      transform: translateX(-25px);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0ms,
+                  transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0ms;
     }
     .lr-res-right {
-      clip-path: inset(0 0 0 55%);
+      /* Droite: grands collages photo Land Rover avec circles callouts */
+      clip-path: inset(0 0 0 54%);
       opacity: 0;
-      transform: translateX(45px) scale(0.97);
-      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1) 560ms, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) 560ms;
+      transform: translateX(40px) scale(0.97);
+      transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1) 450ms,
+                  transform 0.75s cubic-bezier(0.16, 1, 0.3, 1) 450ms;
     }
-    .spread-frame.active .lr-res-l1,
-    .spread-frame.active .lr-res-l2,
-    .spread-frame.active .lr-res-l3,
-    .spread-frame.active .lr-res-l4,
+    .lr-res-title {
+      clip-path: inset(0 75% 85% 0);
+      opacity: 0;
+      transform: translateY(-12px);
+      transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0ms,
+                  transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0ms;
+    }
+    .spread-frame.active .lr-res-title,
+    .spread-frame.active .lr-res-left,
     .spread-frame.active .lr-res-right {
       opacity: 1;
       transform: translateX(0) translateY(0) scale(1);
     }
 
-    /* 4. LR Defining Form (page_24.png): Center green steering wheel FIRST, seats, then interior cutaway */
+    /* ── 4. LR DEFINING (page_24.png)
+       Layout: GAUCHE: 3 petites photos + grand rendu siège vert (0-43%), CENTRE: volant vert émeraude
+       (43-73%), DROITE: cockpit cutaway isométrique (73-100%)
+       Stratégie: le VOLANT arrive en premier (pièce maîtresse), puis sièges gauche, puis cockpit droite */
     .lr-def-wheel {
-      clip-path: inset(30% 36% 30% 36%);
+      /* Volant vert au centre — LA pièce maîtresse, arrive en premier */
+      clip-path: inset(0 28% 0 43%);
       opacity: 0;
-      transform: scale(0.8) translateY(20px);
-      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: scale(0.88) translateY(20px);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0ms,
+                  transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0ms;
     }
-    .lr-def-seats {
-      clip-path: inset(0 64% 0 0);
+    .lr-def-left {
+      /* Gauche: 3 petites photos + rendu 3D siège vert + croquis wireframe siège */
+      clip-path: inset(0 57% 0 0);
       opacity: 0;
-      transform: translateX(-35px);
-      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1) 250ms, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 250ms;
+      transform: translateX(-30px);
+      transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1) 300ms,
+                  transform 0.65s cubic-bezier(0.16, 1, 0.3, 1) 300ms;
     }
     .lr-def-right {
-      clip-path: inset(0 0 0 64%);
+      /* Droite: cockpit cutaway isométrique avec flèches et détails */
+      clip-path: inset(0 0 0 72%);
       opacity: 0;
-      transform: translateX(35px);
-      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1) 480ms, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 480ms;
+      transform: translateX(35px) scale(0.97);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1) 560ms,
+                  transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) 560ms;
     }
+    .lr-def-title {
+      clip-path: inset(0 75% 85% 0);
+      opacity: 0;
+      transform: translateY(-12px);
+      transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0ms,
+                  transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0ms;
+    }
+    .spread-frame.active .lr-def-title,
     .spread-frame.active .lr-def-wheel,
-    .spread-frame.active .lr-def-seats,
+    .spread-frame.active .lr-def-left,
     .spread-frame.active .lr-def-right {
       opacity: 1;
       transform: translateX(0) translateY(0) scale(1);
     }
+
+
 
     /* ─── FOOTER & CONTACT ─── */
     footer.site-footer {
@@ -1241,39 +1298,36 @@
       </div>
     </section>
 
-    <!-- 02. DT RESEARCH: Title, 4-step left machine gun, center car pop, right sketch -->
+    <!-- 02. DT RESEARCH: Title, Left column, Center Hero car, Bottom ensemble -->
     <section class="spread-section" id="detomaso-4">
       <div class="spread-container">
         <div class="spread-frame" id="dt-research-frame">
           <div class="anim-layer dt-res-title"><img src="pages_ordered/page_14.png" alt="" /></div>
-          <div class="anim-layer dt-res-l1"><img src="pages_ordered/page_14.png" alt="" /></div>
-          <div class="anim-layer dt-res-l2"><img src="pages_ordered/page_14.png" alt="" /></div>
-          <div class="anim-layer dt-res-l3"><img src="pages_ordered/page_14.png" alt="" /></div>
-          <div class="anim-layer dt-res-l4"><img src="pages_ordered/page_14.png" alt="" /></div>
-          <div class="anim-layer dt-res-car"><img src="pages_ordered/page_14.png" alt="" /></div>
-          <div class="anim-layer dt-res-right"><img src="pages_ordered/page_14.png" alt="" /></div>
+          <div class="anim-layer dt-res-left"><img src="pages_ordered/page_14.png" alt="" /></div>
+          <div class="anim-layer dt-res-hero"><img src="pages_ordered/page_14.png" alt="" /></div>
+          <div class="anim-layer dt-res-bottom"><img src="pages_ordered/page_14.png" alt="" /></div>
         </div>
       </div>
     </section>
 
-    <!-- 03. DT VOLUME EXPLORATION: Top salvo left-to-right, bottom render reveal -->
+    <!-- 03. DT VOLUME EXPLORATION: Left photos, Center top-views + red bar, Right giant 3D render -->
     <section class="spread-section" id="detomaso-5">
       <div class="spread-container">
         <div class="spread-frame" id="dt-volume-frame">
-          <div class="anim-layer dt-vol-s1"><img src="pages_ordered/page_15.png" alt="" /></div>
-          <div class="anim-layer dt-vol-s2"><img src="pages_ordered/page_15.png" alt="" /></div>
-          <div class="anim-layer dt-vol-s3"><img src="pages_ordered/page_15.png" alt="" /></div>
-          <div class="anim-layer dt-vol-bot"><img src="pages_ordered/page_15.png" alt="" /></div>
+          <div class="anim-layer dt-vol-left"><img src="pages_ordered/page_15.png" alt="" /></div>
+          <div class="anim-layer dt-vol-center"><img src="pages_ordered/page_15.png" alt="" /></div>
+          <div class="anim-layer dt-vol-right"><img src="pages_ordered/page_15.png" alt="" /></div>
         </div>
       </div>
     </section>
 
-    <!-- 04. DT DEFINING & AERODYNAMICS: Central diagrams first, left/right perspective renders -->
+    <!-- 04. DT DEFINING & AERODYNAMICS: Left front/back views, Center technical diagrams, Right top-view render -->
     <section class="spread-section" id="detomaso-6">
       <div class="spread-container">
         <div class="spread-frame" id="dt-def-frame">
-          <div class="anim-layer dt-def-center"><img src="pages_ordered/page_16.png" alt="" /></div>
+          <div class="anim-layer dt-def-title"><img src="pages_ordered/page_16.png" alt="" /></div>
           <div class="anim-layer dt-def-left"><img src="pages_ordered/page_16.png" alt="" /></div>
+          <div class="anim-layer dt-def-center"><img src="pages_ordered/page_16.png" alt="" /></div>
           <div class="anim-layer dt-def-right"><img src="pages_ordered/page_16.png" alt="" /></div>
         </div>
       </div>
@@ -1340,37 +1394,36 @@
       </div>
     </section>
 
-    <!-- 02. LR REFINING & PROPORTION: Left salvo, middle cockpit, right vehicle section -->
+    <!-- 02. LR REFINING & PROPORTION: Title, Left photos, Center cockpit/landscape, Right profile sketch -->
     <section class="spread-section" id="landrover-5">
       <div class="spread-container">
         <div class="spread-frame" id="lr-refining-frame">
-          <div class="anim-layer lr-ref-l1"><img src="pages_ordered/page_22.png" alt="" /></div>
-          <div class="anim-layer lr-ref-l2"><img src="pages_ordered/page_22.png" alt="" /></div>
-          <div class="anim-layer lr-ref-mid"><img src="pages_ordered/page_22.png" alt="" /></div>
+          <div class="anim-layer lr-ref-title"><img src="pages_ordered/page_22.png" alt="" /></div>
+          <div class="anim-layer lr-ref-left"><img src="pages_ordered/page_22.png" alt="" /></div>
+          <div class="anim-layer lr-ref-center"><img src="pages_ordered/page_22.png" alt="" /></div>
           <div class="anim-layer lr-ref-right"><img src="pages_ordered/page_22.png" alt="" /></div>
         </div>
       </div>
     </section>
 
-    <!-- 03. LR RESEARCH & ITERATIONS: Left seating salvo machine gun, right dashboard reveal -->
+    <!-- 03. LR RESEARCH & ITERATIONS: Title, Left seats/structure, Right photo collages -->
     <section class="spread-section" id="landrover-6">
       <div class="spread-container">
         <div class="spread-frame" id="lr-research-frame">
-          <div class="anim-layer lr-res-l1"><img src="pages_ordered/page_23.png" alt="" /></div>
-          <div class="anim-layer lr-res-l2"><img src="pages_ordered/page_23.png" alt="" /></div>
-          <div class="anim-layer lr-res-l3"><img src="pages_ordered/page_23.png" alt="" /></div>
-          <div class="anim-layer lr-res-l4"><img src="pages_ordered/page_23.png" alt="" /></div>
+          <div class="anim-layer lr-res-title"><img src="pages_ordered/page_23.png" alt="" /></div>
+          <div class="anim-layer lr-res-left"><img src="pages_ordered/page_23.png" alt="" /></div>
           <div class="anim-layer lr-res-right"><img src="pages_ordered/page_23.png" alt="" /></div>
         </div>
       </div>
     </section>
 
-    <!-- 04. LR DEFINING FORM: Steering wheel center FIRST, seats left, interior cutaway right -->
+    <!-- 04. LR DEFINING FORM: Title, Steering wheel center FIRST, Seats left, Interior cutaway right -->
     <section class="spread-section" id="landrover-7">
       <div class="spread-container">
         <div class="spread-frame" id="lr-def-frame">
+          <div class="anim-layer lr-def-title"><img src="pages_ordered/page_24.png" alt="" /></div>
           <div class="anim-layer lr-def-wheel"><img src="pages_ordered/page_24.png" alt="" /></div>
-          <div class="anim-layer lr-def-seats"><img src="pages_ordered/page_24.png" alt="" /></div>
+          <div class="anim-layer lr-def-left"><img src="pages_ordered/page_24.png" alt="" /></div>
           <div class="anim-layer lr-def-right"><img src="pages_ordered/page_24.png" alt="" /></div>
         </div>
       </div>
