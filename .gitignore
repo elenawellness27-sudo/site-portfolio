@@ -1,3 +1,4 @@
 ﻿node_modules/
 .temp/
 *.idlk
+assets_master/**/*.psd
