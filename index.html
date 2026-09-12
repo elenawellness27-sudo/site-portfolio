@@ -532,11 +532,16 @@
       <p class="project-hero-desc">Conception conjointe d'un bateau et de sa remorque détachable, alliant élégance rétro-futuriste américaine et hydrodynamisme d'inspiration aquatique.</p>
     </div>
 
-    <!-- Pages Chrysler (4 à 10) -->
-    <section class="spread-section" id="chrysler-1">
-      <div class="spread-container">
-        <div class="spread-card" data-anim="zoom-in">
-          <img class="spread-image" src="pages_ordered/page_4.png" alt="Chrysler Title & Brief" loading="lazy" />
+    <!-- Chrysler Video Hero Cover with Scroll-Scrubbing -->
+    <section class="scroll-video-section" id="chrysler-1">
+      <div class="sticky-video-container">
+        <video id="chryslerVideo" class="scrub-video" src="artplayer.org_upscaled_1789229198237.mp4" muted playsinline preload="auto"></video>
+        <div class="project-video-overlay" id="chryslerOverlay">
+          <div class="project-video-overlay-num">01.</div>
+          <div class="project-video-overlay-title">BRIEF.</div>
+          <p class="project-video-overlay-desc">
+            The brief was to design a boat together with its trailer, creating a coherent concept adapted for both road and water use.
+          </p>
         </div>
       </div>
     </section>
@@ -897,11 +902,12 @@
       }
     }, { passive: true });
 
-    // ─── SMOOTH SCROLL-DRIVEN VIDEO SCRUBBING (DE TOMASO & LAND ROVER) ───
-    // fromEnd=false → plays first `clipSeconds` (De Tomaso)
-    // fromEnd=true  → plays last `clipSeconds`  (Land Rover)
-    // overlayEarlyFade: seconds before clip end that the text fades out
-    function setupScrollScrubVideo(sectionId, videoId, overlayId, clipSeconds = 5.0, overlayEarlyFade = 0, fromEnd = false) {
+    // ─── SMOOTH SCROLL-DRIVEN VIDEO SCRUBBING (CHRYSLER, DE TOMASO, LAND ROVER) ───
+    // fromEnd=false → plays first `clipSeconds` (or full video if large)
+    // fromEnd=true  → plays last `clipSeconds`
+    // overlayEarlyFade: seconds before clip end that the text overlay starts disappearing
+    // fadeDuration: duration in seconds of smooth progressive opacity fade to pure white at clip end
+    function setupScrollScrubVideo(sectionId, videoId, overlayId, clipSeconds = 999, overlayEarlyFade = 0, fromEnd = false, fadeDuration = 0.5) {
       const section = document.getElementById(sectionId);
       const video = document.getElementById(videoId);
       const overlay = document.getElementById(overlayId);
@@ -953,12 +959,24 @@
             video.currentTime += diff * 0.25;
           }
 
-          const videoFadeThreshold = endTime - 0.15;
-          const overlayFadeThreshold = endTime - 0.15 - overlayEarlyFade;
+          // Progressive smooth fade to white background
+          const timeRemaining = endTime - video.currentTime;
+          if (timeRemaining <= fadeDuration) {
+            const vOp = Math.max(0, Math.min(1, timeRemaining / fadeDuration));
+            video.style.opacity = vOp;
+          } else {
+            video.style.opacity = '1';
+          }
 
-          video.style.opacity = video.currentTime >= videoFadeThreshold ? '0' : '1';
+          const overlayRemaining = endTime - overlayEarlyFade - video.currentTime;
           if (overlay) {
-            overlay.style.opacity = video.currentTime >= overlayFadeThreshold ? '0' : '1';
+            const oFade = Math.min(fadeDuration, 0.4);
+            if (overlayRemaining <= oFade) {
+              const oOp = Math.max(0, Math.min(1, overlayRemaining / oFade));
+              overlay.style.opacity = oOp;
+            } else {
+              overlay.style.opacity = '1';
+            }
           }
         }
         requestAnimationFrame(loop);
@@ -966,10 +984,12 @@
       requestAnimationFrame(loop);
     }
 
+    // Chrysler : durée complète, fondu progressif au blanc sur les dernières frames (0.6s)
+    setupScrollScrubVideo('chrysler-1', 'chryslerVideo', 'chryslerOverlay', 999, 0, false, 0.6);
     // De Tomaso : premières 5 secondes (fromEnd = false)
-    setupScrollScrubVideo('detomaso-1', 'detomasoVideo', 'detomasoOverlay', 5.0, 0, false);
-    // Land Rover : dernières 5 secondes (fromEnd = true), texte disparaît 0.7s avant
-    setupScrollScrubVideo('landrover-1', 'landroverVideo', 'landroverOverlay', 5.0, 0.3, true);
+    setupScrollScrubVideo('detomaso-1', 'detomasoVideo', 'detomasoOverlay', 5.0, 0, false, 0.4);
+    // Land Rover : dernières 5 secondes (fromEnd = true), texte disparaît 0.3s avant
+    setupScrollScrubVideo('landrover-1', 'landroverVideo', 'landroverOverlay', 5.0, 0.3, true, 0.4);
 
   </script>
 </body>
