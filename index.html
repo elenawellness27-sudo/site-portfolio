@@ -707,6 +707,258 @@
       transform: translateX(0) translateY(0) scale(1);
     }
 
+    /* ─── DE TOMASO CHOREOGRAPHIES ─── */
+    /* 1. DT Inspiration (page_12.png): 01 left, then 02 right */
+    .dt-insp-01 {
+      clip-path: inset(0 32% 0 0);
+      opacity: 0;
+      transform: translateY(35px) scale(0.98);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .dt-insp-02 {
+      clip-path: inset(0 0 0 68%);
+      opacity: 0;
+      transform: translateY(35px) scale(0.98);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.45s, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.45s;
+    }
+    .spread-frame.active .dt-insp-01,
+    .spread-frame.active .dt-insp-02 {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    /* 2. DT Research (page_14.png): Title top left, 4-step left machine gun, center car pop, right sketch finish */
+    .dt-res-title {
+      clip-path: inset(0 75% 82% 0);
+      opacity: 0;
+      transform: translateY(-15px);
+      transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1), transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .dt-res-l1 {
+      clip-path: inset(18% 70% 48% 0);
+      opacity: 0;
+      transform: scale(0.85) translateY(18px);
+      transition: opacity 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2) 80ms, transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2) 80ms;
+    }
+    .dt-res-l2 {
+      clip-path: inset(48% 70% 0 0);
+      opacity: 0;
+      transform: scale(0.85) translateY(18px);
+      transition: opacity 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2) 180ms, transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2) 180ms;
+    }
+    .dt-res-l3 {
+      clip-path: inset(18% 45% 48% 30%);
+      opacity: 0;
+      transform: scale(0.85) translateY(18px);
+      transition: opacity 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2) 280ms, transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2) 280ms;
+    }
+    .dt-res-l4 {
+      clip-path: inset(48% 45% 0 30%);
+      opacity: 0;
+      transform: scale(0.85) translateY(18px);
+      transition: opacity 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2) 380ms, transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2) 380ms;
+    }
+    .dt-res-car {
+      clip-path: inset(18% 22% 48% 55%);
+      opacity: 0;
+      transform: scale(0.9) translateY(25px);
+      transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1) 520ms, transform 0.55s cubic-bezier(0.16, 1, 0.3, 1) 520ms;
+    }
+    .dt-res-right {
+      clip-path: inset(0 0 0 78%);
+      opacity: 0;
+      transform: translateX(40px) scale(0.96);
+      transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1) 700ms, transform 0.65s cubic-bezier(0.16, 1, 0.3, 1) 700ms;
+    }
+    .spread-frame.active .dt-res-title,
+    .spread-frame.active .dt-res-l1,
+    .spread-frame.active .dt-res-l2,
+    .spread-frame.active .dt-res-l3,
+    .spread-frame.active .dt-res-l4,
+    .spread-frame.active .dt-res-car,
+    .spread-frame.active .dt-res-right {
+      opacity: 1;
+      transform: translateX(0) translateY(0) scale(1);
+    }
+
+    /* 3. DT Volume Exploration (page_15.png): Top sketches salvo left-to-right, giant 3D top render reveal right */
+    .dt-vol-s1 {
+      clip-path: inset(0 72% 50% 0);
+      opacity: 0;
+      transform: translateY(-20px) scale(0.95);
+      transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1) 50ms, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1) 50ms;
+    }
+    .dt-vol-s2 {
+      clip-path: inset(0 50% 50% 28%);
+      opacity: 0;
+      transform: translateY(-20px) scale(0.95);
+      transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1) 180ms, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1) 180ms;
+    }
+    .dt-vol-s3 {
+      clip-path: inset(0 25% 50% 50%);
+      opacity: 0;
+      transform: translateY(-20px) scale(0.95);
+      transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1) 310ms, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1) 310ms;
+    }
+    .dt-vol-bot {
+      clip-path: inset(50% 0 0 0);
+      opacity: 0;
+      transform: scale(0.96) translateY(30px);
+      transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1) 500ms, transform 0.75s cubic-bezier(0.16, 1, 0.3, 1) 500ms;
+    }
+    .spread-frame.active .dt-vol-s1,
+    .spread-frame.active .dt-vol-s2,
+    .spread-frame.active .dt-vol-s3,
+    .spread-frame.active .dt-vol-bot {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    /* 4. DT Defining & Aerodynamics (page_16.png): Central diagrams first, then side/perspective renders */
+    .dt-def-center {
+      clip-path: inset(20% 30% 20% 30%);
+      opacity: 0;
+      transform: scale(0.88);
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .dt-def-left {
+      clip-path: inset(0 70% 0 0);
+      opacity: 0;
+      transform: translateX(-40px);
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1) 250ms, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 250ms;
+    }
+    .dt-def-right {
+      clip-path: inset(0 0 0 70%);
+      opacity: 0;
+      transform: translateX(40px);
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1) 450ms, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 450ms;
+    }
+    .spread-frame.active .dt-def-center,
+    .spread-frame.active .dt-def-left,
+    .spread-frame.active .dt-def-right {
+      opacity: 1;
+      transform: translateX(0) scale(1);
+    }
+
+    /* ─── LAND ROVER CHOREOGRAPHIES ─── */
+    /* 1. LR Inspirations (page_20.png): 01 left, then 02 outdoor photography right */
+    .lr-insp-01 {
+      clip-path: inset(0 48% 0 0);
+      opacity: 0;
+      transform: translateY(35px) scale(0.98);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .lr-insp-02 {
+      clip-path: inset(0 0 0 52%);
+      opacity: 0;
+      transform: translateY(35px) scale(0.98);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.45s, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.45s;
+    }
+    .spread-frame.active .lr-insp-01,
+    .spread-frame.active .lr-insp-02 {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    /* 2. LR Refining & Proportion (page_22.png): Left salvo, middle cockpit, right vehicle section */
+    .lr-ref-l1 {
+      clip-path: inset(0 68% 50% 0);
+      opacity: 0;
+      transform: scale(0.88) translateY(20px);
+      transition: opacity 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.2) 60ms, transform 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.2) 60ms;
+    }
+    .lr-ref-l2 {
+      clip-path: inset(50% 68% 0 0);
+      opacity: 0;
+      transform: scale(0.88) translateY(20px);
+      transition: opacity 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.2) 180ms, transform 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.2) 180ms;
+    }
+    .lr-ref-mid {
+      clip-path: inset(0 35% 0 32%);
+      opacity: 0;
+      transform: translateY(30px) scale(0.96);
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1) 340ms, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 340ms;
+    }
+    .lr-ref-right {
+      clip-path: inset(0 0 0 65%);
+      opacity: 0;
+      transform: translateX(45px) scale(0.96);
+      transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1) 540ms, transform 0.65s cubic-bezier(0.16, 1, 0.3, 1) 540ms;
+    }
+    .spread-frame.active .lr-ref-l1,
+    .spread-frame.active .lr-ref-l2,
+    .spread-frame.active .lr-ref-mid,
+    .spread-frame.active .lr-ref-right {
+      opacity: 1;
+      transform: translateX(0) translateY(0) scale(1);
+    }
+
+    /* 3. LR Research & Iterations (page_23.png): Left seating salvo machine gun, right dashboard reveal */
+    .lr-res-l1 {
+      clip-path: inset(18% 70% 48% 0);
+      opacity: 0;
+      transform: scale(0.85) translateY(18px);
+      transition: opacity 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2) 80ms, transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2) 80ms;
+    }
+    .lr-res-l2 {
+      clip-path: inset(48% 70% 0 0);
+      opacity: 0;
+      transform: scale(0.85) translateY(18px);
+      transition: opacity 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2) 180ms, transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2) 180ms;
+    }
+    .lr-res-l3 {
+      clip-path: inset(18% 45% 48% 30%);
+      opacity: 0;
+      transform: scale(0.85) translateY(18px);
+      transition: opacity 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2) 280ms, transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2) 280ms;
+    }
+    .lr-res-l4 {
+      clip-path: inset(48% 45% 0 30%);
+      opacity: 0;
+      transform: scale(0.85) translateY(18px);
+      transition: opacity 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2) 380ms, transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2) 380ms;
+    }
+    .lr-res-right {
+      clip-path: inset(0 0 0 55%);
+      opacity: 0;
+      transform: translateX(45px) scale(0.97);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1) 560ms, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) 560ms;
+    }
+    .spread-frame.active .lr-res-l1,
+    .spread-frame.active .lr-res-l2,
+    .spread-frame.active .lr-res-l3,
+    .spread-frame.active .lr-res-l4,
+    .spread-frame.active .lr-res-right {
+      opacity: 1;
+      transform: translateX(0) translateY(0) scale(1);
+    }
+
+    /* 4. LR Defining Form (page_24.png): Center green steering wheel FIRST, seats, then interior cutaway */
+    .lr-def-wheel {
+      clip-path: inset(30% 36% 30% 36%);
+      opacity: 0;
+      transform: scale(0.8) translateY(20px);
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .lr-def-seats {
+      clip-path: inset(0 64% 0 0);
+      opacity: 0;
+      transform: translateX(-35px);
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1) 250ms, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 250ms;
+    }
+    .lr-def-right {
+      clip-path: inset(0 0 0 64%);
+      opacity: 0;
+      transform: translateX(35px);
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1) 480ms, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 480ms;
+    }
+    .spread-frame.active .lr-def-wheel,
+    .spread-frame.active .lr-def-seats,
+    .spread-frame.active .lr-def-right {
+      opacity: 1;
+      transform: translateX(0) translateY(0) scale(1);
+    }
+
     /* ─── FOOTER & CONTACT ─── */
     footer.site-footer {
       background: #080808;
@@ -971,10 +1223,12 @@
       </div>
     </section>
 
+    <!-- 01. DT INSPIRATION: 01 left first, then 02 right -->
     <section class="spread-section" id="detomaso-2">
       <div class="spread-container">
-        <div class="spread-card" data-anim="tilt-in">
-          <img class="spread-image" src="pages_ordered/page_12.png" alt="De Tomaso Inspiration & Concept" loading="lazy" />
+        <div class="spread-frame" id="dt-insp-frame">
+          <div class="anim-layer dt-insp-01"><img src="pages_ordered/page_12.png" alt="De Tomaso Inspiration 01" /></div>
+          <div class="anim-layer dt-insp-02"><img src="pages_ordered/page_12.png" alt="De Tomaso Inspiration 02" /></div>
         </div>
       </div>
     </section>
@@ -987,27 +1241,40 @@
       </div>
     </section>
 
+    <!-- 02. DT RESEARCH: Title, 4-step left machine gun, center car pop, right sketch -->
     <section class="spread-section" id="detomaso-4">
       <div class="spread-container">
-        <div class="spread-card" data-anim="slide-up">
-          <img class="spread-image" src="pages_ordered/page_14.png" alt="De Tomaso Sketches & Attitude" loading="lazy" />
-          <img class="floating-cutout" src="assets_master/pantera/recherches/avant 3-4.png" alt="De Tomaso Front Angle Research" style="bottom: 8%; right: 6%; width: 24vw; max-width: 380px;" />
+        <div class="spread-frame" id="dt-research-frame">
+          <div class="anim-layer dt-res-title"><img src="pages_ordered/page_14.png" alt="" /></div>
+          <div class="anim-layer dt-res-l1"><img src="pages_ordered/page_14.png" alt="" /></div>
+          <div class="anim-layer dt-res-l2"><img src="pages_ordered/page_14.png" alt="" /></div>
+          <div class="anim-layer dt-res-l3"><img src="pages_ordered/page_14.png" alt="" /></div>
+          <div class="anim-layer dt-res-l4"><img src="pages_ordered/page_14.png" alt="" /></div>
+          <div class="anim-layer dt-res-car"><img src="pages_ordered/page_14.png" alt="" /></div>
+          <div class="anim-layer dt-res-right"><img src="pages_ordered/page_14.png" alt="" /></div>
         </div>
       </div>
     </section>
 
+    <!-- 03. DT VOLUME EXPLORATION: Top salvo left-to-right, bottom render reveal -->
     <section class="spread-section" id="detomaso-5">
       <div class="spread-container">
-        <div class="spread-card" data-anim="fade-scale">
-          <img class="spread-image" src="pages_ordered/page_15.png" alt="De Tomaso Volume Exploration" loading="lazy" />
+        <div class="spread-frame" id="dt-volume-frame">
+          <div class="anim-layer dt-vol-s1"><img src="pages_ordered/page_15.png" alt="" /></div>
+          <div class="anim-layer dt-vol-s2"><img src="pages_ordered/page_15.png" alt="" /></div>
+          <div class="anim-layer dt-vol-s3"><img src="pages_ordered/page_15.png" alt="" /></div>
+          <div class="anim-layer dt-vol-bot"><img src="pages_ordered/page_15.png" alt="" /></div>
         </div>
       </div>
     </section>
 
+    <!-- 04. DT DEFINING & AERODYNAMICS: Central diagrams first, left/right perspective renders -->
     <section class="spread-section" id="detomaso-6">
       <div class="spread-container">
-        <div class="spread-card" data-anim="tilt-in">
-          <img class="spread-image" src="pages_ordered/page_16.png" alt="De Tomaso Aerodynamics & Wedge" loading="lazy" />
+        <div class="spread-frame" id="dt-def-frame">
+          <div class="anim-layer dt-def-center"><img src="pages_ordered/page_16.png" alt="" /></div>
+          <div class="anim-layer dt-def-left"><img src="pages_ordered/page_16.png" alt="" /></div>
+          <div class="anim-layer dt-def-right"><img src="pages_ordered/page_16.png" alt="" /></div>
         </div>
       </div>
     </section>
@@ -1055,10 +1322,12 @@
       </div>
     </section>
 
+    <!-- 01. LR INSPIRATION: 01 left, 02 right -->
     <section class="spread-section" id="landrover-3">
       <div class="spread-container">
-        <div class="spread-card" data-anim="slide-up">
-          <img class="spread-image" src="pages_ordered/page_20.png" alt="Land Rover Inspirations" loading="lazy" />
+        <div class="spread-frame" id="lr-insp-frame">
+          <div class="anim-layer lr-insp-01"><img src="pages_ordered/page_20.png" alt="Land Rover Inspiration 01" /></div>
+          <div class="anim-layer lr-insp-02"><img src="pages_ordered/page_20.png" alt="Land Rover Inspiration 02" /></div>
         </div>
       </div>
     </section>
@@ -1071,27 +1340,38 @@
       </div>
     </section>
 
+    <!-- 02. LR REFINING & PROPORTION: Left salvo, middle cockpit, right vehicle section -->
     <section class="spread-section" id="landrover-5">
       <div class="spread-container">
-        <div class="spread-card" data-anim="tilt-in">
-          <img class="spread-image" src="pages_ordered/page_22.png" alt="Land Rover Sketches & Proportion" loading="lazy" />
-          <img class="floating-cutout" src="assets_master/landrover/defining/volant.png" alt="Land Rover Steering Wheel Detail" style="top: 10%; right: 7%; width: 18vw; max-width: 280px;" />
+        <div class="spread-frame" id="lr-refining-frame">
+          <div class="anim-layer lr-ref-l1"><img src="pages_ordered/page_22.png" alt="" /></div>
+          <div class="anim-layer lr-ref-l2"><img src="pages_ordered/page_22.png" alt="" /></div>
+          <div class="anim-layer lr-ref-mid"><img src="pages_ordered/page_22.png" alt="" /></div>
+          <div class="anim-layer lr-ref-right"><img src="pages_ordered/page_22.png" alt="" /></div>
         </div>
       </div>
     </section>
 
+    <!-- 03. LR RESEARCH & ITERATIONS: Left seating salvo machine gun, right dashboard reveal -->
     <section class="spread-section" id="landrover-6">
       <div class="spread-container">
-        <div class="spread-card" data-anim="slide-left">
-          <img class="spread-image" src="pages_ordered/page_23.png" alt="Land Rover Research & Iterations" loading="lazy" />
+        <div class="spread-frame" id="lr-research-frame">
+          <div class="anim-layer lr-res-l1"><img src="pages_ordered/page_23.png" alt="" /></div>
+          <div class="anim-layer lr-res-l2"><img src="pages_ordered/page_23.png" alt="" /></div>
+          <div class="anim-layer lr-res-l3"><img src="pages_ordered/page_23.png" alt="" /></div>
+          <div class="anim-layer lr-res-l4"><img src="pages_ordered/page_23.png" alt="" /></div>
+          <div class="anim-layer lr-res-right"><img src="pages_ordered/page_23.png" alt="" /></div>
         </div>
       </div>
     </section>
 
+    <!-- 04. LR DEFINING FORM: Steering wheel center FIRST, seats left, interior cutaway right -->
     <section class="spread-section" id="landrover-7">
       <div class="spread-container">
-        <div class="spread-card" data-anim="fade-scale">
-          <img class="spread-image" src="pages_ordered/page_24.png" alt="Land Rover Defining Form" loading="lazy" />
+        <div class="spread-frame" id="lr-def-frame">
+          <div class="anim-layer lr-def-wheel"><img src="pages_ordered/page_24.png" alt="" /></div>
+          <div class="anim-layer lr-def-seats"><img src="pages_ordered/page_24.png" alt="" /></div>
+          <div class="anim-layer lr-def-right"><img src="pages_ordered/page_24.png" alt="" /></div>
         </div>
       </div>
     </section>
@@ -1255,7 +1535,7 @@
       rootMargin: '-12% 0px -12% 0px'
     });
 
-    ['insp-frame', 'research-frame', 'defining-frame', 'usage-frame'].forEach(id => {
+    ['insp-frame', 'research-frame', 'defining-frame', 'usage-frame', 'dt-insp-frame', 'dt-research-frame', 'dt-volume-frame', 'dt-def-frame', 'lr-insp-frame', 'lr-refining-frame', 'lr-research-frame', 'lr-def-frame'].forEach(id => {
       const el = document.getElementById(id);
       if (el) frameObserver.observe(el);
     });
