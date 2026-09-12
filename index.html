@@ -906,8 +906,9 @@
     // fromEnd=false → plays first `clipSeconds` (or full video if large)
     // fromEnd=true  → plays last `clipSeconds`
     // overlayEarlyFade: seconds before clip end that the text overlay starts disappearing
-    // fadeDuration: duration in seconds of smooth progressive opacity fade to pure white at clip end
-    function setupScrollScrubVideo(sectionId, videoId, overlayId, clipSeconds = 999, overlayEarlyFade = 0, fromEnd = false, fadeDuration = 0.5) {
+    // fadeDuration: duration of smooth progressive opacity fade
+    // earlyWhiteOffset: reaches 100% pure white this many seconds before clip end
+    function setupScrollScrubVideo(sectionId, videoId, overlayId, clipSeconds = 999, overlayEarlyFade = 0, fromEnd = false, fadeDuration = 0.8, earlyWhiteOffset = 0.5) {
       const section = document.getElementById(sectionId);
       const video = document.getElementById(videoId);
       const overlay = document.getElementById(overlayId);
@@ -959,23 +960,29 @@
             video.currentTime += diff * 0.25;
           }
 
-          // Progressive smooth fade to white background
-          const timeRemaining = endTime - video.currentTime;
-          if (timeRemaining <= fadeDuration) {
-            const vOp = Math.max(0, Math.min(1, timeRemaining / fadeDuration));
-            video.style.opacity = vOp;
+          // Progressive smooth fade to 100% pure white background earlier
+          const fadeEnd = endTime - earlyWhiteOffset;
+          const fadeStart = fadeEnd - fadeDuration;
+
+          if (video.currentTime >= fadeEnd) {
+            video.style.opacity = 0;
+          } else if (video.currentTime > fadeStart) {
+            const vOp = (fadeEnd - video.currentTime) / fadeDuration;
+            video.style.opacity = Math.max(0, Math.min(1, vOp));
           } else {
-            video.style.opacity = '1';
+            video.style.opacity = 1;
           }
 
-          const overlayRemaining = endTime - overlayEarlyFade - video.currentTime;
+          const overlayEnd = endTime - earlyWhiteOffset - overlayEarlyFade;
+          const overlayStart = overlayEnd - Math.min(fadeDuration, 0.4);
           if (overlay) {
-            const oFade = Math.min(fadeDuration, 0.4);
-            if (overlayRemaining <= oFade) {
-              const oOp = Math.max(0, Math.min(1, overlayRemaining / oFade));
-              overlay.style.opacity = oOp;
+            if (video.currentTime >= overlayEnd) {
+              overlay.style.opacity = 0;
+            } else if (video.currentTime > overlayStart) {
+              const oOp = (overlayEnd - video.currentTime) / Math.min(fadeDuration, 0.4);
+              overlay.style.opacity = Math.max(0, Math.min(1, oOp));
             } else {
-              overlay.style.opacity = '1';
+              overlay.style.opacity = 1;
             }
           }
         }
@@ -984,12 +991,12 @@
       requestAnimationFrame(loop);
     }
 
-    // Chrysler : durée complète, fondu progressif au blanc sur les dernières frames (0.6s)
-    setupScrollScrubVideo('chrysler-1', 'chryslerVideo', 'chryslerOverlay', 999, 0, false, 0.6);
-    // De Tomaso : premières 5 secondes (fromEnd = false)
-    setupScrollScrubVideo('detomaso-1', 'detomasoVideo', 'detomasoOverlay', 5.0, 0, false, 0.4);
-    // Land Rover : dernières 5 secondes (fromEnd = true), texte disparaît 0.3s avant
-    setupScrollScrubVideo('landrover-1', 'landroverVideo', 'landroverOverlay', 5.0, 0.3, true, 0.4);
+    // Chrysler : durée complète, passe au blanc pur 0.5s plus tôt avec transition fluide de 0.8s
+    setupScrollScrubVideo('chrysler-1', 'chryslerVideo', 'chryslerOverlay', 999, 0, false, 0.8, 0.5);
+    // De Tomaso : premières 5 secondes, fond blanc 0.4s plus tôt
+    setupScrollScrubVideo('detomaso-1', 'detomasoVideo', 'detomasoOverlay', 5.0, 0, false, 0.6, 0.4);
+    // Land Rover : dernières 5 secondes, texte part un peu avant, fond blanc 0.4s plus tôt
+    setupScrollScrubVideo('landrover-1', 'landroverVideo', 'landroverOverlay', 5.0, 0.2, true, 0.6, 0.4);
 
   </script>
 </body>
