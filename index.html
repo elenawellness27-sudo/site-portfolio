@@ -204,16 +204,74 @@
       transform: translate3d(0, 0, 0) scale(1);
     }
 
-    /* Cover Page (Page 1): Car glued flush to the right edge */
-    #page-1 .spread-container,
-    #page-1 .spread-card {
-      justify-content: flex-end;
-    }
-    #page-1 .spread-image {
+    /* Cover Page (Page 01): Car flush to right edge with dynamic scroll-exit */
+    .cover-hero-section {
+      position: relative;
       width: 100vw;
       height: 100vh;
+      background: #ffffff;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0;
+    }
+    .cover-hero-container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-left: clamp(40px, 8vw, 140px);
+    }
+    .cover-hero-text {
+      z-index: 10;
+      user-select: none;
+      pointer-events: none;
+      max-width: 480px;
+    }
+    .cover-name {
+      font-size: clamp(28px, 3.2vw, 48px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #1a1a1a;
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+    .cover-title {
+      font-size: clamp(22px, 2.5vw, 38px);
+      font-weight: 300;
+      color: #333333;
+      letter-spacing: -0.01em;
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+    .cover-subtitle {
+      font-size: clamp(16px, 1.8vw, 26px);
+      font-weight: 300;
+      color: #666666;
+    }
+    .cover-year {
+      font-size: clamp(22px, 2.5vw, 38px);
+      font-weight: 300;
+      color: #333333;
+      letter-spacing: -0.01em;
+      line-height: 1.1;
+    }
+    .cover-hero-car {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      height: min(78vh, 650px);
+      width: auto;
+      max-width: 65vw;
       object-fit: contain;
       object-position: right center;
+      pointer-events: none;
+      will-change: transform;
+      transition: transform 0.1s ease-out;
     }
 
     /* Animation varieties depending on data-anim attribute */
@@ -534,11 +592,14 @@
 
   <main>
     <!-- PAGE 01 : COVER -->
-    <section class="spread-section" id="page-1">
-      <div class="spread-container">
-        <div class="spread-card visible" data-anim="slide-left">
-          <img class="spread-image" src="pages_ordered/page_1.png" alt="Paloma Hernandez Portfolio 2026" loading="eager" />
+    <section class="cover-hero-section" id="page-1">
+      <div class="cover-hero-container">
+        <div class="cover-hero-text">
+          <h1 class="cover-name">PALOMA HERNANDEZ</h1>
+          <p class="cover-title">PORTFOLIO <span class="cover-subtitle">2nd year</span></p>
+          <p class="cover-year">2026</p>
         </div>
+        <img class="cover-hero-car" id="coverCar" src="assets_master/cover_car.png" alt="Paloma Hernandez Concept Car" />
       </div>
     </section>
 
@@ -606,7 +667,6 @@
       <div class="spread-container">
         <div class="spread-card" data-anim="zoom-in">
           <img class="spread-image" src="pages_ordered/page_7.png" alt="Chrysler Research & Sketches" loading="lazy" />
-          <img class="floating-cutout" src="assets_master/bateau/sketch/final/final bateau 3-4.png" alt="Chrysler Bateau 3D Cutout" style="bottom: 8%; right: 6%; width: 34vw; max-width: 520px;" />
         </div>
       </div>
     </section>
@@ -899,12 +959,19 @@
       });
     });
 
-    // Scroll Progress Indicator
+    // Scroll Progress Indicator & Cover Car Dynamic Exit
     const progressLine = document.getElementById('progressLine');
+    const coverCar = document.getElementById('coverCar');
     window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
       const total = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = (window.scrollY / total) * 100;
+      const progress = (scrollY / total) * 100;
       progressLine.style.width = progress + '%';
+
+      // Cover car drives/slides off to the right as user scrolls down
+      if (coverCar && scrollY < window.innerHeight * 1.5) {
+        coverCar.style.transform = `translate3d(${scrollY * 1.1}px, -50%, 0)`;
+      }
     }, { passive: true });
 
     // Smooth reveal animation on scroll (White Desert style)
