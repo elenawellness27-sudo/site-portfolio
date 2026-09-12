@@ -899,7 +899,8 @@
 
     // ─── SMOOTH SCROLL-DRIVEN VIDEO SCRUBBING (DE TOMASO & LAND ROVER) ───
     // Plays the LAST `clipSeconds` of the video, scrubbed by scroll.
-    function setupScrollScrubVideo(sectionId, videoId, overlayId, clipSeconds = 5.0) {
+    // overlayEarlyFade: seconds BEFORE video end that the text overlay starts disappearing.
+    function setupScrollScrubVideo(sectionId, videoId, overlayId, clipSeconds = 5.0, overlayEarlyFade = 0) {
       const section = document.getElementById(sectionId);
       const video = document.getElementById(videoId);
       const overlay = document.getElementById(overlayId);
@@ -913,14 +914,12 @@
         if (video.duration && video.duration > 0) {
           fullDuration = video.duration;
           startTime = Math.max(0, fullDuration - clipSeconds);
-          // Park video at the start of the clip
           video.currentTime = startTime;
           targetTime = startTime;
         }
       }
 
       video.addEventListener('loadedmetadata', initTimes);
-      // Fallback if metadata already loaded
       if (video.readyState >= 1) initTimes();
 
       window.addEventListener('scroll', () => {
@@ -935,7 +934,6 @@
         if (scrollDistance > 0) {
           const currentScroll = -rect.top;
           const progress = Math.min(Math.max(currentScroll / scrollDistance, 0), 1);
-          // Map 0→1 to startTime→fullDuration
           targetTime = startTime + progress * clipSeconds;
         }
       }, { passive: true });
@@ -947,14 +945,15 @@
             video.currentTime += diff * 0.25;
           }
 
-          // Near the very end (last 0.15s), fade out to reveal pure white background
-          const fadeThreshold = fullDuration - 0.15;
-          if (video.currentTime >= fadeThreshold) {
-            video.style.opacity = '0';
-            if (overlay) overlay.style.opacity = '0';
-          } else {
-            video.style.opacity = '1';
-            if (overlay) overlay.style.opacity = '1';
+          const videoFadeThreshold = fullDuration - 0.15;
+          const overlayFadeThreshold = fullDuration - 0.15 - overlayEarlyFade;
+
+          // Fade video at end
+          video.style.opacity = video.currentTime >= videoFadeThreshold ? '0' : '1';
+
+          // Fade overlay earlier if overlayEarlyFade > 0
+          if (overlay) {
+            overlay.style.opacity = video.currentTime >= overlayFadeThreshold ? '0' : '1';
           }
         }
         requestAnimationFrame(loop);
@@ -962,8 +961,8 @@
       requestAnimationFrame(loop);
     }
 
-    setupScrollScrubVideo('detomaso-1', 'detomasoVideo', 'detomasoOverlay', 5.0);
-    setupScrollScrubVideo('landrover-1', 'landroverVideo', 'landroverOverlay', 5.0);
+    setupScrollScrubVideo('detomaso-1', 'detomasoVideo', 'detomasoOverlay', 5.0, 0);
+    setupScrollScrubVideo('landrover-1', 'landroverVideo', 'landroverOverlay', 5.0, 0.7);
 
   </script>
 </body>
