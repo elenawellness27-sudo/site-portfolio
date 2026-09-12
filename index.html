@@ -1,120 +1,533 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Portfolio – Paloma</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio — Paloma</title>
+  <style>
+    /* ─── Reset & Base ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black: #0f0f0f;
+      --white: #ffffff;
+      --gray: #6b6b6b;
+      --light: #f4f4f2;
+      --accent: #c8a98a;
+      --serif: 'Georgia', 'Times New Roman', serif;
+      --sans: 'Helvetica Neue', Arial, sans-serif;
+    }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      background: var(--white);
+      color: var(--black);
+      font-family: var(--sans);
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
 
-        html, body {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            background-color: #1a1a1a;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-        }
+    /* ─── NAVBAR ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      height: 64px;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      transition: background 0.3s;
+    }
+    .nav-brand {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 20px;
+      letter-spacing: 0.02em;
+      color: var(--black);
+    }
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .nav-links a {
+      color: var(--gray);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--black); }
+    .nav-dl {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: 1px solid var(--black);
+      padding: 8px 18px;
+      border-radius: 2px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-dl:hover { background: var(--black); color: var(--white); }
 
-        /* ─── Barre du haut (optionnelle, très discrète) ─── */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 48px;
-            background: rgba(20, 20, 20, 0.92);
-            backdrop-filter: blur(8px);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 24px;
-            z-index: 100;
-            border-bottom: 1px solid rgba(255,255,255,0.08);
-        }
+    /* ─── HERO ─── */
+    .hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding-bottom: 80px;
+      text-align: center;
+      background: var(--white);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -54%);
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: clamp(80px, 14vw, 180px);
+      font-weight: 400;
+      color: var(--light);
+      white-space: nowrap;
+      user-select: none;
+      pointer-events: none;
+      letter-spacing: -0.03em;
+      transition: transform 0.1s linear;
+    }
+    .hero-content { position: relative; z-index: 2; }
+    .hero-eyebrow {
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 24px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.8s 0.2s forwards;
+    }
+    .hero-title {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: clamp(40px, 6vw, 80px);
+      font-weight: 400;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--black);
+      margin-bottom: 32px;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 0.9s 0.4s forwards;
+    }
+    .hero-sub {
+      font-size: 15px;
+      color: var(--gray);
+      max-width: 480px;
+      line-height: 1.7;
+      margin: 0 auto 48px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.9s 0.6s forwards;
+    }
+    .hero-scroll {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      opacity: 0;
+      animation: fadeUp 0.9s 1s forwards;
+    }
+    .hero-scroll span {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gray);
+    }
+    .scroll-line {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, var(--gray), transparent);
+      animation: scrollPulse 2s 1.5s infinite;
+    }
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.1); }
+    }
 
-        header .brand {
-            color: #fff;
-            font-weight: 700;
-            font-size: 16px;
-            letter-spacing: 0.04em;
-        }
+    /* ─── DIVIDER ─── */
+    .section-divider {
+      width: 40px;
+      height: 1px;
+      background: var(--black);
+      margin: 24px auto;
+    }
 
-        header a.dl {
-            color: rgba(255,255,255,0.6);
-            text-decoration: none;
-            font-size: 13px;
-            border: 1px solid rgba(255,255,255,0.2);
-            padding: 4px 12px;
-            border-radius: 6px;
-            transition: all 0.2s;
-        }
+    /* ─── SECTION: ABOUT ─── */
+    .section {
+      padding: 140px 48px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .section-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 16px;
+    }
+    .section-title-serif {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: clamp(32px, 4vw, 56px);
+      font-weight: 400;
+      line-height: 1.15;
+      margin-bottom: 40px;
+      letter-spacing: -0.01em;
+    }
+    .section-body {
+      font-size: 17px;
+      line-height: 1.8;
+      color: var(--gray);
+      max-width: 620px;
+    }
 
-        header a.dl:hover {
-            color: #fff;
-            border-color: rgba(255,255,255,0.6);
-        }
+    /* ─── FULL-WIDTH BAND ─── */
+    .band {
+      background: var(--light);
+      padding: 120px 48px;
+    }
+    .band-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
 
-        /* ─── Le PDF prend tout l'espace sous la barre ─── */
-        #pdf-frame {
-            position: fixed;
-            top: 48px;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            width: 100%;
-            height: calc(100% - 48px);
-            border: none;
-        }
+    /* ─── PROJETS GRID ─── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 2px;
+      margin-top: 80px;
+    }
+    .project-card {
+      position: relative;
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      background: var(--light);
+      cursor: pointer;
+    }
+    .project-card-inner {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 32px;
+      background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+    .project-card:hover .project-card-inner { opacity: 1; }
+    .project-card-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 18px;
+      color: var(--gray);
+      transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+    .project-card:hover .project-card-placeholder { transform: scale(1.04); }
+    .project-title {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 22px;
+      color: white;
+      margin-bottom: 6px;
+    }
+    .project-tag {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+    }
 
-        /* Fallback si le navigateur ne supporte pas l'embed PDF */
-        .fallback {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            color: #aaa;
-            gap: 16px;
-            text-align: center;
-            padding: 32px;
-        }
+    /* ─── COMPÉTENCES ─── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 48px;
+      margin-top: 64px;
+    }
+    .skill-item { border-top: 1px solid rgba(0,0,0,0.12); padding-top: 24px; }
+    .skill-label {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 12px;
+    }
+    .skill-name {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 22px;
+      color: var(--black);
+    }
 
-        .fallback a {
-            color: #fff;
-            background: #444;
-            padding: 12px 24px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-        }
-    </style>
+    /* ─── CONTACT ─── */
+    .contact-section {
+      text-align: center;
+      padding: 160px 48px;
+      background: var(--black);
+      color: var(--white);
+    }
+    .contact-title {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: clamp(40px, 6vw, 80px);
+      font-weight: 400;
+      margin-bottom: 32px;
+      letter-spacing: -0.02em;
+    }
+    .contact-sub {
+      color: rgba(255,255,255,0.5);
+      font-size: 15px;
+      line-height: 1.7;
+      max-width: 440px;
+      margin: 0 auto 48px;
+    }
+    .contact-email {
+      display: inline-block;
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(255,255,255,0.4);
+      padding-bottom: 4px;
+      color: var(--white);
+      transition: border-color 0.2s;
+    }
+    .contact-email:hover { border-color: var(--white); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--black);
+      color: rgba(255,255,255,0.3);
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 32px 48px;
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    /* ─── SCROLL REVEAL ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(48px);
+      transition: opacity 0.9s cubic-bezier(0.25,0.46,0.45,0.94),
+                  transform 0.9s cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.22s; }
+    .reveal-delay-3 { transition-delay: 0.36s; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      nav { padding: 0 24px; }
+      .nav-links { display: none; }
+      .section { padding: 80px 24px; }
+      .band { padding: 80px 24px; }
+      .skills-grid { grid-template-columns: 1fr; gap: 32px; }
+      .contact-section { padding: 100px 24px; }
+      footer { flex-direction: column; gap: 8px; text-align: center; }
+    }
+  </style>
 </head>
 <body>
 
-    <header>
-        <span class="brand">Paloma — Portfolio</span>
-        <a class="dl" href="portfolio_compressed_small.pdf" download="Portfolio_Paloma.pdf">⬇ Télécharger</a>
-    </header>
+  <!-- ─── NAVBAR ─── -->
+  <nav>
+    <span class="nav-brand">Paloma</span>
+    <ul class="nav-links">
+      <li><a href="#about">À propos</a></li>
+      <li><a href="#projets">Projets</a></li>
+      <li><a href="#competences">Compétences</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a class="nav-dl" href="portfolio_compressed_small.pdf" download="Portfolio_Paloma.pdf">
+      ↓ Portfolio PDF
+    </a>
+  </nav>
 
-    <!-- Le PDF s'affiche directement comme page principale -->
-    <iframe
-        id="pdf-frame"
-        src="portfolio_compressed_small.pdf"
-        type="application/pdf"
-        title="Portfolio Paloma"
-    ></iframe>
+  <!-- ─── HERO ─── -->
+  <section class="hero" id="top">
+    <div class="hero-bg-text" id="heroBgText">Portfolio</div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Designer & Créatrice</p>
+      <h1 class="hero-title">Créative, passionnée<br>et prête à innover.</h1>
+      <p class="hero-sub">Bienvenue sur mon portfolio. Je conçois des expériences visuelles qui racontent des histoires et laissent une empreinte durable.</p>
+      <div class="hero-scroll">
+        <span>Défiler</span>
+        <div class="scroll-line"></div>
+      </div>
+    </div>
+  </section>
 
-    <!-- Fallback pour mobile où l'iframe PDF ne marche pas -->
-    <noscript>
-        <div class="fallback" style="display:flex;">
-            <p>Ton navigateur ne peut pas afficher le PDF directement.</p>
-            <a href="portfolio_compressed_small.pdf">📄 Ouvrir le portfolio</a>
+  <!-- ─── À PROPOS ─── -->
+  <section class="section" id="about">
+    <div class="reveal">
+      <p class="section-eyebrow">À propos</p>
+      <h2 class="section-title-serif">Une approche créative<br>guidée par l'intention.</h2>
+      <div class="section-divider"></div>
+    </div>
+    <div class="reveal reveal-delay-1">
+      <p class="section-body">
+        Diplômée de CREAPOLE, je crée des expériences visuelles au croisement du design, de la stratégie et de l'émotion. Chaque projet est une opportunité de transformer une idée en quelque chose de mémorable.
+      </p>
+    </div>
+  </section>
+
+  <!-- ─── PROJETS ─── -->
+  <div class="band" id="projets">
+    <div class="band-inner">
+      <div class="reveal">
+        <p class="section-eyebrow">Projets</p>
+        <h2 class="section-title-serif">Sélection de travaux.</h2>
+      </div>
+      <div class="projects-grid">
+        <!-- Projet 1 -->
+        <div class="project-card reveal reveal-delay-1">
+          <div class="project-card-placeholder">Projet 01</div>
+          <div class="project-card-inner">
+            <div class="project-title">Projet 01</div>
+            <div class="project-tag">Design · Branding</div>
+          </div>
         </div>
-    </noscript>
+        <!-- Projet 2 -->
+        <div class="project-card reveal reveal-delay-2">
+          <div class="project-card-placeholder">Projet 02</div>
+          <div class="project-card-inner">
+            <div class="project-title">Projet 02</div>
+            <div class="project-tag">Direction artistique</div>
+          </div>
+        </div>
+        <!-- Projet 3 -->
+        <div class="project-card reveal reveal-delay-3">
+          <div class="project-card-placeholder">Projet 03</div>
+          <div class="project-card-inner">
+            <div class="project-title">Projet 03</div>
+            <div class="project-tag">Identité visuelle</div>
+          </div>
+        </div>
+      </div>
+      <p style="margin-top:40px; font-size:13px; color:var(--gray); text-align:center;" class="reveal reveal-delay-1">
+        → Dis-moi tes projets et envoie-moi tes images pour que je les intègre ici.
+      </p>
+    </div>
+  </div>
+
+  <!-- ─── COMPÉTENCES ─── -->
+  <section class="section" id="competences">
+    <div class="reveal">
+      <p class="section-eyebrow">Compétences</p>
+      <h2 class="section-title-serif">Domaines d'expertise.</h2>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-item reveal reveal-delay-1">
+        <p class="skill-label">01</p>
+        <p class="skill-name">Direction artistique</p>
+      </div>
+      <div class="skill-item reveal reveal-delay-2">
+        <p class="skill-label">02</p>
+        <p class="skill-name">Design graphique</p>
+      </div>
+      <div class="skill-item reveal reveal-delay-3">
+        <p class="skill-label">03</p>
+        <p class="skill-name">Identité de marque</p>
+      </div>
+      <div class="skill-item reveal reveal-delay-1">
+        <p class="skill-label">04</p>
+        <p class="skill-name">Typographie</p>
+      </div>
+      <div class="skill-item reveal reveal-delay-2">
+        <p class="skill-label">05</p>
+        <p class="skill-name">Photographie</p>
+      </div>
+      <div class="skill-item reveal reveal-delay-3">
+        <p class="skill-label">06</p>
+        <p class="skill-name">Motion design</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CONTACT ─── -->
+  <section class="contact-section" id="contact">
+    <h2 class="contact-title reveal">Travaillons ensemble.</h2>
+    <p class="contact-sub reveal reveal-delay-1">Tu as un projet ? Une idée ? Je suis disponible pour toute collaboration ou opportunité.</p>
+    <a href="mailto:paloma@example.com" class="contact-email reveal reveal-delay-2">paloma@example.com</a>
+  </section>
+
+  <!-- ─── FOOTER ─── -->
+  <footer>
+    <span>© 2026 Paloma — Tous droits réservés</span>
+    <a href="portfolio_compressed_small.pdf" download="Portfolio_Paloma.pdf" style="color:rgba(255,255,255,0.3); transition:color 0.2s;" onmouseover="this.style.color='rgba(255,255,255,0.8)'" onmouseout="this.style.color='rgba(255,255,255,0.3)'">Télécharger le portfolio PDF ↓</a>
+  </footer>
+
+  <!-- ─── JAVASCRIPT ANIMATIONS ─── -->
+  <script>
+    // ── Parallax hero bg text
+    const bgText = document.getElementById('heroBgText');
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      bgText.style.transform = `translate(-50%, calc(-54% + ${y * 0.3}px))`;
+    }, { passive: true });
+
+    // ── Scroll reveal via IntersectionObserver
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => observer.observe(el));
+
+    // ── Smooth active nav on scroll
+    const sections = document.querySelectorAll('section[id], div[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+    const navEl = document.querySelector('nav');
+    window.addEventListener('scroll', () => {
+      // nav background
+      if (window.scrollY > 40) {
+        navEl.style.background = 'rgba(255,255,255,0.97)';
+      } else {
+        navEl.style.background = 'rgba(255,255,255,0.92)';
+      }
+    }, { passive: true });
+  </script>
 
 </body>
 </html>
