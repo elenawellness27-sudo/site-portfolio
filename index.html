@@ -41,21 +41,37 @@
       transition: transform 0.12s ease-out, width 0.25s, height 0.25s, border-color 0.25s;
     }
 
-    /* ─── TOP NAVIGATION ─── */
+    /* ─── TOP NAVIGATION (APPLE iOS LIQUID GLASS STYLE) ─── */
     header.site-nav {
       position: fixed;
-      top: 0; left: 0; right: 0;
-      height: 64px;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 48px);
+      max-width: 1380px;
+      height: 56px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 4vw;
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      padding: 0 24px;
+      background: rgba(255, 255, 255, 0.45);
+      backdrop-filter: blur(28px) saturate(190%);
+      -webkit-backdrop-filter: blur(28px) saturate(190%);
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      box-shadow: 
+        0 8px 32px 0 rgba(0, 0, 0, 0.06),
+        0 1px 2px 0 rgba(0, 0, 0, 0.04),
+        inset 0 1px 1px 0 rgba(255, 255, 255, 0.8);
       z-index: 9000;
-      border-bottom: 1px solid rgba(0,0,0,0.05);
-      transition: background 0.3s;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    header.site-nav:hover {
+      background: rgba(255, 255, 255, 0.55);
+      box-shadow: 
+        0 12px 40px 0 rgba(0, 0, 0, 0.08),
+        0 2px 4px 0 rgba(0, 0, 0, 0.04),
+        inset 0 1px 1px 0 rgba(255, 255, 255, 0.9);
     }
     .brand {
       display: flex;
@@ -66,41 +82,36 @@
     .brand-title {
       font-size: 13px;
       font-weight: 700;
-      letter-spacing: 0.15em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
     }
     .brand-sub {
-      font-size: 10px;
-      color: #888888;
-      letter-spacing: 0.1em;
+      font-size: 9.5px;
+      color: #777777;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
     }
     .nav-items {
       display: flex;
-      gap: 32px;
+      gap: 28px;
       list-style: none;
     }
     .nav-items a {
       font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.12em;
+      font-weight: 600;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: #666;
+      color: #555;
       text-decoration: none;
       position: relative;
-      padding: 4px 0;
-      transition: color 0.2s;
+      padding: 6px 10px;
+      border-radius: 20px;
+      transition: all 0.25s ease;
     }
-    .nav-items a::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0;
-      width: 0%; height: 1px;
-      background: #000;
-      transition: width 0.3s ease;
+    .nav-items a:hover {
+      color: #000;
+      background: rgba(255, 255, 255, 0.5);
     }
-    .nav-items a:hover { color: #000; }
-    .nav-items a:hover::after { width: 100%; }
 
     .btn-pdf {
       display: inline-flex;
@@ -108,34 +119,38 @@
       gap: 8px;
       font-size: 11px;
       font-weight: 600;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
-      padding: 8px 18px;
-      border: 1px solid #111;
+      padding: 7px 16px;
+      background: rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(0, 0, 0, 0.08);
       border-radius: 999px;
       color: #111;
       text-decoration: none;
-      transition: all 0.25s ease;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
     }
     .btn-pdf:hover {
-      background: #111;
+      background: #000;
       color: #fff;
+      border-color: #000;
       transform: translateY(-1px);
-      box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.15);
     }
 
-    /* ─── SCROLL PROGRESS INDICATOR ─── */
+    /* ─── SCROLL PROGRESS INDICATOR (INTEGRATED GLASS PILL) ─── */
     .progress-bar-container {
       position: fixed;
-      top: 64px; left: 0; right: 0;
-      height: 2px;
+      top: 0; left: 0; right: 0;
+      height: 3px;
       background: transparent;
-      z-index: 8999;
+      z-index: 9999;
     }
     .progress-bar-line {
       height: 100%;
       width: 0%;
-      background: #111;
+      background: linear-gradient(90deg, #0d8b8f, #b81c25, #587834);
       transition: width 0.1s linear;
     }
 
@@ -285,7 +300,7 @@
       pointer-events: none;
       transition: opacity 0.3s ease;
     }
-    .detomaso-hero-overlay {
+    .project-video-overlay {
       position: absolute;
       top: 50%;
       right: 10vw;
@@ -298,7 +313,7 @@
       user-select: none;
       transition: opacity 0.3s ease;
     }
-    .detomaso-hero-num {
+    .project-video-overlay-num {
       font-size: clamp(36px, 4.2vw, 68px);
       font-weight: 700;
       line-height: 1;
@@ -307,7 +322,7 @@
       color: #ffffff;
       text-shadow: 0 4px 20px rgba(0,0,0,0.6);
     }
-    .detomaso-hero-brief-title {
+    .project-video-overlay-title {
       font-size: 14px;
       font-weight: 700;
       letter-spacing: 0.16em;
@@ -316,7 +331,7 @@
       color: #ffffff;
       text-shadow: 0 2px 10px rgba(0,0,0,0.6);
     }
-    .detomaso-hero-brief-desc {
+    .project-video-overlay-desc {
       font-size: 15px;
       font-weight: 300;
       line-height: 1.6;
@@ -591,10 +606,10 @@
     <section class="scroll-video-section" id="detomaso-1">
       <div class="sticky-video-container">
         <video id="detomasoVideo" class="scrub-video" src="artplayer.org_upscaled_1789225303813.mp4" muted playsinline preload="auto"></video>
-        <div class="detomaso-hero-overlay" id="detomasoOverlay">
-          <div class="detomaso-hero-num">02.</div>
-          <div class="detomaso-hero-brief-title">BRIEF.</div>
-          <p class="detomaso-hero-brief-desc">
+        <div class="project-video-overlay" id="detomasoOverlay">
+          <div class="project-video-overlay-num">02.</div>
+          <div class="project-video-overlay-title">BRIEF.</div>
+          <p class="project-video-overlay-desc">
             The ultimate automotive challenge: remastering the legendary De Tomaso Pantera by fusing its raw, retro brutalism with cutting-edge modern engineering
           </p>
         </div>
@@ -662,11 +677,16 @@
       <p class="project-hero-desc">Création d'un véhicule d'exploration outdoor offrant une connexion organique et sensorielle avec la nature environnante.</p>
     </div>
 
-    <!-- Pages Land Rover (18 à 26) -->
-    <section class="spread-section" id="landrover-1">
-      <div class="spread-container">
-        <div class="spread-card" data-anim="fade-scale">
-          <img class="spread-image" src="pages_ordered/page_18.png" alt="Land Rover Title & Landscape" loading="lazy" />
+    <!-- Land Rover Video Hero Cover with Scroll-Scrubbing -->
+    <section class="scroll-video-section" id="landrover-1">
+      <div class="sticky-video-container">
+        <video id="landroverVideo" class="scrub-video" src="artplayer.org_upscaled_1789226753401.mp4" muted playsinline preload="auto"></video>
+        <div class="project-video-overlay" id="landroverOverlay">
+          <div class="project-video-overlay-num">03.</div>
+          <div class="project-video-overlay-title">BRIEF.</div>
+          <p class="project-video-overlay-desc">
+            Create a vehicle that allows to explore nature while maintaining a strong connection with their environment.
+          </p>
         </div>
       </div>
     </section>
@@ -877,62 +897,62 @@
       }
     }, { passive: true });
 
-    // ─── SMOOTH SCROLL-DRIVEN VIDEO SCRUBBING (DE TOMASO) ───
-    const detomasoSection = document.getElementById('detomaso-1');
-    const detomasoVideo = document.getElementById('detomasoVideo');
-    const detomasoOverlay = document.getElementById('detomasoOverlay');
-    let targetTime = 0;
-    let videoDuration = 0;
-    const MAX_VIDEO_TIME = 5.0; // Cut off at 5 seconds into pure white background
+    // ─── SMOOTH SCROLL-DRIVEN VIDEO SCRUBBING (DE TOMASO & LAND ROVER) ───
+    function setupScrollScrubVideo(sectionId, videoId, overlayId, maxSeconds = 5.0) {
+      const section = document.getElementById(sectionId);
+      const video = document.getElementById(videoId);
+      const overlay = document.getElementById(overlayId);
+      let targetTime = 0;
+      let duration = 0;
 
-    if (detomasoVideo && detomasoSection) {
-      detomasoVideo.addEventListener('loadedmetadata', () => {
-        videoDuration = Math.min(detomasoVideo.duration, MAX_VIDEO_TIME);
+      if (!video || !section) return;
+
+      video.addEventListener('loadedmetadata', () => {
+        duration = Math.min(video.duration, maxSeconds);
       });
 
-      // Update target playback position based on scroll within the section
       window.addEventListener('scroll', () => {
-        if (!videoDuration && detomasoVideo.duration) {
-          videoDuration = Math.min(detomasoVideo.duration, MAX_VIDEO_TIME);
+        if (!duration && video.duration) {
+          duration = Math.min(video.duration, maxSeconds);
         }
-        if (!videoDuration) return;
+        if (!duration) return;
 
-        const rect = detomasoSection.getBoundingClientRect();
-        const sectionHeight = detomasoSection.offsetHeight;
+        const rect = section.getBoundingClientRect();
+        const sectionHeight = section.offsetHeight;
         const windowHeight = window.innerHeight;
-        
-        // Progress from when section enters top of viewport (rect.top <= 0)
-        // to when section has scrolled to bottom (rect.top <= -(sectionHeight - windowHeight))
         const scrollDistance = sectionHeight - windowHeight;
+
         if (scrollDistance > 0) {
           const currentScroll = -rect.top;
           const progress = Math.min(Math.max(currentScroll / scrollDistance, 0), 1);
-          targetTime = Math.min(progress * videoDuration, MAX_VIDEO_TIME);
+          targetTime = Math.min(progress * duration, maxSeconds);
         }
       }, { passive: true });
 
-      // Smooth RAF loop to avoid stutter and keep playback butter-smooth
-      function updateVideoScrub() {
-        if (videoDuration && detomasoVideo.readyState >= 2) {
-          // Linear interpolation / easing towards targetTime
-          const diff = targetTime - detomasoVideo.currentTime;
+      function loop() {
+        if (duration && video.readyState >= 2) {
+          const diff = targetTime - video.currentTime;
           if (Math.abs(diff) > 0.01) {
-            detomasoVideo.currentTime += diff * 0.25;
+            video.currentTime += diff * 0.25;
           }
 
-          // At or past 4.9 seconds, fade out video & text overlay cleanly to reveal pure white background
-          if (detomasoVideo.currentTime >= 4.85) {
-            detomasoVideo.style.opacity = '0';
-            if (detomasoOverlay) detomasoOverlay.style.opacity = '0';
+          // At or past 4.85 seconds, fade out smoothly into pure white background
+          if (video.currentTime >= 4.85) {
+            video.style.opacity = '0';
+            if (overlay) overlay.style.opacity = '0';
           } else {
-            detomasoVideo.style.opacity = '1';
-            if (detomasoOverlay) detomasoOverlay.style.opacity = '1';
+            video.style.opacity = '1';
+            if (overlay) overlay.style.opacity = '1';
           }
         }
-        requestAnimationFrame(updateVideoScrub);
+        requestAnimationFrame(loop);
       }
-      requestAnimationFrame(updateVideoScrub);
+      requestAnimationFrame(loop);
     }
+
+    setupScrollScrubVideo('detomaso-1', 'detomasoVideo', 'detomasoOverlay', 5.0);
+    setupScrollScrubVideo('landrover-1', 'landroverVideo', 'landroverOverlay', 5.0);
+
   </script>
 </body>
 </html>
