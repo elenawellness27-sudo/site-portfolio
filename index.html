@@ -898,24 +898,34 @@
     }, { passive: true });
 
     // ─── SMOOTH SCROLL-DRIVEN VIDEO SCRUBBING (DE TOMASO & LAND ROVER) ───
-    function setupScrollScrubVideo(sectionId, videoId, overlayId, maxSeconds = 5.0) {
+    // Plays the LAST `clipSeconds` of the video, scrubbed by scroll.
+    function setupScrollScrubVideo(sectionId, videoId, overlayId, clipSeconds = 5.0) {
       const section = document.getElementById(sectionId);
       const video = document.getElementById(videoId);
       const overlay = document.getElementById(overlayId);
       let targetTime = 0;
-      let duration = 0;
+      let fullDuration = 0;
+      let startTime = 0; // = fullDuration - clipSeconds
 
       if (!video || !section) return;
 
-      video.addEventListener('loadedmetadata', () => {
-        duration = Math.min(video.duration, maxSeconds);
-      });
+      function initTimes() {
+        if (video.duration && video.duration > 0) {
+          fullDuration = video.duration;
+          startTime = Math.max(0, fullDuration - clipSeconds);
+          // Park video at the start of the clip
+          video.currentTime = startTime;
+          targetTime = startTime;
+        }
+      }
+
+      video.addEventListener('loadedmetadata', initTimes);
+      // Fallback if metadata already loaded
+      if (video.readyState >= 1) initTimes();
 
       window.addEventListener('scroll', () => {
-        if (!duration && video.duration) {
-          duration = Math.min(video.duration, maxSeconds);
-        }
-        if (!duration) return;
+        if (!fullDuration && video.duration) initTimes();
+        if (!fullDuration) return;
 
         const rect = section.getBoundingClientRect();
         const sectionHeight = section.offsetHeight;
@@ -925,19 +935,21 @@
         if (scrollDistance > 0) {
           const currentScroll = -rect.top;
           const progress = Math.min(Math.max(currentScroll / scrollDistance, 0), 1);
-          targetTime = Math.min(progress * duration, maxSeconds);
+          // Map 0→1 to startTime→fullDuration
+          targetTime = startTime + progress * clipSeconds;
         }
       }, { passive: true });
 
       function loop() {
-        if (duration && video.readyState >= 2) {
+        if (fullDuration && video.readyState >= 2) {
           const diff = targetTime - video.currentTime;
           if (Math.abs(diff) > 0.01) {
             video.currentTime += diff * 0.25;
           }
 
-          // At or past 4.85 seconds, fade out smoothly into pure white background
-          if (video.currentTime >= 4.85) {
+          // Near the very end (last 0.15s), fade out to reveal pure white background
+          const fadeThreshold = fullDuration - 0.15;
+          if (video.currentTime >= fadeThreshold) {
             video.style.opacity = '0';
             if (overlay) overlay.style.opacity = '0';
           } else {
