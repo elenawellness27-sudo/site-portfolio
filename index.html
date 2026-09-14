@@ -982,16 +982,14 @@
                   transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0ms;
     }
     .lr-def-left {
-      /* Gauche: 3 petites photos + rendu 3D siège vert + croquis wireframe siège */
-      clip-path: inset(0 57% 0 0);
+      /* Defining: monte depuis bas */
       opacity: 0;
       transform: translateX(-30px);
       transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1) 300ms,
                   transform 0.65s cubic-bezier(0.16, 1, 0.3, 1) 300ms;
     }
     .lr-def-right {
-      /* Droite: cockpit cutaway isométrique avec flèches et détails */
-      clip-path: inset(0 0 0 72%);
+      /* Defining: descend depuis haut */
       opacity: 0;
       transform: translateX(35px) scale(0.97);
       transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1) 560ms,
@@ -1014,7 +1012,43 @@
 
 
 
-    /* ─── FOOTER & CONTACT ─── */
+    /* LR Usage & extra LR anim rules */
+    .lr-usage-top {
+      opacity: 0;
+      transform: translateY(-30px) scale(0.98);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0ms,
+                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0ms;
+    }
+    .lr-usage-bot {
+      opacity: 0;
+      transform: translateY(30px) scale(0.98);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1) 300ms,
+                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 300ms;
+    }
+    .spread-frame.active .lr-usage-top,
+    .spread-frame.active .lr-usage-bot {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    .lr-res-left {
+      opacity: 0;
+      transform: translateX(-40px) scale(0.97);
+      transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1) 0ms,
+                  transform 0.75s cubic-bezier(0.16, 1, 0.3, 1) 0ms;
+    }
+    .lr-res-right {
+      opacity: 0;
+      transform: translateX(40px) scale(0.97);
+      transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1) 350ms,
+                  transform 0.75s cubic-bezier(0.16, 1, 0.3, 1) 350ms;
+    }
+    .spread-frame.active .lr-res-left,
+    .spread-frame.active .lr-res-right {
+      opacity: 1;
+      transform: translateX(0) scale(1);
+    }
+
+        /* ─── FOOTER & CONTACT ─── */
     footer.site-footer {
       background: #080808;
       color: #ffffff;
@@ -1537,7 +1571,7 @@
       rootMargin: '-12% 0px -12% 0px'
     });
 
-    ['insp-frame', 'research-frame', 'defining-frame', 'usage-frame', 'dt-insp-frame', 'dt-research-frame', 'dt-volume-frame', 'dt-def-frame', 'lr-insp-frame', 'lr-refining-frame', 'lr-research-frame', 'lr-def-frame'].forEach(id => {
+    ['insp-frame', 'research-frame', 'defining-frame', 'usage-frame', 'dt-insp-frame', 'dt-research-frame', 'dt-volume-frame', 'dt-def-frame', 'lr-insp-frame', 'lr-research-frame', 'lr-defining-frame', 'lr-usage-frame'].forEach(id => {
       const el = document.getElementById(id);
       if (el) frameObserver.observe(el);
     });
