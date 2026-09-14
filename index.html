@@ -899,24 +899,24 @@
        croquis cockpit + plante (10-54%), DROITE: grand dessin vue de profil intérieur voiture (54-100%)
        Stratégie: Gauche d'abord, centre ensuite, grand dessin droite en dernier */
     .lr-ref-left {
-      /* Colonne gauche: 3 petites photos nature */
-      clip-path: inset(0 90% 0 0);
+      /* Colonne gauche: 3 petites photos nature (0-10.5%) */
+      clip-path: inset(0 89.5% 0 0);
       opacity: 0;
       transform: translateX(-20px);
       transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0ms,
                   transform 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0ms;
     }
     .lr-ref-center {
-      /* Centre: dessin paysage + croquis cockpit vue dessus + dessin plante */
-      clip-path: inset(0 47% 0 10%);
+      /* Centre: croquis volant, planche de bord & habitacle (10.5-54.5%) */
+      clip-path: inset(0 45.5% 0 10.5%);
       opacity: 0;
       transform: translateY(25px);
       transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1) 200ms,
                   transform 0.65s cubic-bezier(0.16, 1, 0.3, 1) 200ms;
     }
     .lr-ref-right {
-      /* Droite: grand dessin vue profil véhicule + écrans + détails */
-      clip-path: inset(0 0 0 53%);
+      /* Droite: moodboard cockpit noir + cercle vert LR (54.5-100%) */
+      clip-path: inset(0 0 0 54.5%);
       opacity: 0;
       transform: translateX(40px) scale(0.97);
       transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1) 480ms,
@@ -937,21 +937,19 @@
       transform: translateX(0) translateY(0) scale(1);
     }
 
-    /* ── 3. LR RESEARCH (page_23.png)
-       Layout: GAUCHE: 3 photos + croquis siège + schémas structure (0-55%), DROITE: grands collages
-       photo avec cercle noir + cercle vert (55-100%)
-       Stratégie: salve gauche puis big reveal droite */
+    /* ── 3. LR DEFINING (page_23.png)
+       Layout: GAUCHE: photos + croquis sièges & élévation (0-56.5%), DROITE: rendu 3D vert (56.5-100%) */
     .lr-res-left {
-      /* Gauche: tout le bloc gauche (photos + croquis siège + structure détail) */
-      clip-path: inset(0 46% 0 0);
+      /* Gauche: bloc croquis sièges, filaires et élévations */
+      clip-path: inset(0 43.5% 0 0);
       opacity: 0;
       transform: translateX(-25px);
       transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0ms,
                   transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0ms;
     }
     .lr-res-right {
-      /* Droite: grands collages photo Land Rover avec circles callouts */
-      clip-path: inset(0 0 0 54%);
+      /* Droite: grand rendu 3D habitacle vert */
+      clip-path: inset(0 0 0 56.5%);
       opacity: 0;
       transform: translateX(40px) scale(0.97);
       transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1) 450ms,
