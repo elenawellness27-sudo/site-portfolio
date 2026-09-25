@@ -1139,13 +1139,28 @@
     .hamburger.open span:nth-child(2) { opacity: 0; }
     .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
+    .mobile-only {
+      display: none !important;
+    }
+    .desktop-only {
+      display: block;
+    }
+
     /* ═══════════════════════════════════════════════════════════════
        MOBILE RESPONSIVE (≤ 768px)
-       — Désactive les animations cinématiques
-       — Affiche chaque page InDesign en image simple scrollable
+       — Désactive les cinématiques vidéo & animations
+       — Affiche les vraies couvertures et planches InDesign en format classique
        — Adapte nav, cover, footer
     ═══════════════════════════════════════════════════════════════ */
     @media (max-width: 768px) {
+
+      .desktop-only,
+      .scroll-video-section {
+        display: none !important;
+      }
+      .mobile-only {
+        display: flex !important;
+      }
 
       /* ── Body & cursor ── */
       body { cursor: auto; }
@@ -1188,15 +1203,6 @@
         letter-spacing: 0.04em;
         color: #111;
         padding: 8px 0;
-      }
-      /* Add PDF download link in the mobile overlay */
-      .nav-items::after {
-        content: '↓ Download PDF';
-        font-size: 13px;
-        color: #555;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        margin-top: 16px;
       }
 
       /* ── Cover page ── */
@@ -1253,7 +1259,7 @@
         width: 100%;
       }
 
-      /* All spread-cards: kill all desktop animations, show immediately */
+      /* All spread-cards: full width, natural flow */
       .spread-card,
       .spread-card[data-anim],
       .spread-card[data-anim="zoom-in"],
@@ -1280,7 +1286,7 @@
         transition: none !important;
       }
 
-      /* ── Cinematic spread-frames: show full image, kill layering ── */
+      /* ── Spread-frames: show full image cleanly ── */
       .spread-frame {
         position: relative;
         width: 100%;
@@ -1288,7 +1294,6 @@
         overflow: visible;
       }
 
-      /* Show only the FIRST anim-layer, hide all others (they all have same image) */
       .anim-layer {
         position: relative !important;
         clip-path: none !important;
@@ -1297,9 +1302,8 @@
         transition: none !important;
         width: 100%;
         height: auto;
-        display: none; /* hidden by default */
+        display: none;
       }
-      /* Show only the first anim-layer child of each spread-frame */
       .spread-frame > .anim-layer:first-child {
         display: block;
       }
@@ -1309,39 +1313,6 @@
         display: block;
         object-fit: contain;
       }
-
-      /* ── Video hero sections: no scroll-scrubbing, normal flow ── */
-      .scroll-video-section {
-        height: auto;
-        min-height: 70svh;
-        position: relative;
-      }
-      .sticky-video-container {
-        position: relative;
-        top: auto;
-        height: 70svh;
-        min-height: 300px;
-      }
-      .scrub-video {
-        opacity: 1 !important;
-        will-change: unset;
-      }
-
-      /* Video overlay text on mobile: centered, smaller */
-      .project-video-overlay,
-      #chryslerOverlay {
-        right: auto;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        text-align: center;
-        max-width: 85vw;
-        width: 85vw;
-        will-change: unset;
-        opacity: 1 !important;
-      }
-      .project-video-overlay-num { font-size: clamp(28px, 8vw, 48px); margin-bottom: 12px; }
-      .project-video-overlay-title { font-size: 12px; }
-      .project-video-overlay-desc { font-size: 13px; }
 
       /* ── Floating cutout: kill on mobile ── */
       .floating-cutout { display: none !important; }
@@ -1373,11 +1344,11 @@
       <span class="brand-sub">Transportation Design · CREAPOLE 2026</span>
     </a>
     <ul class="nav-items" id="navItems">
-      <li><a href="#page-2" onclick="closeMenu()">Profile</a></li>
-      <li><a href="#chrysler" onclick="closeMenu()">01. Chrysler</a></li>
-      <li><a href="#detomaso" onclick="closeMenu()">02. De Tomaso</a></li>
-      <li><a href="#landrover" onclick="closeMenu()">03. Land Rover</a></li>
-      <li><a href="#contact" onclick="closeMenu()">Contact</a></li>
+      <li><a href="#page-2" onclick="navTo('page-2'); return false;">Profile</a></li>
+      <li><a href="#chrysler" onclick="navTo('chrysler'); return false;">01. Chrysler</a></li>
+      <li><a href="#detomaso" onclick="navTo('detomaso'); return false;">02. De Tomaso</a></li>
+      <li><a href="#landrover" onclick="navTo('landrover'); return false;">03. Land Rover</a></li>
+      <li><a href="#contact" onclick="navTo('contact'); return false;">Contact</a></li>
     </ul>
     <button class="hamburger" id="hamburger" aria-label="Menu" onclick="toggleMenu()">
       <span></span><span></span><span></span>
@@ -1426,8 +1397,8 @@
     <!-- ══════════════════════════════════════════════════════════ -->
     <!-- 01. CHRYSLER PROJECT -->
     <!-- ══════════════════════════════════════════════════════════ -->
-    <!-- Chrysler Video Hero Cover with Scroll-Scrubbing -->
-    <section class="scroll-video-section" id="chrysler">
+    <!-- Desktop Video Hero Cover with Scroll-Scrubbing -->
+    <section class="scroll-video-section desktop-only" id="chrysler">
       <div class="sticky-video-container">
         <video id="chryslerVideo" class="scrub-video" src="artplayer.org_upscaled_1789229198237.mp4" muted playsinline preload="auto"></video>
         <div class="project-video-overlay" id="chryslerOverlay">
@@ -1436,6 +1407,15 @@
           <p class="project-video-overlay-desc">
             The brief was to design a boat together with its trailer, creating a coherent concept adapted for both road and water use.
           </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mobile InDesign Cover Page (Page 04) -->
+    <section class="spread-section mobile-only" id="chrysler-m">
+      <div class="spread-container">
+        <div class="spread-card" data-anim="fade-scale">
+          <img class="spread-image" src="pages_ordered/page_4.webp" alt="Chrysler Brief & Cover" loading="lazy" />
         </div>
       </div>
     </section>
@@ -1530,8 +1510,8 @@
     <!-- ══════════════════════════════════════════════════════════ -->
     <!-- 02. DE TOMASO PROJECT -->
     <!-- ══════════════════════════════════════════════════════════ -->
-    <!-- De Tomaso Video Hero Cover with Scroll-Scrubbing -->
-    <section class="scroll-video-section" id="detomaso">
+    <!-- Desktop Video Hero Cover with Scroll-Scrubbing -->
+    <section class="scroll-video-section desktop-only" id="detomaso">
       <div class="sticky-video-container">
         <video id="detomasoVideo" class="scrub-video" src="artplayer.org_upscaled_1789225303813.mp4" muted playsinline preload="auto"></video>
         <div class="project-video-overlay" id="detomasoOverlay">
@@ -1540,6 +1520,15 @@
           <p class="project-video-overlay-desc">
             The ultimate automotive challenge: remastering the legendary De Tomaso Pantera by fusing its raw, retro brutalism with cutting-edge modern engineering
           </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mobile InDesign Cover Page (Page 11) -->
+    <section class="spread-section mobile-only" id="detomaso-m">
+      <div class="spread-container">
+        <div class="spread-card" data-anim="fade-scale">
+          <img class="spread-image" src="pages_ordered/page_11.webp" alt="De Tomaso Brief & Cover" loading="lazy" />
         </div>
       </div>
     </section>
@@ -1608,8 +1597,8 @@
     <!-- ══════════════════════════════════════════════════════════ -->
     <!-- 03. LAND ROVER PROJECT -->
     <!-- ══════════════════════════════════════════════════════════ -->
-    <!-- Land Rover Video Hero Cover with Scroll-Scrubbing -->
-    <section class="scroll-video-section" id="landrover">
+    <!-- Desktop Video Hero Cover with Scroll-Scrubbing -->
+    <section class="scroll-video-section desktop-only" id="landrover">
       <div class="sticky-video-container">
         <video id="landroverVideo" class="scrub-video" src="landrover_fog_hills.mp4" muted playsinline preload="auto"></video>
         <div class="project-video-overlay" id="landroverOverlay">
@@ -1618,6 +1607,15 @@
           <p class="project-video-overlay-desc">
             Create a vehicle that allows to explore nature while maintaining a strong connection with their environment.
           </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mobile InDesign Cover Page (Page 18) -->
+    <section class="spread-section mobile-only" id="landrover-m">
+      <div class="spread-container">
+        <div class="spread-card" data-anim="fade-scale">
+          <img class="spread-image" src="pages_ordered/page_18.webp" alt="Land Rover Brief & Cover" loading="lazy" />
         </div>
       </div>
     </section>
@@ -1736,7 +1734,7 @@
   <script>
     const isMobile = window.innerWidth <= 768 || ('ontouchstart' in window);
 
-    // ─── HAMBURGER MENU ───
+    // ─── NAVIGATION & HAMBURGER MENU ───
     function toggleMenu() {
       const nav = document.getElementById('navItems');
       const btn = document.getElementById('hamburger');
@@ -1748,6 +1746,14 @@
       const btn = document.getElementById('hamburger');
       nav.classList.remove('open');
       btn.classList.remove('open');
+    }
+    function navTo(id) {
+      const isNarrow = window.innerWidth <= 768;
+      const target = isNarrow ? (document.getElementById(id + '-m') || document.getElementById(id)) : document.getElementById(id);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+      closeMenu();
     }
 
     // ─── CUSTOM CURSOR (desktop only) ───
