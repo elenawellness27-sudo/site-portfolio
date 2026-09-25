@@ -391,7 +391,7 @@
       object-position: center;
       display: block;
       pointer-events: none;
-      transition: opacity 0.3s ease;
+      will-change: opacity;
     }
     .project-video-overlay {
       position: absolute;
@@ -404,7 +404,7 @@
       text-align: left;
       pointer-events: none;
       user-select: none;
-      transition: opacity 0.3s ease;
+      will-change: opacity;
     }
     /* Chrysler only: shift text further right to avoid logo overlap */
     #chryslerOverlay {
@@ -1605,12 +1605,7 @@
     }, { passive: true });
 
     // ─── SMOOTH SCROLL-DRIVEN VIDEO SCRUBBING (CHRYSLER, DE TOMASO, LAND ROVER) ───
-    // fromEnd=false → plays first `clipSeconds` (or full video if large)
-    // fromEnd=true  → plays last `clipSeconds`
-    // overlayEarlyFade: seconds before clip end that the text overlay starts disappearing
-    // fadeDuration: duration of smooth progressive opacity fade
-    // earlyWhiteOffset: reaches 100% pure white this many seconds before clip end
-    function setupScrollScrubVideo(sectionId, videoId, overlayId, clipSeconds = 999, overlayEarlyFade = 0, fromEnd = false, fadeDuration = 0.8, earlyWhiteOffset = 0.5) {
+    function setupScrollScrubVideo(sectionId, videoId, overlayId, clipSeconds = 6.0) {
       const section = document.getElementById(sectionId);
       const video = document.getElementById(videoId);
       const overlay = document.getElementById(overlayId);
@@ -1618,21 +1613,17 @@
       let fullDuration = 0;
       let startTime = 0;
       let endTime = 0;
+      let scrollProgress = 0;
 
       if (!video || !section) return;
 
       function initTimes() {
         if (video.duration && video.duration > 0) {
           fullDuration = video.duration;
-          if (fromEnd) {
-            startTime = Math.max(0, fullDuration - clipSeconds);
-            endTime = fullDuration;
-          } else {
-            startTime = 0;
-            endTime = Math.min(clipSeconds, fullDuration);
-          }
-          video.currentTime = startTime;
-          targetTime = startTime;
+          startTime = 0;
+          endTime = Math.min(clipSeconds, fullDuration);
+          video.currentTime = 0;
+          targetTime = 0;
         }
       }
 
@@ -1650,8 +1641,10 @@
 
         if (scrollDistance > 0) {
           const currentScroll = -rect.top;
-          const progress = Math.min(Math.max(currentScroll / scrollDistance, 0), 1);
-          targetTime = startTime + progress * (endTime - startTime);
+          scrollProgress = Math.min(Math.max(currentScroll / scrollDistance, 0), 1);
+          // Video plays along the first 78% of scroll
+          const scrubProgress = Math.min(scrollProgress / 0.78, 1);
+          targetTime = startTime + scrubProgress * (endTime - startTime);
         }
       }, { passive: true });
 
@@ -1659,32 +1652,31 @@
         if (fullDuration && video.readyState >= 2) {
           const diff = targetTime - video.currentTime;
           if (Math.abs(diff) > 0.01) {
-            video.currentTime += diff * 0.25;
+            video.currentTime += diff * 0.28;
           }
 
-          // Progressive smooth fade to 100% pure white background earlier
-          const fadeEnd = endTime - earlyWhiteOffset;
-          const fadeStart = fadeEnd - fadeDuration;
-
-          if (video.currentTime >= fadeEnd) {
-            video.style.opacity = 0;
-          } else if (video.currentTime > fadeStart) {
-            const vOp = (fadeEnd - video.currentTime) / fadeDuration;
-            video.style.opacity = Math.max(0, Math.min(1, vOp));
+          // Progressive smooth fade to 100% pure white:
+          // 0.00 to 0.65 : video full opacity (1)
+          // 0.65 to 0.82 : smooth linear fade to 0
+          // 0.82 to 1.00 : 100% PURE WHITE guaranteed well before scrolling to the next section
+          if (scrollProgress >= 0.82) {
+            video.style.opacity = '0';
+          } else if (scrollProgress > 0.65) {
+            const vOp = (0.82 - scrollProgress) / (0.82 - 0.65);
+            video.style.opacity = Math.max(0, Math.min(1, vOp)).toFixed(3);
           } else {
-            video.style.opacity = 1;
+            video.style.opacity = '1';
           }
 
-          const overlayEnd = endTime - earlyWhiteOffset - overlayEarlyFade;
-          const overlayStart = overlayEnd - Math.min(fadeDuration, 0.4);
+          // Text overlay fades out slightly before the video
           if (overlay) {
-            if (video.currentTime >= overlayEnd) {
-              overlay.style.opacity = 0;
-            } else if (video.currentTime > overlayStart) {
-              const oOp = (overlayEnd - video.currentTime) / Math.min(fadeDuration, 0.4);
-              overlay.style.opacity = Math.max(0, Math.min(1, oOp));
+            if (scrollProgress >= 0.70) {
+              overlay.style.opacity = '0';
+            } else if (scrollProgress > 0.50) {
+              const oOp = (0.70 - scrollProgress) / (0.70 - 0.50);
+              overlay.style.opacity = Math.max(0, Math.min(1, oOp)).toFixed(3);
             } else {
-              overlay.style.opacity = 1;
+              overlay.style.opacity = '1';
             }
           }
         }
@@ -1693,12 +1685,10 @@
       requestAnimationFrame(loop);
     }
 
-    // Chrysler : durée complète, passe au blanc pur 1.0s avant la fin avec transition fluide de 0.8s
-    setupScrollScrubVideo('chrysler', 'chryslerVideo', 'chryslerOverlay', 999, 0, false, 0.8, 1.0);
-    // De Tomaso : premières 5 secondes, fond blanc 0.4s plus tôt
-    setupScrollScrubVideo('detomaso', 'detomasoVideo', 'detomasoOverlay', 5.0, 0, false, 0.6, 0.4);
-    // Land Rover : 5 secondes, synchronisé avec les autres projets, fond blanc 0.4s plus tôt
-    setupScrollScrubVideo('landrover', 'landroverVideo', 'landroverOverlay', 5.0, 0, false, 0.6, 0.4);
+    // Chrysler, De Tomaso & Land Rover : harmonisés à 6s avec transition garantie 100% blanc pur
+    setupScrollScrubVideo('chrysler', 'chryslerVideo', 'chryslerOverlay', 6.0);
+    setupScrollScrubVideo('detomaso', 'detomasoVideo', 'detomasoOverlay', 5.0);
+    setupScrollScrubVideo('landrover', 'landroverVideo', 'landroverOverlay', 5.0);
 
   </script>
 </body>
