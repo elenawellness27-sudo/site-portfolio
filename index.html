@@ -1642,8 +1642,8 @@
         if (scrollDistance > 0) {
           const currentScroll = -rect.top;
           scrollProgress = Math.min(Math.max(currentScroll / scrollDistance, 0), 1);
-          // Video plays along the first 78% of scroll
-          const scrubProgress = Math.min(scrollProgress / 0.78, 1);
+          // Video plays dynamically along 88% of the scroll track
+          const scrubProgress = Math.min(scrollProgress / 0.88, 1);
           targetTime = startTime + scrubProgress * (endTime - startTime);
         }
       }, { passive: true });
@@ -1651,29 +1651,29 @@
       function loop() {
         if (fullDuration && video.readyState >= 2) {
           const diff = targetTime - video.currentTime;
-          if (Math.abs(diff) > 0.01) {
-            video.currentTime += diff * 0.28;
+          if (Math.abs(diff) > 0.005) {
+            video.currentTime += diff * 0.35;
           }
 
-          // Progressive smooth fade to 100% pure white:
-          // 0.00 to 0.65 : video full opacity (1)
-          // 0.65 to 0.82 : smooth linear fade to 0
-          // 0.82 to 1.00 : 100% PURE WHITE guaranteed well before scrolling to the next section
-          if (scrollProgress >= 0.82) {
+          // Progressive smooth fade to 100% pure white without long delay:
+          // 0.00 to 0.78 : full video playback
+          // 0.78 to 0.92 : smooth dynamic fade to white
+          // 0.92 to 1.00 : pure white transition before section unpins
+          if (scrollProgress >= 0.92) {
             video.style.opacity = '0';
-          } else if (scrollProgress > 0.65) {
-            const vOp = (0.82 - scrollProgress) / (0.82 - 0.65);
+          } else if (scrollProgress > 0.78) {
+            const vOp = (0.92 - scrollProgress) / (0.92 - 0.78);
             video.style.opacity = Math.max(0, Math.min(1, vOp)).toFixed(3);
           } else {
             video.style.opacity = '1';
           }
 
-          // Text overlay fades out slightly before the video
+          // Text overlay fades out smoothly
           if (overlay) {
-            if (scrollProgress >= 0.70) {
+            if (scrollProgress >= 0.78) {
               overlay.style.opacity = '0';
-            } else if (scrollProgress > 0.50) {
-              const oOp = (0.70 - scrollProgress) / (0.70 - 0.50);
+            } else if (scrollProgress > 0.60) {
+              const oOp = (0.78 - scrollProgress) / (0.78 - 0.60);
               overlay.style.opacity = Math.max(0, Math.min(1, oOp)).toFixed(3);
             } else {
               overlay.style.opacity = '1';
@@ -1685,10 +1685,10 @@
       requestAnimationFrame(loop);
     }
 
-    // Chrysler, De Tomaso & Land Rover : harmonisés à 6s avec transition garantie 100% blanc pur
+    // Chrysler, De Tomaso & Land Rover : harmonisés avec transition dynamique
     setupScrollScrubVideo('chrysler', 'chryslerVideo', 'chryslerOverlay', 6.0);
     setupScrollScrubVideo('detomaso', 'detomasoVideo', 'detomasoOverlay', 5.0);
-    setupScrollScrubVideo('landrover', 'landroverVideo', 'landroverOverlay', 5.0);
+    setupScrollScrubVideo('landrover', 'landroverVideo', 'landroverOverlay', 5.5);
 
   </script>
 </body>
