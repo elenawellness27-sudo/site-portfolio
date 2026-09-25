@@ -396,15 +396,20 @@
     .project-video-overlay {
       position: absolute;
       top: 50%;
-      right: 4vw;
+      right: 10vw;
       transform: translateY(-50%);
       color: #ffffff;
-      max-width: 300px;
+      max-width: 380px;
       z-index: 10;
       text-align: left;
       pointer-events: none;
       user-select: none;
       transition: opacity 0.3s ease;
+    }
+    /* Chrysler only: shift text further right to avoid logo overlap */
+    #chryslerOverlay {
+      right: 4vw;
+      max-width: 300px;
     }
     .project-video-overlay-num {
       font-size: clamp(36px, 4.2vw, 68px);
@@ -1473,7 +1478,7 @@
     <div class="footer-top">
       <span style="font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: #666;">Opportunities & Contact</span>
       <h2 class="footer-title">Let's work together.</h2>
-      <a href="mailto:hernandezpaloma522@gmail.com" class="footer-email">hernandezpaloma522@gmail.com</a>
+      <a href="mailto:phernandez@creapole.fr" class="footer-email">phernandez@creapole.fr</a>
       <p style="font-size: 14px; color: #777; margin-top: 10px;">+33 (0) 7 67 94 93 56 · France / Paris Area</p>
     </div>
     <div class="footer-bottom">

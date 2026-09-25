@@ -1,5 +1,6 @@
-﻿node_modules/
+node_modules/
 pages_from_indd/
+pages_from_indd_finall/
 extracted_indd_previews/
 assets_extraits/
 *.log
@@ -9,8 +10,11 @@ assets_extraits/
 *.jsx
 *.pdf
 *.idlk
+*.indd
 check_*.js
 copy_pages.js
 extract_indd.js
 update_from_pdf.js
-convert.js
+convert*.js
+fix_*.js
+
