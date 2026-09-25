@@ -1112,9 +1112,251 @@
     }
     .footer-bottom a:hover { color: #fff; }
 
-    @media (max-width: 860px) {
-      .nav-items { display: none; }
-      .footer-bottom { flex-direction: column; gap: 16px; align-items: flex-start; }
+    /* ═══════════════════════════════════════════════════════════════
+       HAMBURGER BUTTON (hidden on desktop, visible on mobile)
+    ═══════════════════════════════════════════════════════════════ */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 22px;
+      height: 16px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      z-index: 9100;
+    }
+    .hamburger span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background: #111;
+      border-radius: 2px;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ═══════════════════════════════════════════════════════════════
+       MOBILE RESPONSIVE (≤ 768px)
+       — Désactive les animations cinématiques
+       — Affiche chaque page InDesign en image simple scrollable
+       — Adapte nav, cover, footer
+    ═══════════════════════════════════════════════════════════════ */
+    @media (max-width: 768px) {
+
+      /* ── Body & cursor ── */
+      body { cursor: auto; }
+      .cursor-dot, .cursor-follower { display: none !important; }
+
+      /* ── Navigation ── */
+      header.site-nav {
+        width: calc(100% - 24px);
+        height: 50px;
+        padding: 0 16px;
+        border-radius: 999px;
+        top: 10px;
+      }
+      .brand-sub { display: none; }
+      .brand-title { font-size: 11px; }
+      .hamburger { display: flex; }
+      .btn-pdf { display: none; }
+
+      /* Nav menu mobile: overlay dropdown */
+      .nav-items {
+        display: none;
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 32px;
+        background: rgba(255,255,255,0.96);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        z-index: 9050;
+        list-style: none;
+      }
+      .nav-items.open {
+        display: flex;
+      }
+      .nav-items a {
+        font-size: 22px;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        color: #111;
+        padding: 8px 0;
+      }
+      /* Add PDF download link in the mobile overlay */
+      .nav-items::after {
+        content: '↓ Download PDF';
+        font-size: 13px;
+        color: #555;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-top: 16px;
+      }
+
+      /* ── Cover page ── */
+      .cover-hero-section {
+        height: 100svh;
+        min-height: 100svh;
+      }
+      .cover-hero-container {
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-end;
+        padding: 0 32px 0 32px;
+        gap: 0;
+      }
+      .cover-hero-text {
+        position: relative;
+        z-index: 10;
+        padding-top: 90px;
+      }
+      .cover-name {
+        font-size: clamp(28px, 8vw, 42px);
+        margin-bottom: 4px;
+      }
+      .cover-title {
+        font-size: clamp(18px, 5vw, 28px);
+        margin-bottom: 4px;
+      }
+      .cover-year { font-size: clamp(18px, 5vw, 28px); }
+      .cover-hero-car {
+        position: relative;
+        top: auto;
+        right: auto;
+        transform: none;
+        width: 110%;
+        height: auto;
+        max-width: 110%;
+        max-height: 55vw;
+        object-position: right bottom;
+        margin-left: -10%;
+        margin-top: -20px;
+        will-change: unset;
+        transition: none;
+      }
+
+      /* ── Spread sections ── */
+      .spread-section {
+        min-height: auto;
+        height: auto;
+        padding: 0;
+        perspective: none;
+      }
+      .spread-container {
+        height: auto;
+        width: 100%;
+      }
+
+      /* All spread-cards: kill all desktop animations, show immediately */
+      .spread-card,
+      .spread-card[data-anim],
+      .spread-card[data-anim="zoom-in"],
+      .spread-card[data-anim="slide-up"],
+      .spread-card[data-anim="fade-scale"],
+      .spread-card[data-anim="tilt-in"],
+      .spread-card[data-anim="slide-left"] {
+        width: 100%;
+        height: auto;
+        opacity: 1 !important;
+        transform: none !important;
+        filter: none !important;
+        transition: none !important;
+        overflow: visible;
+        background: #fff;
+      }
+
+      .spread-image {
+        width: 100%;
+        height: auto;
+        max-height: none;
+        object-fit: contain;
+        transform: none !important;
+        transition: none !important;
+      }
+
+      /* ── Cinematic spread-frames: show full image, kill layering ── */
+      .spread-frame {
+        position: relative;
+        width: 100%;
+        height: auto;
+        overflow: visible;
+      }
+
+      /* Show only the FIRST anim-layer, hide all others (they all have same image) */
+      .anim-layer {
+        position: relative !important;
+        clip-path: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+        width: 100%;
+        height: auto;
+        display: none; /* hidden by default */
+      }
+      /* Show only the first anim-layer child of each spread-frame */
+      .spread-frame > .anim-layer:first-child {
+        display: block;
+      }
+      .spread-frame > .anim-layer:first-child img {
+        width: 100%;
+        height: auto;
+        display: block;
+        object-fit: contain;
+      }
+
+      /* ── Video hero sections: no scroll-scrubbing, normal flow ── */
+      .scroll-video-section {
+        height: auto;
+        min-height: 70svh;
+        position: relative;
+      }
+      .sticky-video-container {
+        position: relative;
+        top: auto;
+        height: 70svh;
+        min-height: 300px;
+      }
+      .scrub-video {
+        opacity: 1 !important;
+        will-change: unset;
+      }
+
+      /* Video overlay text on mobile: centered, smaller */
+      .project-video-overlay,
+      #chryslerOverlay {
+        right: auto;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        max-width: 85vw;
+        width: 85vw;
+        will-change: unset;
+        opacity: 1 !important;
+      }
+      .project-video-overlay-num { font-size: clamp(28px, 8vw, 48px); margin-bottom: 12px; }
+      .project-video-overlay-title { font-size: 12px; }
+      .project-video-overlay-desc { font-size: 13px; }
+
+      /* ── Floating cutout: kill on mobile ── */
+      .floating-cutout { display: none !important; }
+
+      /* ── Footer ── */
+      footer.site-footer {
+        padding: 80px 28px 40px;
+      }
+      .footer-title { font-size: clamp(32px, 10vw, 56px); }
+      .footer-email { font-size: clamp(16px, 5vw, 28px); }
+      .footer-bottom {
+        flex-direction: column;
+        gap: 12px;
+        align-items: flex-start;
+      }
     }
   </style>
 </head>
@@ -1130,13 +1372,16 @@
       <span class="brand-title">Paloma Hernandez</span>
       <span class="brand-sub">Transportation Design · CREAPOLE 2026</span>
     </a>
-    <ul class="nav-items">
-      <li><a href="#page-2">Profile</a></li>
-      <li><a href="#chrysler">01. Chrysler</a></li>
-      <li><a href="#detomaso">02. De Tomaso</a></li>
-      <li><a href="#landrover">03. Land Rover</a></li>
-      <li><a href="#contact">Contact</a></li>
+    <ul class="nav-items" id="navItems">
+      <li><a href="#page-2" onclick="closeMenu()">Profile</a></li>
+      <li><a href="#chrysler" onclick="closeMenu()">01. Chrysler</a></li>
+      <li><a href="#detomaso" onclick="closeMenu()">02. De Tomaso</a></li>
+      <li><a href="#landrover" onclick="closeMenu()">03. Land Rover</a></li>
+      <li><a href="#contact" onclick="closeMenu()">Contact</a></li>
     </ul>
+    <button class="hamburger" id="hamburger" aria-label="Menu" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
     <a href="portfolio_compressed_small.pdf" download="Paloma_Hernandez_Portfolio_2026.pdf" class="btn-pdf">
       ↓ Download PDF
     </a>
@@ -1487,135 +1732,160 @@
     </div>
   </footer>
 
-  <!-- ─── JAVASCRIPT: LUXURY SCROLL & CURSOR ─── -->
+  <!-- ─── JAVASCRIPT: RESPONSIVE SCROLL & CURSOR ─── -->
   <script>
-    // Smooth custom cursor
-    const dot = document.getElementById('cursorDot');
-    const ring = document.getElementById('cursorFollower');
-    let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
-    let ringX = mouseX, ringY = mouseY;
+    const isMobile = window.innerWidth <= 768 || ('ontouchstart' in window);
 
-    window.addEventListener('mousemove', e => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      dot.style.left = mouseX + 'px';
-      dot.style.top = mouseY + 'px';
-    });
-
-    function renderCursor() {
-      ringX += (mouseX - ringX) * 0.15;
-      ringY += (mouseY - ringY) * 0.15;
-      ring.style.left = ringX + 'px';
-      ring.style.top = ringY + 'px';
-      requestAnimationFrame(renderCursor);
+    // ─── HAMBURGER MENU ───
+    function toggleMenu() {
+      const nav = document.getElementById('navItems');
+      const btn = document.getElementById('hamburger');
+      nav.classList.toggle('open');
+      btn.classList.toggle('open');
     }
-    renderCursor();
+    function closeMenu() {
+      const nav = document.getElementById('navItems');
+      const btn = document.getElementById('hamburger');
+      nav.classList.remove('open');
+      btn.classList.remove('open');
+    }
 
-    // Hover state for cursor
-    document.querySelectorAll('a, button, .spread-card').forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        dot.style.width = '12px';
-        dot.style.height = '12px';
-        ring.style.width = '52px';
-        ring.style.height = '52px';
-        ring.style.borderColor = 'rgba(0,0,0,0.4)';
-      });
-      el.addEventListener('mouseleave', () => {
-        dot.style.width = '6px';
-        dot.style.height = '6px';
-        ring.style.width = '32px';
-        ring.style.height = '32px';
-        ring.style.borderColor = 'rgba(0,0,0,0.25)';
-      });
-    });
+    // ─── CUSTOM CURSOR (desktop only) ───
+    if (!isMobile) {
+      const dot = document.getElementById('cursorDot');
+      const ring = document.getElementById('cursorFollower');
+      let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
+      let ringX = mouseX, ringY = mouseY;
 
-    // Scroll Progress Indicator & Cover Car Dynamic Exit
+      window.addEventListener('mousemove', e => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        dot.style.left = mouseX + 'px';
+        dot.style.top = mouseY + 'px';
+      });
+
+      function renderCursor() {
+        ringX += (mouseX - ringX) * 0.15;
+        ringY += (mouseY - ringY) * 0.15;
+        ring.style.left = ringX + 'px';
+        ring.style.top = ringY + 'px';
+        requestAnimationFrame(renderCursor);
+      }
+      renderCursor();
+
+      document.querySelectorAll('a, button, .spread-card').forEach(el => {
+        el.addEventListener('mouseenter', () => {
+          dot.style.width = '12px'; dot.style.height = '12px';
+          ring.style.width = '52px'; ring.style.height = '52px';
+          ring.style.borderColor = 'rgba(0,0,0,0.4)';
+        });
+        el.addEventListener('mouseleave', () => {
+          dot.style.width = '6px'; dot.style.height = '6px';
+          ring.style.width = '32px'; ring.style.height = '32px';
+          ring.style.borderColor = 'rgba(0,0,0,0.25)';
+        });
+      });
+    }
+
+    // ─── SCROLL PROGRESS + COVER CAR ───
     const progressLine = document.getElementById('progressLine');
     const coverCar = document.getElementById('coverCar');
     window.addEventListener('scroll', () => {
       const scrollY = window.scrollY;
       const total = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = (scrollY / total) * 100;
-      progressLine.style.width = progress + '%';
+      progressLine.style.width = ((scrollY / total) * 100) + '%';
 
-      // Cover car drives/slides off to the right as user scrolls down
-      if (coverCar && scrollY < window.innerHeight * 1.5) {
+      // Cover car exit animation — desktop only
+      if (!isMobile && coverCar && scrollY < window.innerHeight * 1.5) {
         coverCar.style.transform = `translate3d(${scrollY * 1.1}px, -50%, 0)`;
       }
     }, { passive: true });
 
-    // Smooth reveal animation on scroll (triggered when section reaches center of viewport)
-    const cards = document.querySelectorAll('.spread-card');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        } else if (entry.boundingClientRect.top > window.innerHeight * 0.7) {
-          // Re-trigger reveal when scrolling back down smoothly
-          entry.target.classList.remove('visible');
-        }
-      });
-    }, {
-      threshold: 0.35,
-      rootMargin: '-12% 0px -12% 0px'
-    });
-    cards.forEach(card => observer.observe(card));
-
-    // ─── CHOREOGRAPHED SPREAD OBSERVER (INSPIRATION / RESEARCH / DEFINING / USAGE) ───
-    const frameObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('active');
-        } else if (entry.boundingClientRect.top > window.innerHeight * 0.7) {
-          // Re-arm when user scrolls back above the section
-          entry.target.classList.remove('active');
-        }
-      });
-    }, {
-      threshold: 0.35,
-      rootMargin: '-12% 0px -12% 0px'
-    });
-
-    ['insp-frame', 'research-frame', 'defining-frame', 'usage-frame', 'dt-insp-frame', 'dt-research-frame', 'dt-volume-frame', 'dt-def-frame', 'lr-insp-frame', 'lr-research-frame', 'lr-defining-frame', 'lr-usage-frame'].forEach(id => {
-      const el = document.getElementById(id);
-      if (el) frameObserver.observe(el);
-    });
-
-    // Dynamic 3D tilt and floating cutout parallax on mouse move
-    window.addEventListener('mousemove', (e) => {
-      const centerX = window.innerWidth / 2;
-      const centerY = window.innerHeight / 2;
-      const deltaX = (e.clientX - centerX) / centerX;
-      const deltaY = (e.clientY - centerY) / centerY;
-
-      // Parallax on all visible cards in viewport
-      document.querySelectorAll('.spread-card.visible').forEach(card => {
-        const rect = card.getBoundingClientRect();
-        if (rect.top < window.innerHeight && rect.bottom > 0) {
-          const img = card.querySelector('.spread-image');
-          const cut = card.querySelector('.floating-cutout');
-          if (img && card.id !== 'page-1') {
-            img.style.transform = `translate3d(${-deltaX * 10}px, ${-deltaY * 10}px, 0) scale(1.008)`;
+    // ─── SPREAD CARD OBSERVER ───
+    if (!isMobile) {
+      const cards = document.querySelectorAll('.spread-card');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          } else if (entry.boundingClientRect.top > window.innerHeight * 0.7) {
+            entry.target.classList.remove('visible');
           }
-          if (cut) {
-            cut.style.transform = `translate3d(${deltaX * 22}px, ${deltaY * 22}px, 0) rotate(${deltaX * 2}deg)`;
-          }
-        }
-      });
-    }, { passive: true });
+        });
+      }, { threshold: 0.35, rootMargin: '-12% 0px -12% 0px' });
+      cards.forEach(card => observer.observe(card));
+    }
 
-    // ─── SMOOTH SCROLL-DRIVEN VIDEO SCRUBBING (CHRYSLER, DE TOMASO, LAND ROVER) ───
+    // ─── CHOREOGRAPHED FRAME OBSERVER (desktop only) ───
+    if (!isMobile) {
+      const frameObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+          } else if (entry.boundingClientRect.top > window.innerHeight * 0.7) {
+            entry.target.classList.remove('active');
+          }
+        });
+      }, { threshold: 0.35, rootMargin: '-12% 0px -12% 0px' });
+
+      ['insp-frame', 'research-frame', 'defining-frame', 'usage-frame',
+       'dt-insp-frame', 'dt-research-frame', 'dt-volume-frame', 'dt-def-frame',
+       'lr-insp-frame', 'lr-research-frame', 'lr-defining-frame', 'lr-usage-frame'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) frameObserver.observe(el);
+      });
+    }
+
+    // ─── MOUSE PARALLAX (desktop only) ───
+    if (!isMobile) {
+      window.addEventListener('mousemove', (e) => {
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight / 2;
+        const deltaX = (e.clientX - centerX) / centerX;
+        const deltaY = (e.clientY - centerY) / centerY;
+        document.querySelectorAll('.spread-card.visible').forEach(card => {
+          const rect = card.getBoundingClientRect();
+          if (rect.top < window.innerHeight && rect.bottom > 0) {
+            const img = card.querySelector('.spread-image');
+            const cut = card.querySelector('.floating-cutout');
+            if (img && card.id !== 'page-1') {
+              img.style.transform = `translate3d(${-deltaX * 10}px, ${-deltaY * 10}px, 0) scale(1.008)`;
+            }
+            if (cut) {
+              cut.style.transform = `translate3d(${deltaX * 22}px, ${deltaY * 22}px, 0) rotate(${deltaX * 2}deg)`;
+            }
+          }
+        });
+      }, { passive: true });
+    }
+
+    // ─── VIDEO: SCROLL-SCRUBBING (desktop) / AUTOPLAY (mobile) ───
     function setupScrollScrubVideo(sectionId, videoId, overlayId, clipSeconds = 6.0) {
       const section = document.getElementById(sectionId);
       const video = document.getElementById(videoId);
       const overlay = document.getElementById(overlayId);
+
+      if (!video || !section) return;
+
+      // MOBILE: simple autoplay loop, no scrubbing
+      if (isMobile) {
+        video.removeAttribute('src'); // will be reset
+        video.src = video.src || video.getAttribute('src');
+        video.autoplay = true;
+        video.loop = true;
+        video.muted = true;
+        video.playsInline = true;
+        video.load();
+        video.play().catch(() => {});
+        return;
+      }
+
+      // DESKTOP: scroll-driven scrubbing
       let targetTime = 0;
       let fullDuration = 0;
       let startTime = 0;
       let endTime = 0;
       let scrollProgress = 0;
-
-      if (!video || !section) return;
 
       function initTimes() {
         if (video.duration && video.duration > 0) {
@@ -1642,7 +1912,6 @@
         if (scrollDistance > 0) {
           const currentScroll = -rect.top;
           scrollProgress = Math.min(Math.max(currentScroll / scrollDistance, 0), 1);
-          // Video plays dynamically along 88% of the scroll track
           const scrubProgress = Math.min(scrollProgress / 0.88, 1);
           targetTime = startTime + scrubProgress * (endTime - startTime);
         }
@@ -1654,11 +1923,6 @@
           if (Math.abs(diff) > 0.005) {
             video.currentTime += diff * 0.35;
           }
-
-          // Progressive smooth fade to 100% pure white without long delay:
-          // 0.00 to 0.78 : full video playback
-          // 0.78 to 0.92 : smooth dynamic fade to white
-          // 0.92 to 1.00 : pure white transition before section unpins
           if (scrollProgress >= 0.92) {
             video.style.opacity = '0';
           } else if (scrollProgress > 0.78) {
@@ -1667,8 +1931,6 @@
           } else {
             video.style.opacity = '1';
           }
-
-          // Text overlay fades out smoothly
           if (overlay) {
             if (scrollProgress >= 0.78) {
               overlay.style.opacity = '0';
@@ -1685,7 +1947,6 @@
       requestAnimationFrame(loop);
     }
 
-    // Chrysler, De Tomaso & Land Rover : harmonisés avec transition dynamique
     setupScrollScrubVideo('chrysler', 'chryslerVideo', 'chryslerOverlay', 6.0);
     setupScrollScrubVideo('detomaso', 'detomasoVideo', 'detomasoOverlay', 5.0);
     setupScrollScrubVideo('landrover', 'landroverVideo', 'landroverOverlay', 5.5);
