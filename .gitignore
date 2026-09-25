@@ -9,6 +9,7 @@ assets_extraits/
 *.ps1
 *.jsx
 *.pdf
+!Paloma-Hernandez-Portfolio.pdf
 *.idlk
 *.indd
 check_*.js
