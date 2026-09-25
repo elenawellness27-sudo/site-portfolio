@@ -1162,6 +1162,10 @@
         display: flex !important;
       }
 
+      main {
+        padding-top: 60px;
+      }
+
       /* ── Body & cursor ── */
       body { cursor: auto; }
       .cursor-dot, .cursor-follower { display: none !important; }
@@ -1365,7 +1369,8 @@
 
   <main>
     <!-- PAGE 01 : COVER -->
-    <section class="cover-hero-section" id="page-1">
+    <!-- Desktop Interactive Hero Cover -->
+    <section class="cover-hero-section desktop-only" id="page-1">
       <div class="cover-hero-container">
         <div class="cover-hero-text">
           <h1 class="cover-name">PALOMA HERNANDEZ</h1>
@@ -1373,6 +1378,15 @@
           <p class="cover-year">2026</p>
         </div>
         <img class="cover-hero-car" id="coverCar" src="assets_master/cover_car.png" alt="Paloma Hernandez Concept Car" />
+      </div>
+    </section>
+
+    <!-- Mobile InDesign Cover (Page 01) -->
+    <section class="spread-section mobile-only" id="page-1-m">
+      <div class="spread-container">
+        <div class="spread-card" data-anim="fade-scale">
+          <img class="spread-image" src="pages_ordered/page_1.webp" alt="Paloma Hernandez Portfolio 2026" loading="lazy" />
+        </div>
       </div>
     </section>
 
